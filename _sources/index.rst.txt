@@ -1,0 +1,51 @@
+
+Posit Arithmetic
+================
+
+John L. Gustafson 10 October 2017
+
+Copyright © 2017 John L. Gustafson
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+“Software”), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sub-license, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+This copyright and permission notice shall be included in all copies or
+substantial portions of the software.
+
+THE SOFTWARE IS PROVIDED “AS IS” WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OR CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Posit算术
+=========
+
+原文PDF：https://posithub.org/docs/Posits4.pdf
+
+Posit是III型的unum,
+这份文档对其思想做了很详细的阐述，但是如果要理解最好先看书 `The End of
+Error - Unum
+Computing <https://jszheng.github.io/TheEndOfError/index.html>`__\ 。作者主页
+http://www.johngustafson.net/unums.html
+的一些历史文件也可以参考看看unum是如何演化的。
+
+最新的\ `Posit标准 <https://posithub.org/docs/posit_standard-2.pdf>`__\ 已经发布，有些名词略有改变，ToDo:
+后面有空再在这份原文基础上附加上翻译。
+
+中文翻译 by jszheng
+
+.. toctree::
+   :maxdepth: 3
+   :numbered:
+
+   01_Overview
+   02_Specifics
+   03_Visualize

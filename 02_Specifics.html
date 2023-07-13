@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>2. 细节：将 posit 位字符串转换为值 &#8212; Posit 算术 0.1 documentation</title>
+
+    <link rel="stylesheet" href="_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="_static/fonts.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css" />
+    <link rel="stylesheet" type="text/css" href="_static/d2l.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/d2l.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3. 可视化射影实数" href="03_Visualize.html" />
+    <link rel="prev" title="1. 概论" href="01_Overview.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link is-active"><span class="section-number">2. </span>细节：将 posit 位字符串转换为值</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="_sources/02_Specifics.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/jszheng/PositArithmetic">
+                  <i class="fab fa-github"></i>
+                  Github
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="index.html">
+              <span class="title-text">
+                  Posit 算术
+              </span>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Overview.html">1. 概论</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2. 细节：将 posit 位字符串转换为值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Visualize.html">3. 可视化射影实数</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="index.html">
+              <span class="title-text">
+                  Posit 算术
+              </span>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Overview.html">1. 概论</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2. 细节：将 posit 位字符串转换为值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Visualize.html">3. 可视化射影实数</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <div class="section" id="posit">
+<h1><span class="section-number">2. </span>细节：将 posit 位字符串转换为值<a class="headerlink" href="#posit" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="id1">
+<h2><span class="section-number">2.1. </span>设置posit环境<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
+<p>我们在 I 型 unum中用 <span class="math notranslate nohighlight">\(esizesize\)</span> 和 <span class="math notranslate nohighlight">\(fsizesize\)</span>
+定义了计算环境。 而在这里，我们将 <span class="math notranslate nohighlight">\(nbits\)</span> 和 <span class="math notranslate nohighlight">\(es\)</span>
+定义为建立posit含义所需的全局整数值。 <span class="math notranslate nohighlight">\(nbits\)</span>
+值是数的总位数，可以是 2 或更大的任意整数；
+<span class="math notranslate nohighlight">\(es\)</span>是指数位数，可以是 0 或更大的任何整数。 <span class="math notranslate nohighlight">\(nbits\)</span> 和
+<span class="math notranslate nohighlight">\(es\)</span> 值可以相互独立地选择；
+虽然看起来很奇怪，但您的确可以有一个最多 5 个指数位的 4 位posit。
+也不会破坏数学。</p>
+<p>与 I 型 unums 类似，<strong>setpositenv</strong> 例程使用 <span class="math notranslate nohighlight">\(nbits\)</span> 和
+<span class="math notranslate nohighlight">\(es\)</span> 来计算表征 posit 环境的值。 可能的位模式数目 <span class="math notranslate nohighlight">\(npat\)</span> 为
+<span class="math notranslate nohighlight">\(2^{nbits}\)</span>。 值 <span class="math notranslate nohighlight">\(2^{2^{es}}\)</span>
+因为它经常出现，被赋予变量“<span class="math notranslate nohighlight">\(useed\)</span>”。 除了计算 <span class="math notranslate nohighlight">\(npat\)</span>
+和<span class="math notranslate nohighlight">\(useed\)</span> 之外，<strong>setpositenv</strong>
+还找到最小和最大正数<span class="math notranslate nohighlight">\(minpos\)</span> 和<span class="math notranslate nohighlight">\(maxpos\)</span>。
+这些值决定动态范围，与IEEE
+浮点定义一致。Posit的极端值是精确值，互为倒数；
+<span class="math notranslate nohighlight">\(\frac{1}{minpos}=maxpos\)</span>； 动态范围完美平衡在值 1.0
+的左右，并且每个2的整数幂都有一个精确的倒数。（这些属性不适用于 IEEE
+浮点数。）</p>
+<p>还需要设置 quire 寄存器的大小 <strong>qsize</strong> ，以及它具有的额外位数
+<strong>qextra</strong> 来用最坏情况求和产生的进位。 quire
+寄存器将在稍后有关融合操作的部分中进行解释。</p>
+<div class="figure align-default" id="id5">
+<img alt="_images/image-20230713100905943.png" src="_images/image-20230713100905943.png" />
+<p class="caption"><span class="caption-number">Fig. 2.1.1 </span><span class="caption-text">image-20230713100905943</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+<p>例如，具有单比特指数位的 6 位 posit 环境是这样建立的：</p>
+<div class="highlight-mathematica notranslate"><div class="highlight"><pre><span></span><span class="n">setpositenv</span><span class="p">[{</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">}]</span><span class="w"></span>
+</pre></div>
+</div>
+<p>该命令分配了这些全局变量：</p>
+<div class="highlight-mathematica notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">nbits</span><span class="p">,</span><span class="w"> </span><span class="n">es</span><span class="p">,</span><span class="w"> </span><span class="n">npat</span><span class="p">,</span><span class="w"> </span><span class="n">useed</span><span class="p">,</span><span class="w"> </span><span class="n">minpos</span><span class="p">,</span><span class="w"> </span><span class="n">maxpos</span><span class="p">,</span><span class="w"> </span><span class="n">qsize</span><span class="p">,</span><span class="w"> </span><span class="n">qextra</span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p><span class="math notranslate nohighlight">\(\left \{6, 1, 64, 4, \frac{1}{256}, 256, 64, 32\right \}\)</span></p>
+<p>大多数计算机体系结构都强烈倾向于使用 2 的幂作为变量的位大小，或者至少是
+8 位字节的倍数。 如果使用 56 位posit而不是 64
+位浮点对计算机来说不是性能负担，那么 56 位posit通常可以提供比 64
+位浮点更准确的答案。
+在带宽有限的计算机上，较小数量所需的内存和带宽的节省可能会节省时间（以及能量和功率），具体取决于它们需要在较大的二次幂边界上对齐读取和存储的程度。
+用户可能会发现 64 位浮点对于他们的应用来说有些过大，但他们需要比 32
+位浮点提供的更高的精度或动态范围； 在某些情况下，32
+位posit可能就足够了，并且比 64 位标准浮点具有明显的性能和存储优势。
+类似地，16 位posit有时可以代替 32
+位浮点数，并且我们知道至少一种应用（神经网络训练）可以用 8 位posit代替
+16 位浮点数。 使用 quire
+寄存器是一种创建长算术运算序列的强大方法，最后只有一次舍入误差，甚至可以在某些情况下允许
+16 位posit替换 64 位浮点数。</p>
+<p>注意到<span class="math notranslate nohighlight">\(maxpos\)</span> 与 <span class="math notranslate nohighlight">\(minpos\)</span>
+之比是<span class="math notranslate nohighlight">\(useed^{2nbits-4}\)</span>，它决定了posit的动态范围。
+回想一下，<span class="math notranslate nohighlight">\(useed\)</span>是 <span class="math notranslate nohighlight">\(2^{2^{es}}\)</span>。 posit
+格式使用regime字段来对<span class="math notranslate nohighlight">\(useed\)</span>求从 <span class="math notranslate nohighlight">\(-nbits+1\)</span> 到
+<span class="math notranslate nohighlight">\(nbits-1\)</span> 之间的任何整数的幂次，因此动态范围是指数的指数的指数。
+因此与IEEE浮点系统相比，Posit可以用更少的指数位创建更大的动态范围，从而留下更多的小数位来提高结果的准确性。
+换句话说，<span class="math notranslate nohighlight">\(es\)</span>设置很强大，所以要小心。大于5的值可能会消耗掉计算机的内存；简单地打印es=5的minpos的精确值需要几GB。</p>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">2.2. </span>提取符号位<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
+<p>如果将 posit 位字符串解释为 2 的补码整数，则其范围为 -npat 到 npat-1。
+Mathematica 不将 2 的补码整数作为本机类型处理，因此此解释必须使用 0 到
+npat-1 之间的整数。 npat/2
+的无符号整数是表示<span class="math notranslate nohighlight">\(\pm\infty\)</span>的位串。
+如果用有符号整数，则<span class="math notranslate nohighlight">\(\pm\infty\)</span>的位串的值对应于-npat/2。</p>
+<p>如果输入整数（被视为位字符串）是可以表示为posit的，则 <strong>positQ</strong>
+测试返回 True，否则返回 False。</p>
+<div class="highlight-mathematica notranslate"><div class="highlight"><pre><span></span><span class="n">positQ</span><span class="p">[</span><span class="nv">p_Integer</span><span class="p">]</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">npat</span><span class="w"></span>
+</pre></div>
+</div>
+<p>以下函数将帮助解决 Mathematica 中缺少 2 的补码整数的问题。</p>
+<div class="highlight-mathematica notranslate"><div class="highlight"><pre><span></span><span class="n">twoscomp</span><span class="p">[</span><span class="nv">sign_</span><span class="p">,</span><span class="w"> </span><span class="nv">p_</span><span class="p">]</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">Mod</span><span class="p">[</span><span class="n">If</span><span class="p">[</span><span class="n">sign</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">npat</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">p</span><span class="p">],</span><span class="w"> </span><span class="n">npat</span><span class="p">]</span><span class="w"></span>
+</pre></div>
+</div>
+<p>提取一个 posit
+的符号位很容易，它是最高有效位，<span class="math notranslate nohighlight">\(\color{red}0\)</span>表示正数（包括零）或
+<span class="math notranslate nohighlight">\(\color{red}1\)</span> 表示负数（和<span class="math notranslate nohighlight">\(\pm\infty\)</span>）。
+位的颜色编码与所有类型的 unum
+所使用的颜色编码类似，这使得长二进制字符串更易于阅读。
+符号位颜色编码为红色（RGB 分量 1、0.125、0）：</p>
+<div class="figure align-default" id="id6">
+<img alt="_images/image-20230713110538517.png" src="_images/image-20230713110538517.png" />
+<p class="caption"><span class="caption-number">Fig. 2.2.1 </span><span class="caption-text">image-20230713110538517</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+<p>在可能的假设值的极值点进行测试，包括我们刚刚设置的 {6,1} 环境的非法值：</p>
+<div class="figure align-default" id="id7">
+<img alt="_images/image-20230713110648993.png" src="_images/image-20230713110648993.png" />
+<p class="caption"><span class="caption-number">Fig. 2.2.2 </span><span class="caption-text">image-20230713110648993</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</div>
+<p>请注意，<strong>positQ</strong> 函数可以保护我们免于计算超出范围的整数 <strong>npat</strong>
+的符号位<strong>signbit</strong>，因为 posit 位字符串的范围是从 <span class="math notranslate nohighlight">\(0\)</span> 到
+<span class="math notranslate nohighlight">\(npat-1\)</span>（当视为无符号整数时）。 在 C 环境中，测试输入 p
+是表示有效posit的有符号整数，则需要满足
+<span class="math notranslate nohighlight">\(-32 \le p \lt 32\)</span>，而不是 <span class="math notranslate nohighlight">\(0 \le p \lt 64\)</span>。 （当
+Mathematica
+被要求执行运行范围外操作时，它只是将表达式回显给用户，就像上面返回“<code class="docutils literal notranslate"><span class="pre">signbit[64]</span></code>”时一样。）</p>
+</div>
+<div class="section" id="regime">
+<h2><span class="section-number">2.3. </span>提取regime位<a class="headerlink" href="#regime" title="Permalink to this heading">¶</a></h2>
+<p><em>regime</em>字段由相同位（全 0 或全 1）的长度决定。
+相同的状态位采用琥珀色颜色编码（RGB 0.8、0.6、0.2）。
+解码它的一个简单方法是，如果 posit 的符号位为 1，则将该 posit
+的位串看作有符号整数按 2 的补码取反（这意味着翻转所有位并加 1）。
+在汇编语言中，此函数中的许多看起来复杂的表达式在大多数处理器上是一个时钟周期内执行的单指令，比如
+“查找第一个1”或“计算前导0的数量”。
+在<strong>regimebits</strong>函数中，我们将二进制数字作为字符串分开，但真正的硬件（或低级语言中的例程）可以更快、更简单地执行位提取。</p>
+<p>当到达字符串末尾或遇到相反的位时，位运行终止。 相反位的颜色为棕色（RGB
+0.6、0.4、0.2）。</p>
+<div class="figure align-default" id="id8">
+<img alt="_images/image-20230713112858628.png" src="_images/image-20230713112858628.png" />
+<p class="caption"><span class="caption-number">Fig. 2.3.1 </span><span class="caption-text">image-20230713112858628</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+</div>
+<p>对regime字段的解释很像衣服的尺寸； L 为 Large，XL 为 Extra Large，XXL 为
+Extra Extra Large，依此类推。 计算 X 字符的个数。
+函数<strong>regimevalue</strong>使用类似的原理，就一行代码函数。
+它本应该是<strong>regimebits</strong>函数的输出，但为了清楚起见，我们分两个阶段计算regime字段表示的整数。</p>
+<div class="figure align-default" id="id9">
+<img alt="_images/image-20230713113445719.png" src="_images/image-20230713113445719.png" />
+<p class="caption"><span class="caption-number">Fig. 2.3.2 </span><span class="caption-text">image-20230713113445719</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+</div>
+<p>这里有两个例子。 <strong>注意对于正指数，regime值比运行中的位数少
+1，因为我们需要能够表示零值</strong>。
+同样，硬件可以毫不费力地快速完成这种事情； 它看起来很像 2 的补码逻辑。</p>
+<p>首先，一个小的正数（记住，我们仍然处于 6 位 posit 环境中）：</p>
+<div class="figure align-default" id="id10">
+<img alt="_images/image-20230713113506724.png" src="_images/image-20230713113506724.png" />
+<p class="caption"><span class="caption-number">Fig. 2.3.3 </span><span class="caption-text">image-20230713113506724</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
+</div>
+<p>接下来，尝试一个负数，按 2 的补码形式的取反， 0 位串变成了 1 位串。</p>
+<p>注：100001的2的补码为011110 + 1 = 011111； 即翻转所有位并加 1</p>
+<div class="figure align-default" id="id11">
+<img alt="_images/image-20230713120609748.png" src="_images/image-20230713120609748.png" />
+<p class="caption"><span class="caption-number">Fig. 2.3.4 </span><span class="caption-text">image-20230713120609748</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">2.4. </span>提取指数位<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h2>
+<p>下一个字段是指数位。 即使 es
+大于零，也可能不存在任何指数位，因为regime位可能会将部分或全部指数位挤出数字的右端！
+例如，<span class="math notranslate nohighlight">\(\color{red}0\color{orange}11111\)</span>
+没有指数位，<span class="math notranslate nohighlight">\(\color{red}0\color{orange}1111\color{brown}0\)</span>
+也没有。对于较短的regime字段，指数位才开始出现，例如
+<span class="math notranslate nohighlight">\(\color{red}0\color{orange}111\color{brown}0\color{blue}0\)</span> 和
+<span class="math notranslate nohighlight">\(\color{red}0\color{orange}111\color{brown}0\color{blue}1\)</span>。</p>
+<p>在下面的代码中，regime位由相反的位终止，因此我们跳过该终止位并查看下一个
+es 位以及剩下的任何位，以较小者为准。 结果可以是从空集 { } 到长度为 es
+的位串。</p>
+<div class="figure align-default" id="id12">
+<img alt="_images/image-20230713122423964.png" src="_images/image-20230713122423964.png" />
+<p class="caption"><span class="caption-number">Fig. 2.4.1 </span><span class="caption-text">image-20230713122423964</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
+</div>
+<p>这些指数位串中不存在浮点数那样的“偏移”，因此它们表示的 2
+的幂只是一个无符号整数。 指数位采用蓝色颜色编码（RGB 值 0.25、0.5、1）。
+如果指数位为 <span class="math notranslate nohighlight">\(\color{blue}110\)</span> = 6，则意味着 <span class="math notranslate nohighlight">\(2^6\)</span>
+是指数位贡献的缩放因子。
+如果没有指数位，则指数为零并且指数位贡献的比例因子为<span class="math notranslate nohighlight">\(2^0=1\)</span>。</p>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">2.5. </span>提取小数位<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h2>
+<p>一旦我们有了小数位，我们就拥有了posit位串的所有四个部分，并且可以直接计算它所代表的值。
+小数位是指数右侧的所有位，如果它们没有被其他位挤出右端的话。
+（如果被挤出了就是全零，代表的小数的值为 1.0 。换句话说，隐藏位始终为
+1）。<strong>fractionbits</strong> 函数与 <strong>exponentbits</strong> 的不同之处仅在于使用
+<strong>startbit</strong>
+的值后逐一获取所有剩余位，而不是停在设定的最大数量处。这就是posit随比例因子不同有不同精度的原因。如果比例因子很小，就会有足够的位来表达高精度的小数。
+posit的的幅度很大或是很小，那么留给精度的位数就越少。</p>
+<div class="figure align-default" id="id13">
+<img alt="_images/image-20230713125416178.png" src="_images/image-20230713125416178.png" />
+<p class="caption"><span class="caption-number">Fig. 2.5.1 </span><span class="caption-text">image-20230713125416178</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
+</div>
+<p>小数的颜色编码是缺省的<strong>黑色</strong>。</p>
+</div>
+<div class="section" id="p2x">
+<h2><span class="section-number">2.6. </span>把各个部分组织起来： p2x函数<a class="headerlink" href="#p2x" title="Permalink to this heading">¶</a></h2>
+<p>遵循 Type I unum 原型环境的命名约定，我们将把posit位串 <span class="math notranslate nohighlight">\(p\)</span>
+转换为数学上的值 <span class="math notranslate nohighlight">\(x\)</span> 的函数称为 <strong>p2x</strong> 函数。
+它将各个部分组合在一起如下</p>
+<div class="math notranslate nohighlight" id="equation-02-specifics-0">
+<span class="eqno">(2.6.1)<a class="headerlink" href="#equation-02-specifics-0" title="Permalink to this equation">¶</a></span>\[\begin{split}\text{有符号整数表示的Posit的值 } p= \left \{ \begin{array}{ll}
+p=0 &amp; 0, \\
+p=-npat/2 &amp; \pm\infty \\
+\text{其他 } p \text{ 取值} &amp; (-1)^s \times useed^k\times2^e\times f
+\end{array}
+\right.\end{split}\]</div>
+<p>其中 s = 符号位，k 是由regime字段表示的整数，e 是由指数位表示的整数，f
+是小数（包括始终为 1 的隐藏位）。以下例程提取 s， k、e 和
+f，然后应用上式。</p>
+<div class="figure align-default" id="id14">
+<img alt="_images/image-20230713131504854.png" src="_images/image-20230713131504854.png" />
+<p class="caption"><span class="caption-number">Fig. 2.6.1 </span><span class="caption-text">image-20230713131504854</span><a class="headerlink" href="#id14" title="Permalink to this image">¶</a></p>
+</div>
+<p>（由于 Mathematica 不支持 2 的补码整数，因此 <span class="math notranslate nohighlight">\(\pm\infty\)</span> 的测试是
+<span class="math notranslate nohighlight">\(p\)</span> 是否为 <span class="math notranslate nohighlight">\(npat/2\)</span> 而不是 <span class="math notranslate nohighlight">\(-npat/2\)</span>。并且我们使用
+<strong>ComplexInfinity</strong> 作为 Mathematica 等价的<span class="math notranslate nohighlight">\(\pm\infty\)</span>。）</p>
+<p>“<strong>colorcodep</strong>”函数使Posit二进制字符串更易于阅读。首先显示原始位串，然后为该数字或其
+2 的补码（如果该数字位于投影实数圆的左半部分）的位字段着色。</p>
+<div class="figure align-default" id="id15">
+<img alt="_images/image-20230713131702684.png" src="_images/image-20230713131702684.png" />
+<p class="caption"><span class="caption-number">Fig. 2.6.2 </span><span class="caption-text">image-20230713131702684</span><a class="headerlink" href="#id15" title="Permalink to this image">¶</a></p>
+</div>
+<p>我们需要至少两个指数位来演示指数位如何被regime位挤出，因此我们将环境更改为{6,2}，并创建每个可能的位串及其含义的表。
+该表从代表最小有符号整数的位串开始（100000
+是-32），一直计数到零，然后再计数到最大有符号整数（011111 是 +32）：</p>
+<div class="figure align-default" id="id16">
+<img alt="_images/image-20230713154825510.png" src="_images/image-20230713154825510.png" />
+<p class="caption"><span class="caption-number">Fig. 2.6.3 </span><span class="caption-text">image-20230713154825510</span><a class="headerlink" href="#id16" title="Permalink to this image">¶</a></p>
+</div>
+<div class="figure align-default" id="id17">
+<img alt="_images/image-20230713154725754.png" src="_images/image-20230713154725754.png" />
+<p class="caption"><span class="caption-number">Fig. 2.6.4 </span><span class="caption-text">image-20230713154725754</span><a class="headerlink" href="#id17" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">2. 细节：将 posit 位字符串转换为值</a><ul>
+<li><a class="reference internal" href="#id1">2.1. 设置posit环境</a></li>
+<li><a class="reference internal" href="#id2">2.2. 提取符号位</a></li>
+<li><a class="reference internal" href="#regime">2.3. 提取regime位</a></li>
+<li><a class="reference internal" href="#id3">2.4. 提取指数位</a></li>
+<li><a class="reference internal" href="#id4">2.5. 提取小数位</a></li>
+<li><a class="reference internal" href="#p2x">2.6. 把各个部分组织起来： p2x函数</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="01_Overview.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>1. 概论</div>
+         </div>
+     </a>
+     <a id="button-next" href="03_Visualize.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>3. 可视化射影实数</div>
+        </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>1. 概论 &#8212; Posit 算术 0.1 documentation</title>
+
+    <link rel="stylesheet" href="_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="_static/fonts.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css" />
+    <link rel="stylesheet" type="text/css" href="_static/d2l.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/d2l.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2. 细节：将 posit 位字符串转换为值" href="02_Specifics.html" />
+    <link rel="prev" title="Posit Arithmetic" href="index.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link is-active"><span class="section-number">1. </span>概论</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="_sources/01_Overview.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/jszheng/PositArithmetic">
+                  <i class="fab fa-github"></i>
+                  Github
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="index.html">
+              <span class="title-text">
+                  Posit 算术
+              </span>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. 概论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Specifics.html">2. 细节：将 posit 位字符串转换为值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Visualize.html">3. 可视化射影实数</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="index.html">
+              <span class="title-text">
+                  Posit 算术
+              </span>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. 概论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Specifics.html">2. 细节：将 posit 位字符串转换为值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Visualize.html">3. 可视化射影实数</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <div class="section" id="id1">
+<h1><span class="section-number">1. </span>概论<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
+<p>Unum 用于表达实数和实数范围。
+有两种操作模式可供用户选择：posit/定位模式和valid/有效模式。</p>
+<p>在 posit 模式下，unum
+的行为很像固定大小的浮点数，如果计算结果不能精确表达，则四舍五入到最接近的可表达值；
+然而，与相同位数的浮点数相比，正值表示提供了更高的精度和更大的动态范围，以及许多其他优点。
+我们可以将它们简称为 posits，就像我们将 IEEE 754 标准浮点数称为 float
+一样。</p>
+<p>在valid模式下，unum
+表示一系列实数，可用于严格限制答案，就像区间算术一样，但比传统区间算术有许多改进。
+Valids 仅在此顺便提及，并在单独的文档中详细描述。</p>
+<p>本文档重点介绍 posit
+模式的细节，可以将其视为“在浮点数自己的游戏中击败它”。 它引入了一种
+unum，即 Type III，它结合了 Type I 和 Type II unum
+的许多优点，但不太激进，被设计为 IEEE 754
+标准浮点的“直接”替代品，无需进行任何更改 应用程序级别的源代码。
+下表可能有助于澄清术语。</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 16%" />
+<col style="width: 24%" />
+<col style="width: 24%" />
+<col style="width: 24%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Unum</p></th>
+<th class="head"><p>引入时间</p></th>
+<th class="head"><p>IEEE 754
+兼容性</p></th>
+<th class="head"><p>优点</p></th>
+<th class="head"><p>缺点</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>I 型</p></td>
+<td><p>2015.3</p></td>
+<td><p>是</p></td>
+<td><p>比特空
+间占用最有效</p></td>
+<td><p>需
+要管理变长码</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td></td>
+<td><p>完美超集</p></td>
+<td><p>严格边界表示</p></td>
+<td><p>继承了IEEE
+754的缺
+点如冗余表示</p></td>
+</tr>
+<tr class="row-even"><td><p>II 型</p></td>
+<td><p>2016.1</p></td>
+<td><p>否</p></td>
+<td><p>每
+比特信息最大
+(可以根
+据工作量定制)</p></td>
+<td><p>查表限制了精
+度约20b或更小</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td></td>
+<td><p>全新设计</p></td>
+<td><p>完美倒数, (+
+– × ÷
+也同样简单)</p></td>
+<td><p>精确
+的点积代价昂
+贵或无法实现</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td></td>
+<td><p>用ROM查
+表执行非常快,
+运
+行十进制表示</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>III 型</p></td>
+<td><p>2017.2</p></td>
+<td><p>相似</p></td>
+<td><p>硬件实现友好</p></td>
+<td><p>太新了
+没有芯片支持</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td><p>可以转换</p></td>
+<td><p>可直接
+替换IEEE浮点
+(改变不激进)</p></td>
+<td><p>完美倒
+数仅限于2^n,
+0和 inf</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td></td>
+<td></td>
+<td><p>比
+浮点更快，更
+精确和低成本</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>第三类Posit使用定长位数，尽管该数字非常灵活，能支持从少至两位到数千位。
+它们专为简单的硬件和软件实现而设计。 它们使用与 IEEE 754
+浮点数相同类型的低级电路结构（整数加法、整数乘法、移位等），并且占用更少的芯片面积，因为它们在许多方面比
+IEEE 浮点数更简单。 早期的 FPGA
+实验表明，与相同精度的浮点数相比，posit的延迟显著减少。</p>
+<p>与所有 unum 类型一样，有一个用户可读值的 h(human) 层、一个用 unum
+表示值的 u 层、以及一个精确且临时执行数学运算的 g 层，结果返回到 u 层。
+在这里，h
+层看起来非常像标准的十进制输入和输出，只是我们在传达精确值和舍入过的值之间的差异时会更加小心。
+u 层是 posit 格式的数字，对于程序员来说，它看起来非常像浮点数。 g
+层表示临时（草稿）值：quire，能执行遵守代数分配律和结合律的精确运算，能以比浮点数更少的位数实现惊人的高精度。
+要解释的东西有很多，但让我们从 u
+层开始，因为它是与浮点运算最接近的表亲。</p>
+<div class="section" id="posit-iiiunum">
+<h2><span class="section-number">1.1. </span>posit模式的格式简述，III型unum数<a class="headerlink" href="#posit-iiiunum" title="Permalink to this heading">¶</a></h2>
+<p>III型unum数的posit格式是硬件友好的设计，如下图描述</p>
+<div class="figure align-default" id="id3">
+<img alt="_images/Pasted_image_20230712135819.png" src="_images/Pasted_image_20230712135819.png" />
+<p class="caption"><span class="caption-number">Fig. 1.1.1 </span><span class="caption-text">Pasted image 20230712135819.png</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<p>仅在符号位之后有画区域边界的实线，其他边界因为会随着<strong>regime字段</strong>的大小而变化就没有画。
+<strong>regime字段</strong>编码是连续相同比特位
+<span class="math notranslate nohighlight">\(r\)</span>，终止在末尾<span class="math notranslate nohighlight">\(\overline r\)</span>位上。
+这种表示整数的方式有时被称为“一进制算术”，但实际上它略复杂一些。
+记录整数最原始的方式是用标记，其中标记的数量就是所表示的数字。
+想想罗马数字，</p>
+<pre>1=I、2=II、3=III，但随后它换用不同的系统来表示 4=IV。</pre><p>或者中文和日文中</p>
+<pre>1=一，2=⼆，3=㆔，但随后它换用不同的系统来表示 4=㆕。</pre><p>我们看到这个系统超过 3 后就用了<strong>划记的标记</strong>（ <strong>tally
+marks</strong>），也就是无数漫画描绘囚犯跟踪他们在监狱里呆了多少天的方式。
+但是划记标记如何同时记录正整数、零整数和负整数呢？
+我们可以想象早期记录这个概念的尝试：</p>
+<div class="figure align-default" id="id4">
+<img alt="_images/image-20230712142052141.png" src="_images/image-20230712142052141.png" />
+<p class="caption"><span class="caption-number">Fig. 1.1.2 </span><span class="caption-text">image-20230712142052141</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+<p>其实我们有能力使用两种“刻度线”：零和一。
+这意味着我们可以通过重复不同标记来分别表达正整数和负整数。
+例如，负整数通过重复 0 比特，零或正整数通过重复 1 比特来表示。</p>
+<p><strong>指数字段</strong>的长度为
+<span class="math notranslate nohighlight">\(es\)</span>，但如果这些位被<strong>regime字段</strong>挤到了 unum
+的末尾，那么其的长度可能会小于 es。 对于习惯了 IEEE
+浮点数的人来说，这通常是令人困惑的部分。“等等，指数字段到底在<em>哪里</em>，有<em>多少位</em>？”
+它们的工作方式与浮点数的指数字段不同。 它们可以左右移动，也可能被剪掉。
+现在先将regime字段和指数字段视为在一起表示整数
+<span class="math notranslate nohighlight">\(k\)</span>，用来将数字的缩放<span class="math notranslate nohighlight">\(2^k\)</span>倍。</p>
+<p><strong>小数字段</strong>是符号位、regime字段和指数字段未使用的剩下的比特位。
+它们的工作方式与标准化浮点数的小数字段完全相同。 这是 Type III
+具有硬件友好性的主要原因。
+就像正则化（二进制）浮点数一样，表示形式归结为</p>
+<div class="math notranslate nohighlight" id="equation-01-overview-0">
+<span class="eqno">(1.1.1)<a class="headerlink" href="#equation-01-overview-0" title="Permalink to this equation">¶</a></span>\[(-1)^{\text{符号}} \times 2^{\text{整数k}} \times (1 + \text{小数})\]</div>
+<p>硬件设计人员会很高兴听到：没有像浮点数那样的“次正规(subnormal)”的posit数，只有一种舍入模式，并且只有两个异常值（0和<span class="math notranslate nohighlight">\(\pm\infty\)</span>）不遵循上面的公式。</p>
+<p>引入<strong>regime字段</strong>的原因是它们自动且经济地创建<em>锥形精度</em>，其中小指数的值具有更高的精度，而非常大或非常小的数字具有较低的精度。（IEEE
+浮点数有一种粗略的锥形精度形式，称为小数值的<em>渐进下溢</em> gradual
+underflow, subnormal，但对于大数值，它们没有等效的形式。）
+锥形精度的想法最初由 Morris 于 1971 年提出，并在 1989
+年创建了完整的实现。但它使用一个单独的字段来指示指数中的位数。该方案不仅浪费了位，而且还导致了多种位模式都表示了相同的数字，从而在做比较
+x&lt;y 和 x=y 时造成了无可救药的复杂与混乱。
+III型posit数不会发生这种情况：每个位串都有唯一的含义，比较操作等同于看作有符号整数的比较。</p>
+<p><strong>posit环境</strong>通过指定两个数字来设置：nbits（posit 的总位数）和
+es（指数字段的最大大小）。
+同样，这些字段表示的数值与浮点数中字段的工作方式类似，不同之处在于：</p>
+<ul class="simple">
+<li><p>如果符号位为 1，则在解码剩余字段之前对 unum 位串取负（将其视为标准 2
+的补码整数）。
+这消除了对“负零”和所有不同模式表示相同实数的情况带来的复杂性。（如果不需要先取绝对值，硬件就直接解码一个
+posit
+位串，的确可以使得电路更快更简单。但这使得解释会更复杂，所以这里我们缺省就使用
+2 的补码 表示负posit数的值。）</p></li>
+<li><p>测试两个整数是否相等的机器指令也将用于比较两个posit数，而浮点数指令还需要额外的负零异常测试（当位模式不同时值也可能相等）以及
+NaN 值检查（当位模式相同时值也可能不等）。</p></li>
+<li><p>相同regime字段 r 的数量决定了缩放该值的的正或负幂
+<span class="math notranslate nohighlight">\(2^{2^{es}}\)</span>，指数字段将值缩放为 2 的幂，范围从<span class="math notranslate nohighlight">\(2^0\)</span>
+到 <span class="math notranslate nohighlight">\(2^{2^{es}-1}\)</span>。
+比如<span class="math notranslate nohighlight">\(es=3\)</span>，三个指数位可以表示从<span class="math notranslate nohighlight">\(\color{blue}{000}\color{black}=0\)</span>
+到 <span class="math notranslate nohighlight">\(\color{blue}111\color{black}=2^3-1=7\)</span>
+的二进制整数。regime字段决定 <span class="math notranslate nohighlight">\(2^3=8\)</span>
+的正幂或负幂，因此regime字段和指数字段一起可以表示一个有符号整数 k
+（就是解码后拼接起来: <span class="math notranslate nohighlight">\(r*2^{es}+e=r*8+e\)</span>
+），k的工作方式类似于浮点数中指数位表示的整数。</p></li>
+<li><p>不存在次正规subnormal（非正规化denormal）数字。
+小数字段之前隐含的“隐藏位”始终为 1。</p></li>
+<li><p>Posit不会像浮点数那样下溢到零或上溢到无穷大。舍入到最接近的数字，其中“最近”是指舍入对于小数字段时有最小差值，而指数字段时有最小比率。
+处理器的状态中没有隐藏任何标志来表明计算期间发生了某些事情；
+你所看到的就是你得到的。
+在开发代码时，调试工具可以提供丰富的有关下溢、上溢以及其他异常的信息，但在正常操作期间它们不会给处理器带来负担。</p></li>
+</ul>
+<p>posit算术定义的另一个主要组成部分是
+<strong>quire</strong>，有固定长度的比特数，用于在 g
+层中用来做暂存器，使得操作在数学上是精确的。 quire
+可以被认为是一个专用寄存器，它允许执行点积、求和和其他运算，并将舍入误差推迟到计算的最后。
+所有计算机都使用隐藏的暂存区进行临时计算。 在 posit
+算术中，程序员可以访问 quire 数据类型，这使得 posits
+比浮点数更严格地遵循代数规则。 quire 的概念非常强大。
+它允许段位“超越其体重等级”。 稍后我们将展示一些示例，其中 16
+位posit在速度和准确性方面都优于 64 位浮点数！</p>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">1.2. </span>一个16 位示例<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
+<p>人们总是要求立即查看一个示例，而不是费力地阅读一长串仔细的定义。
+下面是一个关于 16 位位置的位字段如何工作的示例。 选择
+es=3，因此regime字段按 <span class="math notranslate nohighlight">\(2^{2^3}=256\)</span> 对正负幂做缩放。
+注意：“标准的”16 位 posit 的 es 大小为 1，而不是 3，但出于说明目的，此处
+3 效果更好。</p>
+<div class="figure align-default" id="id5">
+<img alt="_images/image-20230712222454215.png" src="_images/image-20230712222454215.png" />
+<p class="caption"><span class="caption-number">Fig. 1.2.1 </span><span class="caption-text">image-20230712222454215</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+<p>符号位为<span class="math notranslate nohighlight">\(\color{red}0\)</span>表示该值为正。 regime字段是由
+<span class="math notranslate nohighlight">\(\color{DarkOrange}1\)</span> 终止的三个
+<span class="math notranslate nohighlight">\(\color{Orange}0\)</span>，这意味着useed的幂为 -3。
+regime带来的缩放因子为 <span class="math notranslate nohighlight">\(256^{-3}\)</span>。 指数位
+<span class="math notranslate nohighlight">\(\color{blue}101\)</span> 是无符号二进制整数5，表示另一个缩放因子
+<span class="math notranslate nohighlight">\(2^5\)</span>。 最后，小数位 <span class="math notranslate nohighlight">\(11011101\)</span>
+是无符号二进制整数221，代表小数 <span class="math notranslate nohighlight">\(1+221/256\)</span>。
+整个比特串表达式的值是
+<span class="math notranslate nohighlight">\(477 \times 2^{-27} \approx 3.55393 \times 10^{-6}\)</span>。</p>
+<p>regime字段可能看起来是很奇怪的构造，它们实际上是将实数轴投影到圆上，用自然而优雅的二进制整数的几何映射产生的。
+字段的提取及其含义将在稍后详细讨论。</p>
+<p>请注意，此处指数可表示的最大移位为 <span class="math notranslate nohighlight">\(\color{blue}111\)</span>=7 位，即
+<span class="math notranslate nohighlight">\(2^7\)</span>。 这意味着指数可以将小数缩放
+1、2、4、8、<span class="math notranslate nohighlight">\(\cdots\)</span>或 128。如果您需要缩放 256
+倍，这就是regime字段的用武之地，因为它们表示 256 的幂次。</p>
+</div>
+<div class="section" id="posit">
+<h2><span class="section-number">1.3. </span>Posit的两个异常值<a class="headerlink" href="#posit" title="Permalink to this heading">¶</a></h2>
+<p>上面对位字段及其含义的描述仅对两个比特串是例外：(regime没有ending了)</p>
+<ul class="simple">
+<li><p>如果所有位均为 0，则表示的数字为零。</p></li>
+<li><p>如果只有第一位为 1，其余为
+0，则表示的值为<span class="math notranslate nohighlight">\(\pm\infty\)</span>，有时称为“射影无穷大”或“复无穷大”或“无穷远点”。
+如果您无法输入“<span class="math notranslate nohighlight">\(\pm\infty\)</span>”，则可以使用 inf 来表示相同的含义。
+值<span class="math notranslate nohighlight">\(\pm\infty\)</span>
+和零互为倒数，任何非零数除以零都不会触发错误条件；
+它只是<span class="math notranslate nohighlight">\(\pm\infty\)</span>。 第 2 节中的图表将使这一点更加清晰。</p></li>
+</ul>
+<table border="4"><tr><td bgcolor="lightblue"><p>只有一种舍入模式：舍入到最接近、与 IEEE 754
+浮点数的默认舍入到最接近的偶数模式相同。如果程序员或用户觉得需要其他三种浮点的舍入模式（向下舍入、向上舍入、向零舍入），则意味着应用程序需要的是valid模式，而不是posit模式，或者也可能只是要个好的调试工具。</p>
+</td></tr></table><p>舍入中“最近”的含义比浮点数复杂一些，因为右侧被截断的位不一定是小数字段；
+部分或全部指数字段也可以被剪掉。
+当指数位被剪掉并且必须进行舍入时，“最近”意味着“最接近的指数”，其连接点其实是两个选择之间的几何平均值而不是算术平均值（指数的算术平均就是值的几何平均）。
+如果您担心这一点，请想到这种情况事实上很少发生，并且仅在计算即将达到动态范围的极限时发生，因此它可能已经偏离轨道并且需要调试算法。</p>
+<p>如果计算超出最大可表示位置一定量，它是否应该溢出到无穷大？ 当然不是！
+这会将一些有限的错误变成<em>无限</em>错误的答案。 这是浮点数才做的事。
+同样，我们绝不允许下溢为零，因为这样做意味着丢弃了答案…甚至包括其符号在内的<em>所有</em>信息。
+与使用了非标准舍入模式一样，如果需要区分下溢、上溢和 NaN
+通常表明应用程序仍处于开发阶段，尚未准备好用于生产使用。 引用 Donald
+Knuth
+的话：“不幸的是，在许多情况下，忽略指数下溢，并简单地将下溢值设置为零而不指示错误。这在大多数情况下会导致严重的准确性损失（的确，这是丢失了<em>所有</em>有效数字），并且浮点运算的基础假设已经被打破，因此当发生下溢时，程序员应该得到通知说下溢出发生了。仅在某些情况下，比如当结果稍后被加到很大的一个数字上时，将结果设置为零才合适。</p>
+<p>要理解这样做的原因，请想象应用程序有可能产生太大或太小的超出范围的数字。
+Posit 算术返回一个数值有 maxpos 或
+minpos量级，后面就应该程序员决定如何处理。
+这意味着此类情况的处理是在源代码中可见，例如</p>
+<div class="highlight-mathematica notranslate"><div class="highlight"><pre><span></span><span class="n">if</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">minpos</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">minpos</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>换句话说，如果程序员更喜欢这样计算下溢，就应该自己明确地将小结果替换为零。
+其实程序员很少有这样的。
+对于程序员来说更为罕见的是会喜欢计算机在下溢的情况，只能使用汇编语言去访问唯一的隐藏在处理器中的标志！
+三十多年来，IEEE 754
+标准迫使硬件工程师将标志放入处理器寄存器中，希望流行的计算机语言能够以某种方式使它们可见。
+这从来就没有发生过。</p>
+<p>任何数据类型中的异常值都会增加硬件复杂性，并且还会增加能耗。 posit
+格式的例外情况比 float 少得多。 在 64
+位表示中，浮点数有<em>千万亿</em>个比特串模式来表示“非数字”(NaN) ，而
+posits 使用这些比特串模式来表示真实数值。
+如果用户对Posit数要求负数的平方根、零除以零等，计算机语言应该捕获它并报告它（如果这是在语言规则中）。
+如果某种原因它通过语言的保护，来实际尝试诸如 0 / 0
+之类的事情，则默认行为是生成<span class="math notranslate nohighlight">\(\pm\infty\)</span>的
+posit数并继续计算，浮点算术称之为“安静NaN”。
+这避免了声明结果不可表示为数字，然后……<em>又将其表示为数字</em>的逻辑矛盾。
+它还避免了在开始算术运算时硬件测试NaN的任何需要，因为NaN不可能是输入。
+没有表示它的位串。<span class="math notranslate nohighlight">\(\pm\infty\)</span>值履行“安静NaN”的角色。
+计算机语言应该防止出现以下情况，</p>
+<p><span class="math notranslate nohighlight">\(\pm\infty+\pm\infty\)</span></p>
+<p><span class="math notranslate nohighlight">\(\pm\infty-\pm\infty\)</span></p>
+<p><span class="math notranslate nohighlight">\(0 \times \pm\infty\)</span></p>
+<p><span class="math notranslate nohighlight">\(\pm\infty \times 0\)</span></p>
+<p><span class="math notranslate nohighlight">\(0 \div 0\)</span></p>
+<p><span class="math notranslate nohighlight">\(\pm\infty \div \pm\infty\)</span></p>
+<p>如果出现了，我们让<span class="math notranslate nohighlight">\(\pm\infty\)</span>作为安静的 NaN 指示器。
+它是所有错误的垃圾场，我们可以将其视为“四舍五入到无穷大”。
+请记住，即使非常大的数字在Posit算术中也不会舍入到无穷大，因此得到<span class="math notranslate nohighlight">\(\pm\infty\)</span>结果意味着您做了数学老师告诉您永远不要做的事情之一，比如除以零。
+此策略在某些情况下非常有用，例如需要处理完成数字数组并且可以丢弃引发异常的情况。
+有时输入数据无法输入，因此值完全未知，但我们不想因为偶尔出现丢失而停止计算。
+这就是你需要一个安静的 NaN 的时候。</p>
+<p>有些人可能会反对，“但是负数平方根的例外是不同的，我需要不同的行为！”
+想想这意味着什么：一个程序要尝试计算负值的平方根来得到实数结果。
+这是硬件应该尝试优雅地处理的事情吗？ 当然不是。 这是一个错误。
+程序员需要首先阻止这种情况的发生。 代码中有问题的行</p>
+<div class="highlight-mathematica notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sqrt</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+<p>应该被修改成</p>
+<div class="highlight-mathematica notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">if</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="c">(*then*)</span><span class="n">sqrt</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="c">(*else*)</span><span class="w"> </span><span class="n">reportsquarerooterror</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"></span>
+</pre></div>
+</div>
+<p>或者sqrt(x) 函数的定义在特定语言和计算环境中产生错误消息并停止。
+如果将错误处理委托给调用操作系统的中断，则意味着<em>不同的系统上会有不同的行为</em>。
+下一个反对意见通常是“但是条件语句会减慢我的代码速度！”
+回答跟前面的一样，到底是应该硬件来全速处理编程的错误，还是程序员应该找出可能发生异常的地方，并通过明确的指示要做什么来做好保护。
+显然是后者。
+要求硬件始终留意错误并生成有关所发生情况的详细信息，就像在编译程序时打开调试模式，然后要求调试模式能以发布版本那样全速运行而没有性能损失。有经验的程序员会认识到这种需求的愚蠢。</p>
+<p>valid模式具有更丰富的信息方式将运算结果表示为集合（包括空集），并且即使数学家宣布结果<em>不确定</em>，也可以继续计算。
+Posit是为了速度、简单性和经济性而设计的，这对于许多计算机用户（例如玩视频游戏的人，或使用浮点数在数值计算实践中似乎已经足够好的的人）来说，速度是最重要的。
+对于那些关注严格计算（对结果设置界限并跟踪任何准确性损失）的人，或者那些仍在调试计算算法的数值行为以确保其能正常运行的人来说，valid模式就是答案。</p>
+<table border="4"><tr><td bgcolor="lightyellow"><p>当前的 IEEE 754
+定义试图将速度和合法性这两种美学结合起来，这意味着它两者都没有实现。
+“几乎正确”在数学上与“错误”相同。</p>
+</td></tr></table><p>例如，各种舍入模式被吹捧为一种检查算法对舍入误差的敏感性的技术，但该技术仍然无法保证合法性，并且增加了电路的复杂性。
+同样，“负零”有时被视为负无穷小的某种指示符，而有时它只是零，这为硬件设计人员带来了更多的复杂性和门延迟，但对其用户来说几乎没有什么价值。</p>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">1. 概论</a><ul>
+<li><a class="reference internal" href="#posit-iiiunum">1.1. posit模式的格式简述，III型unum数</a></li>
+<li><a class="reference internal" href="#id2">1.2. 一个16 位示例</a></li>
+<li><a class="reference internal" href="#posit">1.3. Posit的两个异常值</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="index.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>Posit Arithmetic</div>
+         </div>
+     </a>
+     <a id="button-next" href="02_Specifics.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>2. 细节：将 posit 位字符串转换为值</div>
+        </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>
