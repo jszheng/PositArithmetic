@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>4. 将数值转换为Posit &#8212; Posit 算术 0.1 documentation</title>
+
+    <link rel="stylesheet" href="_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="_static/fonts.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css" />
+    <link rel="stylesheet" type="text/css" href="_static/d2l.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/d2l.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5. 创建IEEE 754浮点环境" href="05_IEEE754Env.html" />
+    <link rel="prev" title="3. 可视化射影实数" href="03_Visualize.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link is-active"><span class="section-number">4. </span>将数值转换为Posit</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="_sources/04_Convert.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/jszheng/PositArithmetic">
+                  <i class="fab fa-github"></i>
+                  Github
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="index.html">
+              <span class="title-text">
+                  Posit 算术
+              </span>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Overview.html">1. 概论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Specifics.html">2. 细节：将 posit 位字符串转换为值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Visualize.html">3. 可视化射影实数</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">4. 将数值转换为Posit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_IEEE754Env.html">5. 创建IEEE 754浮点环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_FPvsPosit.html">6. 浮点数与Posit对比预览：32 比特下的准确性</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="index.html">
+              <span class="title-text">
+                  Posit 算术
+              </span>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Overview.html">1. 概论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Specifics.html">2. 细节：将 posit 位字符串转换为值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Visualize.html">3. 可视化射影实数</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">4. 将数值转换为Posit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_IEEE754Env.html">5. 创建IEEE 754浮点环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_FPvsPosit.html">6. 浮点数与Posit对比预览：32 比特下的准确性</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <div class="section" id="posit">
+<h1><span class="section-number">4. </span>将数值转换为Posit<a class="headerlink" href="#posit" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="x2p">
+<h2><span class="section-number">4.1. </span>构建 x2p 转换函数<a class="headerlink" href="#x2p" title="Permalink to this heading">¶</a></h2>
+<p>将任何实数转换为Posit表示的方法与将任何类型的数字转换为浮点数的方法非常相似。
+检查异常情况后（对于 posits 只是 0 和
+<span class="math notranslate nohighlight">\(\pm\infty\)</span>），该数字除以二或乘以二，直到它位于区间 [1,2)
+中，然后就可以确定小数。在 posits 的情况下，useed
+是一种2的幂次的“批量”形式，因此我们首先除以useed
+或乘以useed，直到它位于区间 [1,useed) 中。
+然后将该值重复除以2，直到其位于区间 [1,2) 内，从而确定指数。
+指数始终是非负的，从而无需偏移。该小数始终在二进制小数点左侧有一个前导 1
+位，从而无需处理在二进制小数点左侧具有 0 位的subnormal 值。</p>
+<p>该方法可用于转换定点数、整数、浮点数或任何其他可以重复乘以或除以 2
+的类型，直到其在 [1,2) 范围内。 在 Mathematica
+中，值是通用的“numeric”值，我们只需要在允许的数字类型集中包含无限大小的值，以确保可以将其转换为posit。
+如果 <strong>positableQ</strong> 函数的参数可以转换为 posit，则返回 True，否则返回
+False。</p>
+<div class="figure align-default" id="id2">
+<img alt="_images/image-20230714092834057.png" src="_images/image-20230714092834057.png" />
+<p class="caption"><span class="caption-number">Fig. 4.1.1 </span><span class="caption-text">image-20230714092834057</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<p>下面的代码是将一个实数转换为posit格式的函数</p>
+<div class="figure align-default" id="id3">
+<img alt="_images/image-20230714092950502.png" src="_images/image-20230714092950502.png" />
+<p class="caption"><span class="caption-number">Fig. 4.1.2 </span><span class="caption-text">image-20230714092950502</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<p><strong>x2p</strong> 函数代码的方式旨在可以将其轻松转换为 C
+语言的低级操作或芯片电路。 当您看到像“<span class="math notranslate nohighlight">\(p=2p + 1\)</span>”这样的行时，在 C
+中最好将其表示为 “p = (p&lt;&lt;1) || 1”； 在 Mathematica 中，p =
+BitOr[BitShiftLeft[p, 1], 1]
+看起来太冗长，因此我们改用计算来编写实现相同的逻辑。</p>
+</div>
+<div class="section" id="sigmoid">
+<h2><span class="section-number">4.2. </span>sigmoid函数<a class="headerlink" href="#sigmoid" title="Permalink to this heading">¶</a></h2>
+<p>以下是 x2p 函数的一些可视化效果，也有助于测试其正确性。 首先以参数范围从
+-maxpos 到 maxpos 生成的二进制补码整数图：</p>
+<div class="figure align-default" id="id4">
+<img alt="_images/image-20230714094023318.png" src="_images/image-20230714094023318.png" />
+<p class="caption"><span class="caption-number">Fig. 4.2.1 </span><span class="caption-text">image-20230714094023318</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+<p>正如 Isaac Yonemoto
+所观察到的，该图类似于机器学习深度学习神经网络所需的“Sigmoid”函数。
+只需要缩放平移到 0 到 1
+的范围。这种映射可以通过翻转posit的第一位，并将其右移两位来轻松实现的，可能需要四个晶体管，在处理器中很容易单个时钟周期完成
+。机器学习社区目前有两种选择：它可以做计算带指数函数
+<span class="math notranslate nohighlight">\(\frac{1}{(1+e^{-x})}\)</span>，那需要相当多的时钟周期：</p>
+<div class="figure align-default" id="id5">
+<img alt="_images/image-20230714094717184.png" src="_images/image-20230714094717184.png" />
+<p class="caption"><span class="caption-number">Fig. 4.2.2 </span><span class="caption-text">image-20230714094717184</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+<p>… 或者，它还可以使用分段线性近似，这可能会导致训练的收敛问题。</p>
+<p>这是用洋红色绘制的单周期低精度 posit 函数，用绿色绘制
+<span class="math notranslate nohighlight">\(1/(\mathbb{e}^{-x}+1)\)</span> 函数。 斜率在 <span class="math notranslate nohighlight">\(x=0\)</span> 处匹配。</p>
+<div class="figure align-default" id="id6">
+<img alt="_images/image-20230714095234760.png" src="_images/image-20230714095234760.png" />
+<p class="caption"><span class="caption-number">Fig. 4.2.3 </span><span class="caption-text">image-20230714095234760</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="id1">
+<h2><span class="section-number">4.3. </span>使用上划线运算符限制posit词汇<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
+<p>最简单 posit 原型构造方法是让 Mathematica 来执行操作，但始终将支持 posit
+环境的词汇区分开来。 我们可以定义overbar函数来为我们做限制。
+将实数转换为最接近的posit，然后将其转换回实数以完成此操作；
+此外，我们使它成为一个可以处理列表而不仅仅是单个数的函数，这将在我们进行线性代数时节省大量代码。</p>
+<div class="figure align-default" id="id7">
+<img alt="_images/image-20230714100044865.png" src="_images/image-20230714100044865.png" />
+<p class="caption"><span class="caption-number">Fig. 4.3.1 </span><span class="caption-text">image-20230714100044865</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</div>
+<p>下面是我们如何在 {10,1} 环境中找到 <span class="math notranslate nohighlight">\(\pi\)</span> 最接近的posit值：</p>
+<div class="figure align-default" id="id8">
+<img alt="_images/image-20230714100108328.png" src="_images/image-20230714100108328.png" />
+<p class="caption"><span class="caption-number">Fig. 4.3.2 </span><span class="caption-text">image-20230714100108328</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+</div>
+<p>将 Mathematica 视为没有舍入误差的“g 层”，而 overbar 运算符将我们带回“u
+层”，其 unum 表示的精度有限。
+事实证明，该系统作为posit计算环境的快速原型非常方便。</p>
+<p>由于 x2p 和 p2x 近似为反函数，因此我们可以将 <span class="math notranslate nohighlight">\(y=x\)</span> 的图与
+<span class="math notranslate nohighlight">\(y = \overline x\)</span> 进行比较，并获得与 <span class="math notranslate nohighlight">\(y=x\)</span>
+线纵横交错的阶梯函数。 它在从零到一的线性图上看起来相当不错：</p>
+<div class="figure align-default" id="id9">
+<img alt="_images/image-20230714100626181.png" src="_images/image-20230714100626181.png" />
+<p class="caption"><span class="caption-number">Fig. 4.3.3 </span><span class="caption-text">image-20230714100626181</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+</div>
+<p>测试 -minpos 到 minpos 之间的范围，以确保正确处理接近零的异常。
+请注意，对于小数或下溢，没有“舍入到零”：</p>
+<div class="figure align-default" id="id10">
+<img alt="_images/image-20230714100843639.png" src="_images/image-20230714100843639.png" />
+<p class="caption"><span class="caption-number">Fig. 4.3.4 </span><span class="caption-text">image-20230714100843639</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
+</div>
+<p>对于从 -maxpos 到 maxpos 的范围，使用双对数图使图形更易于阅读。
+让我们实际上从 <span class="math notranslate nohighlight">\(-2 \times maxpos\)</span> 到
+<span class="math notranslate nohighlight">\(2 \times maxpos\)</span>，检查值是否不会“舍入”到无穷大（溢出）。</p>
+<div class="figure align-default" id="id11">
+<img alt="_images/image-20230714101449400.png" src="_images/image-20230714101449400.png" />
+<p class="caption"><span class="caption-number">Fig. 4.3.5 </span><span class="caption-text">image-20230714101449400</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">4. 将数值转换为Posit</a><ul>
+<li><a class="reference internal" href="#x2p">4.1. 构建 x2p 转换函数</a></li>
+<li><a class="reference internal" href="#sigmoid">4.2. sigmoid函数</a></li>
+<li><a class="reference internal" href="#id1">4.3. 使用上划线运算符限制posit词汇</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="03_Visualize.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>3. 可视化射影实数</div>
+         </div>
+     </a>
+     <a id="button-next" href="05_IEEE754Env.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>5. 创建IEEE 754浮点环境</div>
+        </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>

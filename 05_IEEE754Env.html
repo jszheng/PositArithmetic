@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>5. 创建IEEE 754浮点环境 &#8212; Posit 算术 0.1 documentation</title>
+
+    <link rel="stylesheet" href="_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="_static/fonts.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css" />
+    <link rel="stylesheet" type="text/css" href="_static/d2l.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/d2l.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="6. 浮点数与Posit对比预览：32 比特下的准确性" href="06_FPvsPosit.html" />
+    <link rel="prev" title="4. 将数值转换为Posit" href="04_Convert.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link is-active"><span class="section-number">5. </span>创建IEEE 754浮点环境</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="_sources/05_IEEE754Env.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/jszheng/PositArithmetic">
+                  <i class="fab fa-github"></i>
+                  Github
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="index.html">
+              <span class="title-text">
+                  Posit 算术
+              </span>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Overview.html">1. 概论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Specifics.html">2. 细节：将 posit 位字符串转换为值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Visualize.html">3. 可视化射影实数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_Convert.html">4. 将数值转换为Posit</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. 创建IEEE 754浮点环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_FPvsPosit.html">6. 浮点数与Posit对比预览：32 比特下的准确性</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="index.html">
+              <span class="title-text">
+                  Posit 算术
+              </span>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Overview.html">1. 概论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Specifics.html">2. 细节：将 posit 位字符串转换为值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Visualize.html">3. 可视化射影实数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_Convert.html">4. 将数值转换为Posit</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. 创建IEEE 754浮点环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_FPvsPosit.html">6. 浮点数与Posit对比预览：32 比特下的准确性</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <div class="section" id="ieee-754">
+<h1><span class="section-number">5. </span>创建IEEE 754浮点环境<a class="headerlink" href="#ieee-754" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="id1">
+<h2><span class="section-number">5.1. </span>浮点环境的两个参数<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
+<p>我们可以对 IEEE 类型的浮点数执行与设置 posit 环境非常相似的操作。 然而与
+IEEE 浮点数不同的是，我们可以提供非常灵活的大小的总位数 <span class="math notranslate nohighlight">\(nfbits\)</span>
+以及指数位数 <span class="math notranslate nohighlight">\(esize\)</span> 。 小数中的位数 <span class="math notranslate nohighlight">\(fsize\)</span>
+是可以算出的常数，因为只有符号位、指数位和小数位总计为
+<span class="math notranslate nohighlight">\(nfbits\)</span>。
+简单数字转换所需的值包括指数偏差、最小次正规浮点subnormal、最小标准化浮点、最大有限浮点，以及向下舍入到最大有限浮点而不是溢出到无穷大的最大有限值maxroundable
+。 （向上舍入到最小次正规的最小有限值是最小次正规的一半
+minroundable；更小的值将下溢到零。）</p>
+<div class="figure align-default" id="id4">
+<img alt="_images/image-20230714102735764.png" src="_images/image-20230714102735764.png" />
+<p class="caption"><span class="caption-number">Fig. 5.1.1 </span><span class="caption-text">image-20230714102735764</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+<p>例如，设置每个数字 6 位和 2 个指数位的环境：</p>
+<div class="figure align-default" id="id5">
+<img alt="_images/image-20230714102802584.png" src="_images/image-20230714102802584.png" />
+<p class="caption"><span class="caption-number">Fig. 5.1.2 </span><span class="caption-text">image-20230714102802584</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+<p>下面就是计算出来的环境设置</p>
+<div class="figure align-default" id="id6">
+<img alt="_images/image-20230714102833609.png" src="_images/image-20230714102833609.png" />
+<p class="caption"><span class="caption-number">Fig. 5.1.3 </span><span class="caption-text">image-20230714102833609</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+<p>我们可以独立指定 posit 环境和 float 环境。 变量名称不重叠。
+这使我们能够使用浮点和posit对各种算法进行一对一比较的基准测试。</p>
+<p>当浮点数只有一位指数位时，它们的行为很像定点数，因为所有有限值都是subnormal的。
+这给 IEEE 规则带来了困难； 例如，maxfloat 变得比smallnormal
+小，但是smallnormal 的位模式是IEEE 规定必须用来表示无穷大的一种！
+解决这种疯狂问题的最简单方法就是要求 esize 为 2 或更大。
+我们还需要符号位和至少一个小数位（否则无穷大值和 NaN 值之间没有区别）。
+因此 nfbits 的最小可能值为 4。以下是 nfbits=4 的 16
+种可能的位模式所表示的值，仅供娱乐：</p>
+<div class="figure align-default" id="id7">
+<img alt="_images/image-20230714103230471.png" src="_images/image-20230714103230471.png" />
+<p class="caption"><span class="caption-number">Fig. 5.1.4 </span><span class="caption-text">image-20230714103230471</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="mathematica-f2x">
+<h2><span class="section-number">5.2. </span>将浮点数转换为Mathematica数值的函数：f2x<a class="headerlink" href="#mathematica-f2x" title="Permalink to this heading">¶</a></h2>
+<p>现在我们需要 <strong>p2x</strong> 的等价物，我们可以将其称为
+<strong>f2x</strong>，输入表示浮点数的位字符串（上表中的第一列）函数返回其数学值（第二列）。
+由于有五个异常情况，该例程比 posits 更复杂，这也是 float 比 posits
+消耗更多电路的原因之一：</p>
+<div class="figure align-default" id="id8">
+<img alt="_images/image-20230714103651274.png" src="_images/image-20230714103651274.png" />
+<p class="caption"><span class="caption-number">Fig. 5.2.1 </span><span class="caption-text">image-20230714103651274</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+</div>
+<p>其中 s = 符号位，e 是由指数位表示为无符号整数的整数，f
+是分数，不包括隐藏位。 以下例程提取位字段，然后应用上述公式。</p>
+<p>我们不能返回“正零”和“负零”，因为它们不是数学量。 根据 IEEE
+规则，它们的倒数分别为正无穷大和负无穷大，但它们应该测试为彼此相等！
+其他古怪的性格特征也被分配给这两种零，例如要求“负零”的平方根是“负零”。
+毫不奇怪，这两个非数学量的处理是处理器中浮点处理单元 (FPU)
+硬件设计错误的丰富来源。
+在这里，我们只是将零分配给两种情况（数学上的零），但稍后在计算闭合图时，我们必须再次适应
+IEEE 规则来适应这两个概念 ……是零, 从某种意义上讲。</p>
+<div class="figure align-default" id="id9">
+<img alt="_images/image-20230714104621118.png" src="_images/image-20230714104621118.png" />
+<p class="caption"><span class="caption-number">Fig. 5.2.2 </span><span class="caption-text">image-20230714104621118</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">5.3. </span>数值转换为浮点<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
+<p>我们快完成了； 最后一步是创建 <strong>x2f</strong>，这样我们就可以将值（可能是 NaN
+或无穷大）转换为 IEEE 风格的浮点数。
+“可转浮点”的值是实数、带符号的无穷大或 NaN（Mathematica
+称之为“<strong>Indeterminate</strong>”）。 这是测试函数定义：</p>
+<div class="figure align-default" id="id10">
+<img alt="_images/image-20230714104835408.png" src="_images/image-20230714104835408.png" />
+<p class="caption"><span class="caption-number">Fig. 5.3.1 </span><span class="caption-text">image-20230714104835408</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
+</div>
+<p>我们可以用它来防止转换函数做一些不应该尝试的事情。</p>
+<div class="figure align-default" id="id11">
+<img alt="_images/image-20230714104930039.png" src="_images/image-20230714104930039.png" />
+<p class="caption"><span class="caption-number">Fig. 5.3.2 </span><span class="caption-text">image-20230714104930039</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
+</div>
+<p>使用 <strong>colorcodef</strong> 运算符来查看浮点数的位字段会很方便，就像我们对
+posits 所做的那样。</p>
+<div class="figure align-default" id="id12">
+<img alt="_images/image-20230714105140387.png" src="_images/image-20230714105140387.png" />
+<p class="caption"><span class="caption-number">Fig. 5.3.3 </span><span class="caption-text">image-20230714105140387</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
+</div>
+<p>前面我们将 <strong>setfloatenv</strong> 设置的浮点环境为 {6,2}。 现在让我们测试一下用
+001101 表示的浮点数的颜色编码，在这个很小的浮点环境中，它代表 1.625：</p>
+<div class="figure align-default" id="id13">
+<img alt="_images/image-20230714105320566.png" src="_images/image-20230714105320566.png" />
+<p class="caption"><span class="caption-number">Fig. 5.3.4 </span><span class="caption-text">image-20230714105320566</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">5.4. </span>对浮点数运算词汇的限制：下划线运算符<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h2>
+<p>正如我们定义了上划线运算符来限制计算使用posit数一样，我们可以定义下划线来将值限制为浮点数：</p>
+<div class="figure align-default" id="id14">
+<img alt="_images/image-20230714105644218.png" src="_images/image-20230714105644218.png" />
+<p class="caption"><span class="caption-number">Fig. 5.4.1 </span><span class="caption-text">image-20230714105644218</span><a class="headerlink" href="#id14" title="Permalink to this image">¶</a></p>
+</div>
+<p>同样以<span class="math notranslate nohighlight">\(\pi\)</span>为例子，对于当前的{6, 2}浮点环境有</p>
+<div class="figure align-default" id="id15">
+<img alt="_images/image-20230714105746180.png" src="_images/image-20230714105746180.png" />
+<p class="caption"><span class="caption-number">Fig. 5.4.2 </span><span class="caption-text">image-20230714105746180</span><a class="headerlink" href="#id15" title="Permalink to this image">¶</a></p>
+</div>
+<p>让我们做两个快速图形测试，就像为posit所做的测试一样。
+首先做接近于零的图，包含了所有subnormal：</p>
+<div class="figure align-default" id="id16">
+<img alt="_images/image-20230714105933337.png" src="_images/image-20230714105933337.png" />
+<p class="caption"><span class="caption-number">Fig. 5.4.3 </span><span class="caption-text">image-20230714105933337</span><a class="headerlink" href="#id16" title="Permalink to this image">¶</a></p>
+</div>
+<p>现在是从 1 到 maxfloat
+的图表，我们使用双对数图来更好地显示变化范围内的锯齿形：</p>
+<div class="figure align-default" id="id17">
+<img alt="_images/image-20230714110204500.png" src="_images/image-20230714110204500.png" />
+<p class="caption"><span class="caption-number">Fig. 5.4.4 </span><span class="caption-text">image-20230714110204500</span><a class="headerlink" href="#id17" title="Permalink to this image">¶</a></p>
+</div>
+<p>值得注意的是，对于 posits，x2p[p2x[p]] 返回 p
+总是正确的，而对于浮点数，不可能用 x2f[f2x[f ]] 和 f 实现如此完美的逆。
+“负零”和表示 NaN 的多种方式是问题所在。</p>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">5. 创建IEEE 754浮点环境</a><ul>
+<li><a class="reference internal" href="#id1">5.1. 浮点环境的两个参数</a></li>
+<li><a class="reference internal" href="#mathematica-f2x">5.2. 将浮点数转换为Mathematica数值的函数：f2x</a></li>
+<li><a class="reference internal" href="#id2">5.3. 数值转换为浮点</a></li>
+<li><a class="reference internal" href="#id3">5.4. 对浮点数运算词汇的限制：下划线运算符</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="04_Convert.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>4. 将数值转换为Posit</div>
+         </div>
+     </a>
+     <a id="button-next" href="06_FPvsPosit.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>6. 浮点数与Posit对比预览：32 比特下的准确性</div>
+        </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>

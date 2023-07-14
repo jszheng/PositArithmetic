@@ -96,6 +96,10 @@ Show Source
 <li class="toctree-l1"><a class="reference internal" href="01_Overview.html">1. 概论</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_Specifics.html">2. 细节：将 posit 位字符串转换为值</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_Visualize.html">3. 可视化射影实数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_Convert.html">4. 将数值转换为Posit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_IEEE754Env.html">5. 创建IEEE 754浮点环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_FPvsPosit.html">6. 浮点数与Posit对比预览：32 比特下的准确性</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_FPvsPositMetric.html">7. Posit与IEEE浮点数的对比：基于度量的研究</a></li>
 </ul>
 
             </nav>
@@ -128,6 +132,10 @@ Show Source
 <li class="toctree-l1"><a class="reference internal" href="01_Overview.html">1. 概论</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_Specifics.html">2. 细节：将 posit 位字符串转换为值</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_Visualize.html">3. 可视化射影实数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_Convert.html">4. 将数值转换为Posit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_IEEE754Env.html">5. 创建IEEE 754浮点环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_FPvsPosit.html">6. 浮点数与Posit对比预览：32 比特下的准确性</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_FPvsPositMetric.html">7. Posit与IEEE浮点数的对比：基于度量的研究</a></li>
 </ul>
 
             </nav>
@@ -190,7 +198,35 @@ Computing</a>。作者主页
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="03_Visualize.html">3. 可视化射影实数</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="03_Visualize.html#posit-useed">3.1. 最小的posit，带有useed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_Visualize.html#posit-useed">3.1. 最小的posit，和useed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_Visualize.html#id2">3.2. 引入指数位</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_Visualize.html#id3">3.3. 小数位出现</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_Visualize.html#id4">3.4. 6位宽的环图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_Visualize.html#id5">3.5. 7位宽的环图有百万比一的动态范围</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_Visualize.html#valid">3.6. 抢先预览：valid算术</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_Visualize.html#regime">3.7. 可视化投影实数环上的regime位</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04_Convert.html">4. 将数值转换为Posit</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04_Convert.html#x2p">4.1. 构建 x2p 转换函数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_Convert.html#sigmoid">4.2. sigmoid函数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_Convert.html#id1">4.3. 使用上划线运算符限制posit词汇</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="05_IEEE754Env.html">5. 创建IEEE 754浮点环境</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="05_IEEE754Env.html#id1">5.1. 浮点环境的两个参数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_IEEE754Env.html#mathematica-f2x">5.2. 将浮点数转换为Mathematica数值的函数：f2x</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_IEEE754Env.html#id2">5.3. 数值转换为浮点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_IEEE754Env.html#id3">5.4. 对浮点数运算词汇的限制：下划线运算符</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="06_FPvsPosit.html">6. 浮点数与Posit对比预览：32 比特下的准确性</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_FPvsPositMetric.html">7. Posit与IEEE浮点数的对比：基于度量的研究</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="07_FPvsPositMetric.html#regime">7.1. 为什么Regime比特增加了精度</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07_FPvsPositMetric.html#ieee">7.2. 我们需要匹配IEEE浮点的动态范围吗？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07_FPvsPositMetric.html#id1">7.3. 构建低精度集进行比较</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07_FPvsPositMetric.html#id2">7.4. “十进制精度”的仔细定义</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07_FPvsPositMetric.html#morris">7.5. Morris浮点</a></li>
 </ul>
 </li>
 </ul>

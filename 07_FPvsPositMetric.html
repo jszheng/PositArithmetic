@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>7. Posit与IEEE浮点数的对比：基于度量的研究 &#8212; Posit 算术 0.1 documentation</title>
+
+    <link rel="stylesheet" href="_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="_static/fonts.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css" />
+    <link rel="stylesheet" type="text/css" href="_static/d2l.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/d2l.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="6. 浮点数与Posit对比预览：32 比特下的准确性" href="06_FPvsPosit.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link is-active"><span class="section-number">7. </span>Posit与IEEE浮点数的对比：基于度量的研究</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="_sources/07_FPvsPositMetric.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/jszheng/PositArithmetic">
+                  <i class="fab fa-github"></i>
+                  Github
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="index.html">
+              <span class="title-text">
+                  Posit 算术
+              </span>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Overview.html">1. 概论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Specifics.html">2. 细节：将 posit 位字符串转换为值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Visualize.html">3. 可视化射影实数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_Convert.html">4. 将数值转换为Posit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_IEEE754Env.html">5. 创建IEEE 754浮点环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_FPvsPosit.html">6. 浮点数与Posit对比预览：32 比特下的准确性</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">7. Posit与IEEE浮点数的对比：基于度量的研究</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="index.html">
+              <span class="title-text">
+                  Posit 算术
+              </span>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Overview.html">1. 概论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Specifics.html">2. 细节：将 posit 位字符串转换为值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Visualize.html">3. 可视化射影实数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_Convert.html">4. 将数值转换为Posit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_IEEE754Env.html">5. 创建IEEE 754浮点环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_FPvsPosit.html">6. 浮点数与Posit对比预览：32 比特下的准确性</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">7. Posit与IEEE浮点数的对比：基于度量的研究</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <div class="section" id="positieee">
+<h1><span class="section-number">7. </span>Posit与IEEE浮点数的对比：基于度量的研究<a class="headerlink" href="#positieee" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="regime">
+<h2><span class="section-number">7.1. </span>为什么Regime比特增加了精度<a class="headerlink" href="#regime" title="Permalink to this heading">¶</a></h2>
+<p>显然，状态位是一种“超级指数”，与浮点数相比，它放大了posit的动态范围。
+而不太显而易见的是，它们还通过允许“剩余”更多位来表达数字的小数部分来<em>提高准确性</em>。</p>
+<p>举个例子，假设我们有 16 位并希望表达数字 10000。半精度 IEEE 浮点数（5
+位指数字段）可以做到这一点而无需舍入：</p>
+<div class="figure align-default" id="id3">
+<img alt="_images/image-20230714113939885.png" src="_images/image-20230714113939885.png" />
+<p class="caption"><span class="caption-number">Fig. 7.1.1 </span><span class="caption-text">image-20230714113939885</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<p>浮点表示的
+<span class="math notranslate nohighlight">\(10000 = 2^{13}\times (1+\frac{113}{512})\)</span>。这意味着我们需要一个指数范围达到<span class="math notranslate nohighlight">\(2^{-14}\)</span>到<span class="math notranslate nohighlight">\(2^{14}\)</span>的正则化浮点数，器指数至少需要5比特。而如果我们用16比特posit来表示的话，看看<span class="math notranslate nohighlight">\(2^{13}\)</span>可以用不同的es长度表示是什么样子，为了清晰就先不显示小数位。</p>
+<div class="figure align-default" id="id4">
+<img alt="_images/image-20230714125026049.png" src="_images/image-20230714125026049.png" />
+<p class="caption"><span class="caption-number">Fig. 7.1.2 </span><span class="caption-text">image-20230714125026049</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+<p>这些都是将整数 13 表示为位移位（按 2 的幂缩放）的方法。
+表达该整数所需的regime位数一开始每步下降为大约一半，然后当它达到最小两位
+10 模式时，指数位就开始接管工作，总数线性增加 。
+因此，当我们打算处理幅度接近 10000 的大量数据，则存在一个“最佳点”。 只有
+es=3 或 es=4 才留出更多位给小数来准确表示 10000：</p>
+<div class="figure align-default" id="id5">
+<img alt="_images/image-20230714125752517.png" src="_images/image-20230714125752517.png" />
+<p class="caption"><span class="caption-number">Fig. 7.1.3 </span><span class="caption-text">image-20230714125752517</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+<p>而对于es=3,
+动态范围远远超过16bit浮点能表示范围，可能对于大多数低精度的应用来说都是</p>
+<p>过头了。</p>
+<div class="figure align-default" id="id6">
+<img alt="_images/image-20230714130011317.png" src="_images/image-20230714130011317.png" />
+<p class="caption"><span class="caption-number">Fig. 7.1.4 </span><span class="caption-text">image-20230714130011317</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+<p>如果有人想要对摩尔量进行低精度快速的化学计算，这已经足以很好地表示阿伏加德罗数了！</p>
+<div class="figure align-default" id="id7">
+<img alt="_images/image-20230714130122292.png" src="_images/image-20230714130122292.png" />
+<p class="caption"><span class="caption-number">Fig. 7.1.5 </span><span class="caption-text">image-20230714130122292</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</div>
+<p>如果有人在现场可编程门阵列 (FPGA) 中将 posit
+算术用于特定的嵌入式应用，而该应用（例如信号处理或机器学习）不需要与标准存储格式兼容，则没有理由限制
+posit 不能是 - 比如说 23
+位宽度且es为6。但是，我们希望尽可能轻松地从过时的 1985
+年浮点格式标准过渡，这意味着需要标准化 16-、32-、64-、128-、 和 256-
+位posit格式。 一位雄心勃勃的硬件工程师可能会使 es
+值可配置，但随之而来的问题是程序语言对许多不同数据类型的支持。理想情况下，多年前编写的使用
+float 和 double 关键字的 C 程序可以简单地重新编译为使用 32 位和 64
+位posit，并使用不同的数学库（libm.h
+包含文件），然后一切都应该正常工作。并产生更准确的答案。</p>
+</div>
+<div class="section" id="ieee">
+<h2><span class="section-number">7.2. </span>我们需要匹配IEEE浮点的动态范围吗？<a class="headerlink" href="#ieee" title="Permalink to this heading">¶</a></h2>
+<p>在当前（2008）版本的 IEEE 754
+标准中，有五种二进制浮点大小：16、32、64、128 和 256 位。
+对于某些用户来说，在动态范围方面希望posit的表现与浮点数一样好甚至更好可能很重要，以免他们看起来为了准确性而牺牲了动态范围。</p>
+<p>下面是 IEEE 浮点数和相同大小位置的表格，选择 es 是为了使 16 和 32
+位大小的动态范围更好，并且对于 64、128 和 256 位大小几乎同样大。
+如果要将 16 位和 32 位位置分别用作 32 位和 64 位浮点的替代品，那么提高
+16 位和 32 位位置的动态范围可能很重要。</p>
+<div class="figure align-default" id="id8">
+<img alt="_images/image-20230714131332568.png" src="_images/image-20230714131332568.png" />
+<p class="caption"><span class="caption-number">Fig. 7.2.1 </span><span class="caption-text">image-20230714131332568</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+</div>
+<p>这些浮点数的指数大小不遵循任何数学模式，但反映了 IEEE
+委员会激烈争论的妥协方案。 试图匹配 IEEE 委员会 1985
+年时代的选择会导致一组同样令人费解的 es 值。
+坦率地说，如此巨大的动态范围的原因是他们试图节省晶体管，而不是提供用户真正需要的东西。
+浮点数的乘法和除法只需要指数字段的整数加法和减法，但小数字段则需要整数乘法器，其成本几乎可以与分数位数的平方成正比。
+因此，虽然在实际应用中几乎没有人会超出 <span class="math notranslate nohighlight">\(10^{-13}\)</span> 到
+<span class="math notranslate nohighlight">\(10^{13}\)</span> 的范围，但 IEEE 754 标准却自豪地允许您跨越从大约
+<span class="math notranslate nohighlight">\(10^{-78984}\)</span> 到 <span class="math notranslate nohighlight">\(10^{78913}\)</span> 的范围。
+即使是天体物理学家也不知道如何处理如此巨大的动态范围。
+讽刺的是，无论这些决策者在整数乘法器的大小上节省了什么，他们都用一长串消耗大量逻辑的繁重异常情况来弥补（例如负零、次正规异常、NaN
+和无穷大位模式，
+多种舍入模式，以及对上溢、下溢和不精确结果的处理器标志的要求）。</p>
+<p>目前我们还是假设 IEEE 的选择是合理的。 posit
+表达2的幂次的方法在很宽的范围都可以为小数释放更多的位，下面是上述 es
+的选择能提供的最大精度：</p>
+<div class="figure align-default" id="id9">
+<img alt="_images/image-20230714132756256.png" src="_images/image-20230714132756256.png" />
+<p class="caption"><span class="caption-number">Fig. 7.2.2 </span><span class="caption-text">image-20230714132756256</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+</div>
+<p>因此即使我们接受了IEEE 754
+的为晶体管压缩做的选择，posit在准确性方面也很容易击败浮点数。</p>
+<p>如果我们采取更合理的方法，每次将精度位数加倍时简单地增加 es 值会怎么样？
+每一次这样的增量都会导致动态范围增加四倍，这当然应该是足够的。 为了与 8
+位posit进行比较，让我们想象一个具有 3 个指数位的“四分之一精度”IEEE
+浮点数，以便我们可以将该大小包含在表中一起对比。</p>
+<div class="figure align-default" id="id10">
+<img alt="_images/image-20230714133118900.png" src="_images/image-20230714133118900.png" />
+<p class="caption"><span class="caption-number">Fig. 7.2.3 </span><span class="caption-text">image-20230714133118900</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
+</div>
+<p>如果我们不尝试匹配 IEEE 的超大动态范围并简单地使用 0-1-2-3-4-5 作为 es
+大小，则下表是posit数的精度优势。</p>
+<div class="figure align-default" id="id11">
+<img alt="_images/image-20230714133225224.png" src="_images/image-20230714133225224.png" />
+<p class="caption"><span class="caption-number">Fig. 7.2.4 </span><span class="caption-text">image-20230714133225224</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
+</div>
+<p>不知何故，这看起来更加理智。 请注意，对于 32
+位位置，四个额外的精度位将使它们与 20 世纪 60 年代 IBM 推出其 System 360
+之前的老式 36 位浮点数相当。 需要一些时间才能从 HPC
+社区获得足够的反馈来决定这个问题，但现在我投票支持第二组 es 设置。 es
+值应该选择</p>
+<div class="math notranslate nohighlight" id="equation-07-fpvspositmetric-0">
+<span class="eqno">(7.2.1)<a class="headerlink" href="#equation-07-fpvspositmetric-0" title="Permalink to this equation">¶</a></span>\[es = log_2(nbits)-3\]</div>
+<p>附注：标准中最终选择es一律为2，统统为2。</p>
+</div>
+<div class="section" id="id1">
+<h2><span class="section-number">7.3. </span>构建低精度集进行比较<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
+<p>让我们构造一些遵循 IEEE
+规则的8bit的“四分之一精度”浮点数，然后构造一个具有可比动态范围的8bit的posit。
+我们使用如此低的精度，以便可以实际找到整个值集并使用由它们对组成的表，该表将有
+65536 个条目。 以下是四分之一精度 IEEE 样式浮点数的样子（使用 4
+位指数，而不是上一节表中使用的 3 位指数）：</p>
+<div class="figure align-default" id="id12">
+<img alt="_images/image-20230714133725702.png" src="_images/image-20230714133725702.png" />
+<p class="caption"><span class="caption-number">Fig. 7.3.1 </span><span class="caption-text">image-20230714133725702</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
+</div>
+<p>将 float 环境设置为具有 4 位指数字段的 8 位长：</p>
+<div class="highlight-mathematica notranslate"><div class="highlight"><pre><span></span><span class="n">setfloatenv</span><span class="p">[{</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">}]</span><span class="w"></span>
+</pre></div>
+</div>
+<p><strong>floatfix</strong>
+函数将浮点强制看做整数作为输入，调整两组整数，从而将位字符串表示的浮点数按其值增递顺序排列。</p>
+<div class="figure align-default" id="id13">
+<img alt="_images/image-20230714135826433.png" src="_images/image-20230714135826433.png" />
+<p class="caption"><span class="caption-number">Fig. 7.3.2 </span><span class="caption-text">image-20230714135826433</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
+</div>
+<p>float8 列表是由每种可能的位模式表示的浮点集。 使用 TableForm
+打印列表是一个技巧，可以使分数自动以比整数更小的字体排版。</p>
+<div class="figure align-default" id="id14">
+<img alt="_images/image-20230714135854692.png" src="_images/image-20230714135854692.png" />
+<p class="caption"><span class="caption-number">Fig. 7.3.3 </span><span class="caption-text">image-20230714135854692</span><a class="headerlink" href="#id14" title="Permalink to this image">¶</a></p>
+</div>
+<p>该集合有 256 个元素，但其中 14 个元素表示 NaN（不确定）。
+另请注意，由于“负零”，值 0 在上述集合中出现了两次。 浮点数的最小正值为
+1/512，最大值为 240，这使得它们的动态范围约为 5 个十进制。</p>
+<p>现在构造 nbits=8 的posit。 如果我们选择 es=1，请注意 minpos 和 maxpos
+的值超出了浮点数的动态范围：</p>
+<div class="figure align-default" id="id15">
+<img alt="_images/image-20230714140141910.png" src="_images/image-20230714140141910.png" />
+<p class="caption"><span class="caption-number">Fig. 7.3.4 </span><span class="caption-text">image-20230714140141910</span><a class="headerlink" href="#id15" title="Permalink to this image">¶</a></p>
+</div>
+<p>再次生成表格，就像我们有 2 的补码整数，从最大负数到最大正数一样。
+positfix 函数会像 floatfix 那样进行调整，将 posits 按升序排列。</p>
+<div class="figure align-default" id="id16">
+<img alt="_images/image-20230714140512577.png" src="_images/image-20230714140512577.png" />
+<p class="caption"><span class="caption-number">Fig. 7.3.5 </span><span class="caption-text">image-20230714140512577</span><a class="headerlink" href="#id16" title="Permalink to this image">¶</a></p>
+</div>
+<p>对于Posit来说，<em>不存在</em>浪费的情况。 所有位模式都代表独特的数学量。
+这与 IEEE 浮点数的另一项数学违规有关。 如果
+<span class="math notranslate nohighlight">\(a=b\)</span>，那么对于任何函数 <span class="math notranslate nohighlight">\(f\)</span>，我们期望
+<span class="math notranslate nohighlight">\(f(a)=f(b)\)</span>。 但 IEEE
+规则声明正零和负零在数值上相等，这让我们陷入了困境，但又说 1/x
+对于“负零”来说是 <span class="math notranslate nohighlight">\(-\infty\)</span>，对于“正零”来说是 <span class="math notranslate nohighlight">\(+\infty\)</span>。
+” 这意味着负无穷与正无穷相同。 呃…</p>
+<p>对于Posit来说，<em>不存在</em>浪费的情况。</p>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">7.4. </span>“十进制精度”的仔细定义<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
+<p>就像数值分析中的许多事情一样，我们已经习惯了一些被广泛接受但逻辑上相当草率的概念。
+我们衡量各类“误差”的方式就是这样一个概念。
+例如，这是一个被广泛接受的定义：</p>
+<div class="math notranslate nohighlight" id="equation-07-fpvspositmetric-1">
+<span class="eqno">(7.4.1)<a class="headerlink" href="#equation-07-fpvspositmetric-1" title="Permalink to this equation">¶</a></span>\[绝对误差= |X_{computed}-X_{exact}|\]</div>
+<p>乍一看这似乎很有道理； 如果值相同，则它们的差异为零并且没有错误。
+但是如果计算生成 315 而不是 314，那么该错误看起来与返回 3.15 而不是 3.14
+非常相似吗？
+为实数设计的数字系统通常跨越数十个数量级的动态范围，简单地相减看起来更像是用整数或定点方式看待不准确性。</p>
+<p>为了修复这个矛盾，计算值的相对误差通常定义为</p>
+<div class="math notranslate nohighlight" id="equation-07-fpvspositmetric-2">
+<span class="eqno">(7.4.2)<a class="headerlink" href="#equation-07-fpvspositmetric-2" title="Permalink to this equation">¶</a></span>\[相对误差=|\frac{X_{computed}-X_{exact}}{X_{exact}}|\]</div>
+<p>以下是您对此定义不满意的几个原因。 其一，如果在正确答案为 100 时计算
+-1，则相对误差仅为 1.01。
+如果您甚至不知道结果位于投影实数圆的哪一半，那么您基本上对答案<em>一无所知</em>，因为符号是数字中最重要的部分。
+在这种情况下，错误公式应该拒绝起作用。
+甚至宣称相对误差为无穷大也太奉承了。</p>
+<p>另一方面，数字及其倒数的公式完全不同。 假设<span class="math notranslate nohighlight">\(x_{computed}=0.001\)</span>
+但<span class="math notranslate nohighlight">\(x_{exact}=0.0001\)</span>。 那么相对误差是
+9。但是，如果我们计算数字的倒数，则相对误差将以
+<span class="math notranslate nohighlight">\(x_{computed}=1000\)</span> 和 <span class="math notranslate nohighlight">\(x_{exact}=10000\)</span>
+作为输入，上面的公式可以保证我们发现相对误差仅为0.9。
+仅仅通过取倒数就可以使答案看起来更准确，这是没有意义的。
+如果您知道一辆汽车的每加仑英里数，相对误差为
+0.1，那么您知道同一辆车的每英里加仑数，相对误差为
+0.2，您不会感到困扰吗？
+这就是为什么更常见的是说某件事精确到某个百分比，例如“百分之五以内”，这当然更好，因为它引用的是比率而不是差异。</p>
+<p>工程师们在将数字与比率进行比较时一直有一个解决方案，那就是使用分贝。
+比率 10 表示 10 分贝 (dB)。 比率为 1 dB 意味着比率为
+<span class="math notranslate nohighlight">\(10^{1/10}=1.2589\cdots\)</span>。
+与分贝一样，我们应该查看数字对数的差异，这与它们比率的对数相同：</p>
+<div class="math notranslate nohighlight" id="equation-07-fpvspositmetric-3">
+<span class="eqno">(7.4.3)<a class="headerlink" href="#equation-07-fpvspositmetric-3" title="Permalink to this equation">¶</a></span>\[\text{decimal error} \equiv | log_{10}(X_{computed})-log_{10}(X_{exact})| =|log_{10}(\frac{X_{computed}}{X_{exact}})|\]</div>
+<p>注意，绝对值使得 <span class="math notranslate nohighlight">\(X_{computed}\)</span> 和 <span class="math notranslate nohighlight">\(X_{exact}\)</span>
+在上面的定义中可以互换。 另外换用<span class="math notranslate nohighlight">\(\frac{1}{X_{computed}}\)</span> 和
+<span class="math notranslate nohighlight">\(\frac{1}{X_{exact}}\)</span> 作为输入，也会产生相同的结果。
+所以这看起来像是一个数学上合理的定义。</p>
+<p>我们可以用任何对数为底来实现这些属性，但我们选择以 10
+为底，因为它测量的是十进制数量级的误差，这与我们测量动态范围用的对于人来理解更友好的方式相同。
+回想一下上面的例子，<span class="math notranslate nohighlight">\(x_{computed}=0.001\)</span>，但
+<span class="math notranslate nohighlight">\(x_{exact}=0.0001\)</span>； decimal error 十进制数量级误差为
+1，这意味着还十倍。</p>
+<p>十进制数量级误差可用于定义十进制精度。 准确度是误差的倒数。
+如果我们想知道精确度的位数，我们再次取以 10 为底的对数。</p>
+<div class="math notranslate nohighlight" id="equation-07-fpvspositmetric-4">
+<span class="eqno">(7.4.4)<a class="headerlink" href="#equation-07-fpvspositmetric-4" title="Permalink to this equation">¶</a></span>\[\text{decimal accuracy} \equiv log_{10}(\frac{1}{\text{decimal error}})=-log_{10}|log_{10}(\frac{X_{computed}}{X_{exact}})|\]</div>
+<p>下面是 Mathematica 函数，它使用上述公式，但也处理异常输入值。
+如果任一输入为 NaN，则精度为 NaN。 如果数字符号相反，它也会生成 NaN。
+否则，如果输入值相同，则精度为<span class="math notranslate nohighlight">\(\infty\)</span>。 如果只有一个输入为
+<span class="math notranslate nohighlight">\(\infty\)</span> 或只有一个输入为 0，则精度为
+<span class="math notranslate nohighlight">\(-\infty\)</span>，因为在对数标度上，0 和
+<span class="math notranslate nohighlight">\(\infty\)</span>都距离任何非零实数无限远 。
+这就是为什么将大结果“舍入”为无穷大（上溢）或将小结果“舍入”为零（下溢）是一场灾难。</p>
+<div class="figure align-default" id="id17">
+<img alt="_images/image-20230714212208935.png" src="_images/image-20230714212208935.png" />
+<p class="caption"><span class="caption-number">Fig. 7.4.1 </span><span class="caption-text">image-20230714212208935</span><a class="headerlink" href="#id17" title="Permalink to this image">¶</a></p>
+</div>
+<p>如果数字相差十倍，则准确度为零； 我们甚至不知道结果的数量级：</p>
+<div class="figure align-default" id="id18">
+<img alt="_images/image-20230714212225341.png" src="_images/image-20230714212225341.png" />
+<p class="caption"><span class="caption-number">Fig. 7.4.2 </span><span class="caption-text">image-20230714212225341</span><a class="headerlink" href="#id18" title="Permalink to this image">¶</a></p>
+</div>
+<p>工程师应该喜欢这个定义的属性：如果答案偏差 1
+dB，则以下是十进制数量精度：</p>
+<div class="figure align-default" id="id19">
+<img alt="_images/image-20230714212351524.png" src="_images/image-20230714212351524.png" />
+<p class="caption"><span class="caption-number">Fig. 7.4.3 </span><span class="caption-text">image-20230714212351524</span><a class="headerlink" href="#id19" title="Permalink to this image">¶</a></p>
+</div>
+<p>如果答案偏差 0.1 dB，那么我们的精确度为 2 位小数； 偏差0.01 dB
+表示精度为 3 位小数，依此类推。</p>
+<p>我们还可以分析<strong>数字系统</strong>的准确性。 我们只研究 float8
+集合中的三个连续值：{15/16, 1, 9/8}。 我们知道</p>
+<p>[15/16,31/32) 中的值四舍五入为 15/16。</p>
+<p>[31/32,17/16] 中的值四舍五入为 1。</p>
+<p>(17/16,9/8] 中的值四舍五入为 9/8。</p>
+<p>如果我们碰巧有一个值正好是 15/16、1 或 9/8，那么小数精度就是无穷大。
+在这些值之间，小数精度降至最低。</p>
+<div class="figure align-default" id="id20">
+<img alt="_images/image-20230714212749269.png" src="_images/image-20230714212749269.png" />
+<p class="caption"><span class="caption-number">Fig. 7.4.4 </span><span class="caption-text">image-20230714212749269</span><a class="headerlink" href="#id20" title="Permalink to this image">¶</a></p>
+</div>
+<p>请注意两个最小值处的轻微不连续性；
+这是因为几何平均值和算术平均值之间的差异。
+尖点位于中间点，<span class="math notranslate nohighlight">\((15/16+1)/2=0.96875\)</span> 和
+<span class="math notranslate nohighlight">\((1+9/8)/2=1.0625\)</span>，但这些不是定义为对数距离的小数误差最小化所在的位置。
+该点将发生在 <span class="math notranslate nohighlight">\(\sqrt{(15/16)*1}=0.96824\cdots\)</span> 和
+<span class="math notranslate nohighlight">\(\sqrt{1*(9/8)}=1.0606\cdots\)</span>
+处，在这种极低的精度下，这是一个足够大的不连续性勉强可以看出。 在 16
+位或更高的精度下，您实际上无法看到它。
+如果计算量不是那么大，所有舍入应该是根据结果落在几何平均值而不是算术平均值的哪一侧来判断会更好一点。</p>
+<p>但请注意，如果舍入位是指数位，则假定使用几何平均值进行舍入。
+这种情况只发生在范围的极端处，但它有助于提高小数精度。
+例如，在此处检查的 8 位posit集合，三个最大的正实数是 512、1024 和
+4096。以下是该范围内 x 的位置小数精度：</p>
+<div class="figure align-default" id="id21">
+<img alt="_images/image-20230714214127152.png" src="_images/image-20230714214127152.png" />
+<p class="caption"><span class="caption-number">Fig. 7.4.5 </span><span class="caption-text">image-20230714214127152</span><a class="headerlink" href="#id21" title="Permalink to this image">¶</a></p>
+</div>
+<p>512 和 1024 的几何平均值为
+<span class="math notranslate nohighlight">\(724.077\cdots\)</span>，但小数部分的正常线性舍入使用中点 768
+作为切换点，从而创建微妙但可见的不连续性。 另一方面，1024 到 4096
+之间的几何平均值恰好是 2048，这也是 posits 用于切换点的值。
+下面是正posit数的十进制数量级精度图：</p>
+<div class="figure align-default" id="id22">
+<img alt="_images/image-20230714214546832.png" src="_images/image-20230714214546832.png" />
+<p class="caption"><span class="caption-number">Fig. 7.4.6 </span><span class="caption-text">image-20230714214546832</span><a class="headerlink" href="#id22" title="Permalink to this image">¶</a></p>
+</div>
+<p>锥形的精度非常明显。
+最常见的数字位于可能指数范围的中心，精度最高。下面是测试的 8
+位浮点数的十进制数量级精度图：</p>
+<div class="figure align-default" id="id23">
+<img alt="_images/image-20230714214926137.png" src="_images/image-20230714214926137.png" />
+<p class="caption"><span class="caption-number">Fig. 7.4.7 </span><span class="caption-text">image-20230714214926137</span><a class="headerlink" href="#id23" title="Permalink to this image">¶</a></p>
+</div>
+<p>动态范围明显小于posit数，并且仅在左侧发生denormal才开始逐渐减小精度。</p>
+<p>这些图表全面地显示了整个数字系统在动态范围内的准确性，但精确点处的垂直尖峰使得很难比较两个系统。
+那让我们持悲观态度，看看数字集中每个点的最坏情况精度。
+下图仅显示了每个波谷的底部，使我们能够在同一图上显示posit和浮点的精度：</p>
+<div class="figure align-default" id="id24">
+<img alt="_images/image-20230714215413547.png" src="_images/image-20230714215413547.png" />
+<p class="caption"><span class="caption-number">Fig. 7.4.8 </span><span class="caption-text">image-20230714215413547</span><a class="headerlink" href="#id24" title="Permalink to this image">¶</a></p>
+</div>
+<p>在更高的精度下，锯齿状不太明显，并且posit的decimal精度是一个对称的三角形轮廓，在中心达到峰值；
+浮点模式始终形成一个矩形，左侧有一个非规范化浮点的斜坡。
+Posit比浮点在中心的位置有更高的精度，并且在下溢和上溢区域附近精度较低。
+es
+值越大，描述posit精度的三角形就越宽，并且在某些时候它变得如此宽，以至于整个精度曲线的精度低于浮点数。</p>
+<p>对于 8 位 posits 和 float，posits 对于绝对值在 1/4 到 4
+之间的数字具有较高的精度，对于绝对值在 1/16 到 16
+之间的数字具有相同或更高的精度。</p>
+</div>
+<div class="section" id="morris">
+<h2><span class="section-number">7.5. </span>Morris浮点<a class="headerlink" href="#morris" title="Permalink to this heading">¶</a></h2>
+<p>我们现在有足够的数学机制来展示 1971 年锥形精度方案发生了什么。
+大约半个世纪前，罗伯特·莫里斯在他的论文《锥形浮点：一种新的浮点表示法》中提出了这一点。
+值得去研究他的建议，并将其与posit数用上面提出的工具进行比较，特别是因为那些熟悉浮点数替代方案文献的人记得，早期曾尝试创建锥形精度数。
+我们知道 Morris 方法从未流行过或影响到 IEEE 754 标准委员会。
+也许我们可以弄清楚为什么没有。</p>
+<p>Morris 建议添加一个附加字段，即 G 字段，用于描述指数有多少位。 G
+字段中的位表示我们添加偏移量的整数，因此两比特 G 位可以表示大小为
+1、2、3 或 4 的指数。或者它可以表示 3、4、5 或 6 .他描述了需要如下字段</p>
+<ul class="simple">
+<li><p>G 字段表示指数位数</p></li>
+<li><p>指数的符号位</p></li>
+<li><p>指数位： E 字段</p></li>
+<li><p>小数的符号位</p></li>
+<li><p>剩余的 F 字段，就是小数字段，其中隐藏位始终为 1（无次正规数denorm）。</p></li>
+</ul>
+<p>1971
+年论文中声称，与仅具有带符号指数和带符号分数的系统相比，这可以为小指数值提供更多的精度位（小数位），但动态范围更大。
+听起来很熟悉！
+作者指出，在该系统中可以有多种方式来表示特定值（冗余位模式），并且他提出了这样的约定：使用
+G 中存储最小的值的表示形式； 其他位模式在系统下变得毫无意义。</p>
+<p>Morris 浮点数如下所示，有五个子字段：</p>
+<div class="figure align-default" id="id25">
+<img alt="_images/image-20230714221036607.png" src="_images/image-20230714221036607.png" />
+<p class="caption"><span class="caption-number">Fig. 7.5.1 </span><span class="caption-text">image-20230714221036607</span><a class="headerlink" href="#id25" title="Permalink to this image">¶</a></p>
+</div>
+<p>请注意，我们仅在 G
+位和指数符号位之间以及指数符号位和指数位之间显示黑色分隔线。
+这提醒我们，其他分区位置根据G的内容而变化。</p>
+<p>我们使用 <span class="math notranslate nohighlight">\(nfbit\)</span> 表示标准浮点数中的位数，因此让我们使用
+<span class="math notranslate nohighlight">\(nmbit\)</span> 表示 Morris 浮点数中的位数。 我们可以使用 gs 作为 G
+字段的大小，并使用 <strong>setmorrisenv</strong> 定义一个 Morris float 环境：</p>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">7. Posit与IEEE浮点数的对比：基于度量的研究</a><ul>
+<li><a class="reference internal" href="#regime">7.1. 为什么Regime比特增加了精度</a></li>
+<li><a class="reference internal" href="#ieee">7.2. 我们需要匹配IEEE浮点的动态范围吗？</a></li>
+<li><a class="reference internal" href="#id1">7.3. 构建低精度集进行比较</a></li>
+<li><a class="reference internal" href="#id2">7.4. “十进制精度”的仔细定义</a></li>
+<li><a class="reference internal" href="#morris">7.5. Morris浮点</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="06_FPvsPosit.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>6. 浮点数与Posit对比预览：32 比特下的准确性</div>
+         </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>

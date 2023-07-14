@@ -49,3 +49,7 @@ http://www.johngustafson.net/unums.html
    01_Overview
    02_Specifics
    03_Visualize
+   04_Convert
+   05_IEEE754Env
+   06_FPvsPosit
+   07_FPvsPositMetric

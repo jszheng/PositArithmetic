@@ -27,6 +27,7 @@
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4. 将数值转换为Posit" href="04_Convert.html" />
     <link rel="prev" title="2. 细节：将 posit 位字符串转换为值" href="02_Specifics.html" /> 
   </head>
 <body>
@@ -97,6 +98,9 @@ Show Source
 <li class="toctree-l1"><a class="reference internal" href="01_Overview.html">1. 概论</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_Specifics.html">2. 细节：将 posit 位字符串转换为值</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">3. 可视化射影实数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_Convert.html">4. 将数值转换为Posit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_IEEE754Env.html">5. 创建IEEE 754浮点环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_FPvsPosit.html">6. 浮点数与Posit对比预览：32 比特下的准确性</a></li>
 </ul>
 
             </nav>
@@ -129,6 +133,9 @@ Show Source
 <li class="toctree-l1"><a class="reference internal" href="01_Overview.html">1. 概论</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_Specifics.html">2. 细节：将 posit 位字符串转换为值</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">3. 可视化射影实数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_Convert.html">4. 将数值转换为Posit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_IEEE754Env.html">5. 创建IEEE 754浮点环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_FPvsPosit.html">6. 浮点数与Posit对比预览：32 比特下的准确性</a></li>
 </ul>
 
             </nav>
@@ -143,16 +150,16 @@ Show Source
   <div class="section" id="id1">
 <h1><span class="section-number">3. </span>可视化射影实数<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
 <div class="section" id="posit-useed">
-<h2><span class="section-number">3.1. </span>最小的posit，带有useed<a class="headerlink" href="#posit-useed" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">3.1. </span>最小的posit，和useed<a class="headerlink" href="#posit-useed" title="Permalink to this heading">¶</a></h2>
 <p>与实数轴不同，射影实数将线包裹在一个圆上，所以负无穷大和正无穷大在顶部相遇。</p>
 <p>有时，事物的发明方式并不是理解它们的最简单方法，这就是为什么我们首先在第
 2 节中展示位字段，现在才展示它们的几何推导。 类型 III Posit算术源自类型
 II unum，后者也将二进制整数映射到射影实数，但在类型 III
 中，我们放宽了所有值都具有精确倒数的要求。 II 型和 III 型 unum
 都以这个两比特的模板开头的：</p>
-<div class="figure align-default" id="id2">
+<div class="figure align-default" id="id6">
 <img alt="_images/image-20230713160353886.png" src="_images/image-20230713160353886.png" />
-<p class="caption"><span class="caption-number">Fig. 3.1.1 </span><span class="caption-text">image-20230713160353886</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 3.1.1 </span><span class="caption-text">image-20230713160353886</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </div>
 <p>围绕环外侧的 2
 的补码格式的有符号整数与实数在完全相同的点处从正值绕回到负值。
@@ -166,9 +173,9 @@ IEEE 浮点数的所做的。</p>
 选择就像在unum环上“播种”生长出更宽的数，因此我们将其称为“<em>useed</em>”。
 我们遵循类型 II
 规则，也就是垂直轴上镜像的点是相反的，水平轴上镜像的点是倒数。</p>
-<div class="figure align-default" id="id3">
+<div class="figure align-default" id="id7">
 <img alt="_images/image-20230713162429381.png" src="_images/image-20230713162429381.png" />
-<p class="caption"><span class="caption-number">Fig. 3.1.2 </span><span class="caption-text">image-20230713162429381</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 3.1.2 </span><span class="caption-text">image-20230713162429381</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
 </div>
 <p>下一步，我们应该在<span class="math notranslate nohighlight">\(useed\)</span>和<span class="math notranslate nohighlight">\(\pm\infty\)</span>之间放置么？
 嗯，<span class="math notranslate nohighlight">\(useed^2\)</span> 确实有效。
@@ -186,10 +193,165 @@ IEEE 浮点数的所做的。</p>
 它使用任何 nbits 和 es 环境设置。
 我们切换到旋转文本，这样我们就可以在空间中塞入更多值，尽管这使得阅读起来有些奇怪。
 尝试 nbits=3 和 es=1：</p>
-<div class="figure align-default" id="id4">
+<div class="figure align-default" id="id8">
 <img alt="_images/image-20230713170800383.png" src="_images/image-20230713170800383.png" />
-<p class="caption"><span class="caption-number">Fig. 3.1.3 </span><span class="caption-text">image-20230713170800383</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 3.1.3 </span><span class="caption-text">image-20230713170800383</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
 </div>
+<p>如果环是指南针，则 +1为东，-1为西，0 为南，<span class="math notranslate nohighlight">\(\pm\infty\)</span> 为北。
+useed值始终位于罗盘的东北点。 对垂直轴进行镜像是该数字的负数。
+绕水平轴镜像， 0、 <span class="math notranslate nohighlight">\(\pm\infty\)</span> 以及所有 2
+的幂次数可得到精确的倒数； 其他值得到的是近似倒数；在所有情况下，posit数
+x 的水平镜像值的范围为 <span class="math notranslate nohighlight">\(\frac{1}{x}\)</span> 到
+<span class="math notranslate nohighlight">\(\frac{1.125}{x}\)</span>。</p>
+<p>这些 unum 产生有递归的定义方法。 通过增加 nbits 来追加一位时，追加 0
+不会改变值； 附加 1
+在现有值中间的圆上创建一个新点，其代表的值遵循以下规则：</p>
+<ul class="simple">
+<li><p>如果它位于 0 和 <span class="math notranslate nohighlight">\(\pm 2^j\)</span> 之间的圆底部旁边，则新值比
+<span class="math notranslate nohighlight">\(\pm 2^j\)</span> 小useed倍。（添加的位是regime位。）</p></li>
+<li><p>如果它位于 <span class="math notranslate nohighlight">\(\pm2^j\)</span> 和 <span class="math notranslate nohighlight">\(\pm\infty\)</span>
+之间的圆顶部旁边，则新值比 <span class="math notranslate nohighlight">\(\pm 2^j\)</span>
+大useed倍。（添加的位是regime位。）</p></li>
+<li><p>如果它位于大小为 <span class="math notranslate nohighlight">\(2^i\)</span> 和 <span class="math notranslate nohighlight">\(2^j\)</span> 的两个值之间，其中整数 i
+和 j 相差超过 1，则新值的大小为 <span class="math notranslate nohighlight">\(2^{(i+j)/2}\)</span>。
+（添加的位是指数位。）</p></li>
+<li><p>如果它在任何其他相邻点x和y之间，则表示(x+y)/2。（添加的位是小数位。）</p></li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">3.2. </span>引入指数位<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
+<p>在环上添加新点的系统比听起来更简单。 检查 4 位位置的颜色编码；
+指数位开始出现在环的东部和西部部分：</p>
+<div class="figure align-default" id="id9">
+<img alt="_images/image-20230713173616489.png" src="_images/image-20230713173616489.png" />
+<p class="caption"><span class="caption-number">Fig. 3.2.1 </span><span class="caption-text">image-20230713173616489</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+</div>
+<p>请注意，上一个环形图中的每个值都保持在原位，并在其表示形式后附加了 0。
+新值位于先前的环形图的值之间，并以 1 位结尾。
+这是这些数字的美妙特性之一； 当通过附加 0
+位来提高精度时，它们会保持不变，并且通过附加 1
+位创建的中间点会自动增加动态范围（顶部和底部）和精度（左侧和右侧）。</p>
+<p>您可以注意到的另一件事是，前两位始终确定数字所在圆的象限。 与 II 型 unum
+一样，将它们视为符号倒数位。 前两位是</p>
+<ul class="simple">
+<li><p>00 在东南， <span class="math notranslate nohighlight">\(0 \le x \lt 1\)</span></p></li>
+<li><p>01 在东北， <span class="math notranslate nohighlight">\(1 \le x \lt \infty\)</span>，</p></li>
+<li><p>10 在西北，<span class="math notranslate nohighlight">\(-\infty \lt x \lt -1\)</span>，</p></li>
+<li><p>11 在西南， <span class="math notranslate nohighlight">\(-1 \le x \lt 0\)</span>。</p></li>
+</ul>
+<p>这也可能有助于解释硬件如何在不首先获取 2 补码的情况下解码regime位。</p>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">3.3. </span>小数位出现<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h2>
+<p>下一步将我们带到五位宽的Posit数，然后完整的模式就会出现。
+在圆的顶部和底部，添加一比特总是将动态范围扩大useed倍或是缩小useed倍。
+在圆的右侧和左侧，添加一位现在总是为分数添加一位精度。
+有了五位，我们现在看到小数位出现在射影实数圆的东部和西部。</p>
+<div class="figure align-default" id="id10">
+<img alt="_images/image-20230713213902547.png" src="_images/image-20230713213902547.png" />
+<p class="caption"><span class="caption-number">Fig. 3.3.1 </span><span class="caption-text">image-20230713213902547</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
+</div>
+<p>如果增加 IEEE
+浮点数的位数，则必须决定指数中增加多少位以及分数中增加多少位。 更改 IEEE
+指数位数也意味着更改指数的偏移，因此一般来说，从一种 IEEE
+精度转换为另一种精度是一件复杂的事情。 对于 I 型 unum 来说也是如此。
+对于III型Posit来说就很简单：您只需在右侧添加位即可。
+在位置末尾添加位可以增加环北部和南部部分的动态范围，以及环东部和西部部分的精度。
+这表明可以很容易地随着计算的进行而来改变环境设置。</p>
+<p>在上图中，请注意以小数位结尾的数字在其镜像中是没有完美的倒数的。
+虽然接近但不完全是。 3/2的镜像是3/4，而不是2/3。 3 的镜像是 3/8，而不是
+1/3。 用镜像作点为初始值迭代计算倒数是一个很好的起点。
+通过将所有有限数限制为 <span class="math notranslate nohighlight">\(2^m \times n\)</span> 的形式（其中 m 和 n
+是整数），而放宽对于每个数字倒数都要是完美的要求，使Posit变得简单且硬件友好。</p>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">3.4. </span>6位宽的环图<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h2>
+<p>如果我们尝试6比特的Posit，其ringplot做出的图仍然可读</p>
+<div class="figure align-default" id="id11">
+<img alt="_images/image-20230713215404932.png" src="_images/image-20230713215404932.png" />
+<p class="caption"><span class="caption-number">Fig. 3.4.1 </span><span class="caption-text">image-20230713215404932</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><span class="section-number">3.5. </span>7位宽的环图有百万比一的动态范围<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h2>
+<p>将图形推到值几乎要重叠但仍然清晰的地步，具有 1 位指数字段的 7
+位位置可以具有六个数量级的动态范围，而且<span class="math notranslate nohighlight">\(\pm 1\)</span>
+附近的点还有超过一位十进制小数的相对精度 。</p>
+<div class="figure align-default" id="id12">
+<img alt="_images/image-20230713220121343.png" src="_images/image-20230713220121343.png" />
+<p class="caption"><span class="caption-number">Fig. 3.5.1 </span><span class="caption-text">image-20230713220121343</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
+</div>
+<p>也许这是一个很好的地方来指出舍入与浮点数的舍入有何微妙的不同。
+如果舍入位是小数位，则它与浮点数完全相同。
+四舍五入到最接近的值，如果存在平局，则选择以 0 位结尾的数字。
+但假设计算结果在 64 到 256 之间；
+我们决定向上舍入还是向下舍入的中点是多少？
+注意到舍入位有一比特指数位，因此您要舍入到最接近的指数。
+对于硬件来说，它与舍入小数位时的算法完全相同。 如果我们再多一位精度，64
+和 256 之间的中点是 128。64 和 128 之间的数字四舍五入为 64； 128 到 256
+之间的数字四舍五入为 256； 精确值 128 是平局，64 是以 0
+位结尾的位置，因此 128 舍入为 64。</p>
+<p>因此，除了异常值 0 和 <span class="math notranslate nohighlight">\(\pm\infty\)</span>
+附近的结果之外，舍入规则是一致的。 永远不会向那些极端值舍入。 而是改用
+<span class="math notranslate nohighlight">\(-minpos\)</span>、<span class="math notranslate nohighlight">\(minpos\)</span>、<span class="math notranslate nohighlight">\(-maxpos\)</span> 或
+<span class="math notranslate nohighlight">\(maxpos\)</span>。 至少这还保留了答案的正确符号。</p>
+<p>附注： 要自己尝试ringplot图，可以访问
+<a class="reference external" href="https://cse512-19s.github.io/FP-Well-Rounded/">https://cse512-19s.github.io/FP-Well-Rounded/</a></p>
+</div>
+<div class="section" id="valid">
+<h2><span class="section-number">3.6. </span>抢先预览：valid算术<a class="headerlink" href="#valid" title="Permalink to this heading">¶</a></h2>
+<p>将环图一直保留到 7 位的原因之一是，上面的环图为 16
+位<strong>valid数</strong>奠定了良好的基础。
+作为对强大的、无需猜测的算术世界的预览，valid数是一对posit，每个posit都有一个不确定位<strong>ubit</strong>，附加到小数后，形成一个<strong>tile</strong>。
+Ubit 采用洋红色 (RGB 1, 0, 1) 进行颜色编码。 对于上面显示的所有值，ubit
+均为 0，对于上面显示的值之间的所有开放间隔，ubit 均为 1。 一种可能的 16
+位valid数格式是一对 7 位posit数，每个posit数末尾都有 ubit 位，如下所示：</p>
+<div class="figure align-default" id="id13">
+<img alt="_images/image-20230713221908557.png" src="_images/image-20230713221908557.png" />
+<p class="caption"><span class="caption-number">Fig. 3.6.1 </span><span class="caption-text">image-20230713221908557</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
+</div>
+<p>（出于说明目的，我们再次使用通用 es 值。比特位数如此短的 es 值几乎肯定为
+0。在上面的环图中，es 为 1。）</p>
+<p>每个tile可以是上面 7 位posit环中显示的任何值，后跟
+<span class="math notranslate nohighlight">\(\color{magenta}0\)</span> ubit 或 <span class="math notranslate nohighlight">\(\color{magenta}1\)</span> ubit。
+传统的区间算术采用闭区间 [a,b] 的形式，其中 a 和 b 是浮点数，且
+<span class="math notranslate nohighlight">\(a \le b\)</span>。 在valid的情况下<em>端点不需要排序</em>。 lower
+tile表示从环上的哪里开始；所表示的间隔包括从lower
+tile逆时针直到到达upper tile间的所有tile，该图块也包含在集合中；
+它环绕圆圈，如有必要会穿过<span class="math notranslate nohighlight">\(\pm\infty\)</span> ！
+这允许表示闭区间、开区间和半开区间，并且由于使用射影实数，连续区间在加法、减法、乘法和除法下<strong>保持连续</strong>。
+例如，上述环图的 {8,1} 环境中的半开区间 <span class="math notranslate nohighlight">\((-1/4,1/16]\)</span>
+由一对tile表示</p>
+<p><span class="math notranslate nohighlight">\(111000111 \to \color{red}-\color{orange}00\color{brown}1 \color{blue}1 \color{black}101 \color{magenta}1\)</span>，表示tile
+<span class="math notranslate nohighlight">\((-1/4, -7/23)\)</span></p>
+<p><span class="math notranslate nohighlight">\(001000000 \to \color{red}-\color{orange}00\color{brown}1 \color{blue}0 \color{black}000 \color{magenta}0\)</span>，表示tile
+<span class="math notranslate nohighlight">\(1/16\)</span></p>
+<p>这是表示两点之间所有tile集合的紧凑方式：</p>
+<div class="math notranslate nohighlight" id="equation-03-visualize-0">
+<span class="eqno">(3.6.1)<a class="headerlink" href="#equation-03-visualize-0" title="Permalink to this equation">¶</a></span>\[(-1/4,-7/32), -7/32, (-7/32,-3/16),-3/16,\dots,3/64,(3/64,1/16),1/16\]</div>
+<p>重申一下：posit算术是针对浮点数已经足够好的情况，并且算法已被证明足够可靠，能满足用户要求。
+而valid算术适用于需要知道<em>答案上可证明的边界</em>的情况。
+或者当您仍在开发算法并调试其数值计算的行为时。
+或者您想要描述实数集而不仅仅是点值。
+valid数的算法通常与浮点数的算法有很大不同，反之亦然。
+valid数可以表达对调试有用的丰富异常条件源，例如空集、整个实数集，或者在间隔太宽（根据用户设置）而无用时触发停止。
+有关valid数使用的详细信息将在其他地方讨论，但现在感兴趣的读者可以参考《<a class="reference external" href="https://jszheng.github.io/TheEndOfError/">错误的终结：Unum
+计算方法</a>》一书中对“ubounds”的讨论。</p>
+</div>
+<div class="section" id="regime">
+<h2><span class="section-number">3.7. </span>可视化投影实数环上的regime位<a class="headerlink" href="#regime" title="Permalink to this heading">¶</a></h2>
+<p>现在我们已经展示了实数和整数如何在几何上映射到环，我们可以通过查看环的右半部分并显示useed的幂如何在环的顶部和底部聚集在一起，专门看看regime的分布：</p>
+<div class="figure align-default" id="id14">
+<img alt="_images/image-20230713225306034.png" src="_images/image-20230713225306034.png" />
+<p class="caption"><span class="caption-number">Fig. 3.7.1 </span><span class="caption-text">image-20230713225306034</span><a class="headerlink" href="#id14" title="Permalink to this image">¶</a></p>
+</div>
+<p>这可能需要一些时间来理解，图中<strong>regime-指数对</strong>描述了
+2的幂的缩放因子，就像对 IEEE 标准浮点数指数（减去偏差）的描述一样。</p>
+<p>如果 es 为 1 或更大，我们可以在 1
+和used之间放置<span class="math notranslate nohighlight">\(useed^{0.5}\)</span>，在<span class="math notranslate nohighlight">\(useed\)</span>和<span class="math notranslate nohighlight">\(useed^2\)</span>之间放置<span class="math notranslate nohighlight">\(useed^{1.5}\)</span>，依此类推。
+如果 es 为 2 或更大，我们会得到 1
+和<span class="math notranslate nohighlight">\(useed\)</span>之间的等间距值<span class="math notranslate nohighlight">\(useed^{0.25}\)</span>、<span class="math notranslate nohighlight">\(useed^{0.5}\)</span>和<span class="math notranslate nohighlight">\(useed^{0.75}\)</span>。
+换句话说，指数位是由regime位表示的useed的幂的小数部分。</p>
 </div>
 </div>
 
@@ -203,7 +365,13 @@ IEEE 浮点数的所做的。</p>
     </p>
     <ul>
 <li><a class="reference internal" href="#">3. 可视化射影实数</a><ul>
-<li><a class="reference internal" href="#posit-useed">3.1. 最小的posit，带有useed</a></li>
+<li><a class="reference internal" href="#posit-useed">3.1. 最小的posit，和useed</a></li>
+<li><a class="reference internal" href="#id2">3.2. 引入指数位</a></li>
+<li><a class="reference internal" href="#id3">3.3. 小数位出现</a></li>
+<li><a class="reference internal" href="#id4">3.4. 6位宽的环图</a></li>
+<li><a class="reference internal" href="#id5">3.5. 7位宽的环图有百万比一的动态范围</a></li>
+<li><a class="reference internal" href="#valid">3.6. 抢先预览：valid算术</a></li>
+<li><a class="reference internal" href="#regime">3.7. 可视化投影实数环上的regime位</a></li>
 </ul>
 </li>
 </ul>
@@ -220,6 +388,13 @@ IEEE 浮点数的所做的。</p>
             <span class="pagenation-direction">Previous</span>
             <div>2. 细节：将 posit 位字符串转换为值</div>
          </div>
+     </a>
+     <a id="button-next" href="04_Convert.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>4. 将数值转换为Posit</div>
+        </div>
      </a>
   </div>
         
