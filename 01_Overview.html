@@ -101,6 +101,9 @@ Show Source
 <li class="toctree-l1"><a class="reference internal" href="04_Convert.html">4. 将数值转换为Posit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05_IEEE754Env.html">5. 创建IEEE 754浮点环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_FPvsPosit.html">6. 浮点数与Posit对比预览：32 比特下的准确性</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_FPvsPositMetric.html">7. Posit与IEEE浮点数的对比：基于度量的研究</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_QuadPrecision.html">8. 四精度测试示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Quadratic.html">9. 二次公式</a></li>
 </ul>
 
             </nav>
@@ -136,6 +139,9 @@ Show Source
 <li class="toctree-l1"><a class="reference internal" href="04_Convert.html">4. 将数值转换为Posit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05_IEEE754Env.html">5. 创建IEEE 754浮点环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_FPvsPosit.html">6. 浮点数与Posit对比预览：32 比特下的准确性</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_FPvsPositMetric.html">7. Posit与IEEE浮点数的对比：基于度量的研究</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_QuadPrecision.html">8. 四精度测试示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Quadratic.html">9. 二次公式</a></li>
 </ul>
 
             </nav>
@@ -153,8 +159,8 @@ Show Source
 有两种操作模式可供用户选择：posit/定位模式和valid/有效模式。</p>
 <p>在 posit 模式下，unum
 的行为很像固定大小的浮点数，如果计算结果不能精确表达，则四舍五入到最接近的可表达值；
-然而，与相同位数的浮点数相比，正值表示提供了更高的精度和更大的动态范围，以及许多其他优点。
-我们可以将它们简称为 posits，就像我们将 IEEE 754 标准浮点数称为 float
+然而，与相同位数的浮点数相比，posit表示提供了更高的精度和更大的动态范围，以及许多其他优点。
+我们可以将它们简称为 posits，就像我们将 IEEE 754 标准浮点数称为 floats
 一样。</p>
 <p>在valid模式下，unum
 表示一系列实数，可用于严格限制答案，就像区间算术一样，但比传统区间算术有许多改进。

@@ -27,6 +27,7 @@
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="8. 四精度测试示例" href="08_QuadPrecision.html" />
     <link rel="prev" title="6. 浮点数与Posit对比预览：32 比特下的准确性" href="06_FPvsPosit.html" /> 
   </head>
 <body>
@@ -101,6 +102,8 @@ Show Source
 <li class="toctree-l1"><a class="reference internal" href="05_IEEE754Env.html">5. 创建IEEE 754浮点环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_FPvsPosit.html">6. 浮点数与Posit对比预览：32 比特下的准确性</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">7. Posit与IEEE浮点数的对比：基于度量的研究</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_QuadPrecision.html">8. 四精度测试示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Quadratic.html">9. 二次公式</a></li>
 </ul>
 
             </nav>
@@ -137,6 +140,8 @@ Show Source
 <li class="toctree-l1"><a class="reference internal" href="05_IEEE754Env.html">5. 创建IEEE 754浮点环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_FPvsPosit.html">6. 浮点数与Posit对比预览：32 比特下的准确性</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">7. Posit与IEEE浮点数的对比：基于度量的研究</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_QuadPrecision.html">8. 四精度测试示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Quadratic.html">9. 二次公式</a></li>
 </ul>
 
             </nav>
@@ -156,36 +161,36 @@ Show Source
 而不太显而易见的是，它们还通过允许“剩余”更多位来表达数字的小数部分来<em>提高准确性</em>。</p>
 <p>举个例子，假设我们有 16 位并希望表达数字 10000。半精度 IEEE 浮点数（5
 位指数字段）可以做到这一点而无需舍入：</p>
-<div class="figure align-default" id="id3">
+<div class="figure align-default" id="id13">
 <img alt="_images/image-20230714113939885.png" src="_images/image-20230714113939885.png" />
-<p class="caption"><span class="caption-number">Fig. 7.1.1 </span><span class="caption-text">image-20230714113939885</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 7.1.1 </span><span class="caption-text">image-20230714113939885</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
 </div>
 <p>浮点表示的
 <span class="math notranslate nohighlight">\(10000 = 2^{13}\times (1+\frac{113}{512})\)</span>。这意味着我们需要一个指数范围达到<span class="math notranslate nohighlight">\(2^{-14}\)</span>到<span class="math notranslate nohighlight">\(2^{14}\)</span>的正则化浮点数，器指数至少需要5比特。而如果我们用16比特posit来表示的话，看看<span class="math notranslate nohighlight">\(2^{13}\)</span>可以用不同的es长度表示是什么样子，为了清晰就先不显示小数位。</p>
-<div class="figure align-default" id="id4">
+<div class="figure align-default" id="id14">
 <img alt="_images/image-20230714125026049.png" src="_images/image-20230714125026049.png" />
-<p class="caption"><span class="caption-number">Fig. 7.1.2 </span><span class="caption-text">image-20230714125026049</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 7.1.2 </span><span class="caption-text">image-20230714125026049</span><a class="headerlink" href="#id14" title="Permalink to this image">¶</a></p>
 </div>
 <p>这些都是将整数 13 表示为位移位（按 2 的幂缩放）的方法。
 表达该整数所需的regime位数一开始每步下降为大约一半，然后当它达到最小两位
 10 模式时，指数位就开始接管工作，总数线性增加 。
 因此，当我们打算处理幅度接近 10000 的大量数据，则存在一个“最佳点”。 只有
 es=3 或 es=4 才留出更多位给小数来准确表示 10000：</p>
-<div class="figure align-default" id="id5">
+<div class="figure align-default" id="id15">
 <img alt="_images/image-20230714125752517.png" src="_images/image-20230714125752517.png" />
-<p class="caption"><span class="caption-number">Fig. 7.1.3 </span><span class="caption-text">image-20230714125752517</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 7.1.3 </span><span class="caption-text">image-20230714125752517</span><a class="headerlink" href="#id15" title="Permalink to this image">¶</a></p>
 </div>
 <p>而对于es=3,
 动态范围远远超过16bit浮点能表示范围，可能对于大多数低精度的应用来说都是</p>
 <p>过头了。</p>
-<div class="figure align-default" id="id6">
+<div class="figure align-default" id="id16">
 <img alt="_images/image-20230714130011317.png" src="_images/image-20230714130011317.png" />
-<p class="caption"><span class="caption-number">Fig. 7.1.4 </span><span class="caption-text">image-20230714130011317</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 7.1.4 </span><span class="caption-text">image-20230714130011317</span><a class="headerlink" href="#id16" title="Permalink to this image">¶</a></p>
 </div>
 <p>如果有人想要对摩尔量进行低精度快速的化学计算，这已经足以很好地表示阿伏加德罗数了！</p>
-<div class="figure align-default" id="id7">
+<div class="figure align-default" id="id17">
 <img alt="_images/image-20230714130122292.png" src="_images/image-20230714130122292.png" />
-<p class="caption"><span class="caption-number">Fig. 7.1.5 </span><span class="caption-text">image-20230714130122292</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 7.1.5 </span><span class="caption-text">image-20230714130122292</span><a class="headerlink" href="#id17" title="Permalink to this image">¶</a></p>
 </div>
 <p>如果有人在现场可编程门阵列 (FPGA) 中将 posit
 算术用于特定的嵌入式应用，而该应用（例如信号处理或机器学习）不需要与标准存储格式兼容，则没有理由限制
@@ -207,9 +212,9 @@ float 和 double 关键字的 C 程序可以简单地重新编译为使用 32 �
 位大小的动态范围更好，并且对于 64、128 和 256 位大小几乎同样大。
 如果要将 16 位和 32 位位置分别用作 32 位和 64 位浮点的替代品，那么提高
 16 位和 32 位位置的动态范围可能很重要。</p>
-<div class="figure align-default" id="id8">
+<div class="figure align-default" id="id18">
 <img alt="_images/image-20230714131332568.png" src="_images/image-20230714131332568.png" />
-<p class="caption"><span class="caption-number">Fig. 7.2.1 </span><span class="caption-text">image-20230714131332568</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 7.2.1 </span><span class="caption-text">image-20230714131332568</span><a class="headerlink" href="#id18" title="Permalink to this image">¶</a></p>
 </div>
 <p>这些浮点数的指数大小不遵循任何数学模式，但反映了 IEEE
 委员会激烈争论的妥协方案。 试图匹配 IEEE 委员会 1985
@@ -226,9 +231,9 @@ float 和 double 关键字的 C 程序可以简单地重新编译为使用 32 �
 <p>目前我们还是假设 IEEE 的选择是合理的。 posit
 表达2的幂次的方法在很宽的范围都可以为小数释放更多的位，下面是上述 es
 的选择能提供的最大精度：</p>
-<div class="figure align-default" id="id9">
+<div class="figure align-default" id="id19">
 <img alt="_images/image-20230714132756256.png" src="_images/image-20230714132756256.png" />
-<p class="caption"><span class="caption-number">Fig. 7.2.2 </span><span class="caption-text">image-20230714132756256</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 7.2.2 </span><span class="caption-text">image-20230714132756256</span><a class="headerlink" href="#id19" title="Permalink to this image">¶</a></p>
 </div>
 <p>因此即使我们接受了IEEE 754
 的为晶体管压缩做的选择，posit在准确性方面也很容易击败浮点数。</p>
@@ -236,15 +241,15 @@ float 和 double 关键字的 C 程序可以简单地重新编译为使用 32 �
 每一次这样的增量都会导致动态范围增加四倍，这当然应该是足够的。 为了与 8
 位posit进行比较，让我们想象一个具有 3 个指数位的“四分之一精度”IEEE
 浮点数，以便我们可以将该大小包含在表中一起对比。</p>
-<div class="figure align-default" id="id10">
+<div class="figure align-default" id="id20">
 <img alt="_images/image-20230714133118900.png" src="_images/image-20230714133118900.png" />
-<p class="caption"><span class="caption-number">Fig. 7.2.3 </span><span class="caption-text">image-20230714133118900</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 7.2.3 </span><span class="caption-text">image-20230714133118900</span><a class="headerlink" href="#id20" title="Permalink to this image">¶</a></p>
 </div>
 <p>如果我们不尝试匹配 IEEE 的超大动态范围并简单地使用 0-1-2-3-4-5 作为 es
 大小，则下表是posit数的精度优势。</p>
-<div class="figure align-default" id="id11">
+<div class="figure align-default" id="id21">
 <img alt="_images/image-20230714133225224.png" src="_images/image-20230714133225224.png" />
-<p class="caption"><span class="caption-number">Fig. 7.2.4 </span><span class="caption-text">image-20230714133225224</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 7.2.4 </span><span class="caption-text">image-20230714133225224</span><a class="headerlink" href="#id21" title="Permalink to this image">¶</a></p>
 </div>
 <p>不知何故，这看起来更加理智。 请注意，对于 32
 位位置，四个额外的精度位将使它们与 20 世纪 60 年代 IBM 推出其 System 360
@@ -262,9 +267,9 @@ float 和 double 关键字的 C 程序可以简单地重新编译为使用 32 �
 我们使用如此低的精度，以便可以实际找到整个值集并使用由它们对组成的表，该表将有
 65536 个条目。 以下是四分之一精度 IEEE 样式浮点数的样子（使用 4
 位指数，而不是上一节表中使用的 3 位指数）：</p>
-<div class="figure align-default" id="id12">
+<div class="figure align-default" id="id22">
 <img alt="_images/image-20230714133725702.png" src="_images/image-20230714133725702.png" />
-<p class="caption"><span class="caption-number">Fig. 7.3.1 </span><span class="caption-text">image-20230714133725702</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 7.3.1 </span><span class="caption-text">image-20230714133725702</span><a class="headerlink" href="#id22" title="Permalink to this image">¶</a></p>
 </div>
 <p>将 float 环境设置为具有 4 位指数字段的 8 位长：</p>
 <div class="highlight-mathematica notranslate"><div class="highlight"><pre><span></span><span class="n">setfloatenv</span><span class="p">[{</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">}]</span><span class="w"></span>
@@ -272,30 +277,30 @@ float 和 double 关键字的 C 程序可以简单地重新编译为使用 32 �
 </div>
 <p><strong>floatfix</strong>
 函数将浮点强制看做整数作为输入，调整两组整数，从而将位字符串表示的浮点数按其值增递顺序排列。</p>
-<div class="figure align-default" id="id13">
+<div class="figure align-default" id="id23">
 <img alt="_images/image-20230714135826433.png" src="_images/image-20230714135826433.png" />
-<p class="caption"><span class="caption-number">Fig. 7.3.2 </span><span class="caption-text">image-20230714135826433</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 7.3.2 </span><span class="caption-text">image-20230714135826433</span><a class="headerlink" href="#id23" title="Permalink to this image">¶</a></p>
 </div>
 <p>float8 列表是由每种可能的位模式表示的浮点集。 使用 TableForm
 打印列表是一个技巧，可以使分数自动以比整数更小的字体排版。</p>
-<div class="figure align-default" id="id14">
+<div class="figure align-default" id="id24">
 <img alt="_images/image-20230714135854692.png" src="_images/image-20230714135854692.png" />
-<p class="caption"><span class="caption-number">Fig. 7.3.3 </span><span class="caption-text">image-20230714135854692</span><a class="headerlink" href="#id14" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 7.3.3 </span><span class="caption-text">image-20230714135854692</span><a class="headerlink" href="#id24" title="Permalink to this image">¶</a></p>
 </div>
 <p>该集合有 256 个元素，但其中 14 个元素表示 NaN（不确定）。
 另请注意，由于“负零”，值 0 在上述集合中出现了两次。 浮点数的最小正值为
 1/512，最大值为 240，这使得它们的动态范围约为 5 个十进制。</p>
 <p>现在构造 nbits=8 的posit。 如果我们选择 es=1，请注意 minpos 和 maxpos
 的值超出了浮点数的动态范围：</p>
-<div class="figure align-default" id="id15">
+<div class="figure align-default" id="id25">
 <img alt="_images/image-20230714140141910.png" src="_images/image-20230714140141910.png" />
-<p class="caption"><span class="caption-number">Fig. 7.3.4 </span><span class="caption-text">image-20230714140141910</span><a class="headerlink" href="#id15" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 7.3.4 </span><span class="caption-text">image-20230714140141910</span><a class="headerlink" href="#id25" title="Permalink to this image">¶</a></p>
 </div>
 <p>再次生成表格，就像我们有 2 的补码整数，从最大负数到最大正数一样。
 positfix 函数会像 floatfix 那样进行调整，将 posits 按升序排列。</p>
-<div class="figure align-default" id="id16">
+<div class="figure align-default" id="id26">
 <img alt="_images/image-20230714140512577.png" src="_images/image-20230714140512577.png" />
-<p class="caption"><span class="caption-number">Fig. 7.3.5 </span><span class="caption-text">image-20230714140512577</span><a class="headerlink" href="#id16" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 7.3.5 </span><span class="caption-text">image-20230714140512577</span><a class="headerlink" href="#id26" title="Permalink to this image">¶</a></p>
 </div>
 <p>对于Posit来说，<em>不存在</em>浪费的情况。 所有位模式都代表独特的数学量。
 这与 IEEE 浮点数的另一项数学违规有关。 如果
@@ -361,20 +366,20 @@ positfix 函数会像 floatfix 那样进行调整，将 posits 按升序排列�
 <span class="math notranslate nohighlight">\(-\infty\)</span>，因为在对数标度上，0 和
 <span class="math notranslate nohighlight">\(\infty\)</span>都距离任何非零实数无限远 。
 这就是为什么将大结果“舍入”为无穷大（上溢）或将小结果“舍入”为零（下溢）是一场灾难。</p>
-<div class="figure align-default" id="id17">
+<div class="figure align-default" id="id27">
 <img alt="_images/image-20230714212208935.png" src="_images/image-20230714212208935.png" />
-<p class="caption"><span class="caption-number">Fig. 7.4.1 </span><span class="caption-text">image-20230714212208935</span><a class="headerlink" href="#id17" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 7.4.1 </span><span class="caption-text">image-20230714212208935</span><a class="headerlink" href="#id27" title="Permalink to this image">¶</a></p>
 </div>
 <p>如果数字相差十倍，则准确度为零； 我们甚至不知道结果的数量级：</p>
-<div class="figure align-default" id="id18">
+<div class="figure align-default" id="id28">
 <img alt="_images/image-20230714212225341.png" src="_images/image-20230714212225341.png" />
-<p class="caption"><span class="caption-number">Fig. 7.4.2 </span><span class="caption-text">image-20230714212225341</span><a class="headerlink" href="#id18" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 7.4.2 </span><span class="caption-text">image-20230714212225341</span><a class="headerlink" href="#id28" title="Permalink to this image">¶</a></p>
 </div>
 <p>工程师应该喜欢这个定义的属性：如果答案偏差 1
 dB，则以下是十进制数量精度：</p>
-<div class="figure align-default" id="id19">
+<div class="figure align-default" id="id29">
 <img alt="_images/image-20230714212351524.png" src="_images/image-20230714212351524.png" />
-<p class="caption"><span class="caption-number">Fig. 7.4.3 </span><span class="caption-text">image-20230714212351524</span><a class="headerlink" href="#id19" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 7.4.3 </span><span class="caption-text">image-20230714212351524</span><a class="headerlink" href="#id29" title="Permalink to this image">¶</a></p>
 </div>
 <p>如果答案偏差 0.1 dB，那么我们的精确度为 2 位小数； 偏差0.01 dB
 表示精度为 3 位小数，依此类推。</p>
@@ -385,9 +390,9 @@ dB，则以下是十进制数量精度：</p>
 <p>(17/16,9/8] 中的值四舍五入为 9/8。</p>
 <p>如果我们碰巧有一个值正好是 15/16、1 或 9/8，那么小数精度就是无穷大。
 在这些值之间，小数精度降至最低。</p>
-<div class="figure align-default" id="id20">
+<div class="figure align-default" id="id30">
 <img alt="_images/image-20230714212749269.png" src="_images/image-20230714212749269.png" />
-<p class="caption"><span class="caption-number">Fig. 7.4.4 </span><span class="caption-text">image-20230714212749269</span><a class="headerlink" href="#id20" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 7.4.4 </span><span class="caption-text">image-20230714212749269</span><a class="headerlink" href="#id30" title="Permalink to this image">¶</a></p>
 </div>
 <p>请注意两个最小值处的轻微不连续性；
 这是因为几何平均值和算术平均值之间的差异。
@@ -402,33 +407,33 @@ dB，则以下是十进制数量精度：</p>
 这种情况只发生在范围的极端处，但它有助于提高小数精度。
 例如，在此处检查的 8 位posit集合，三个最大的正实数是 512、1024 和
 4096。以下是该范围内 x 的位置小数精度：</p>
-<div class="figure align-default" id="id21">
+<div class="figure align-default" id="id31">
 <img alt="_images/image-20230714214127152.png" src="_images/image-20230714214127152.png" />
-<p class="caption"><span class="caption-number">Fig. 7.4.5 </span><span class="caption-text">image-20230714214127152</span><a class="headerlink" href="#id21" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 7.4.5 </span><span class="caption-text">image-20230714214127152</span><a class="headerlink" href="#id31" title="Permalink to this image">¶</a></p>
 </div>
 <p>512 和 1024 的几何平均值为
 <span class="math notranslate nohighlight">\(724.077\cdots\)</span>，但小数部分的正常线性舍入使用中点 768
 作为切换点，从而创建微妙但可见的不连续性。 另一方面，1024 到 4096
 之间的几何平均值恰好是 2048，这也是 posits 用于切换点的值。
 下面是正posit数的十进制数量级精度图：</p>
-<div class="figure align-default" id="id22">
+<div class="figure align-default" id="id32">
 <img alt="_images/image-20230714214546832.png" src="_images/image-20230714214546832.png" />
-<p class="caption"><span class="caption-number">Fig. 7.4.6 </span><span class="caption-text">image-20230714214546832</span><a class="headerlink" href="#id22" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 7.4.6 </span><span class="caption-text">image-20230714214546832</span><a class="headerlink" href="#id32" title="Permalink to this image">¶</a></p>
 </div>
 <p>锥形的精度非常明显。
 最常见的数字位于可能指数范围的中心，精度最高。下面是测试的 8
 位浮点数的十进制数量级精度图：</p>
-<div class="figure align-default" id="id23">
+<div class="figure align-default" id="id33">
 <img alt="_images/image-20230714214926137.png" src="_images/image-20230714214926137.png" />
-<p class="caption"><span class="caption-number">Fig. 7.4.7 </span><span class="caption-text">image-20230714214926137</span><a class="headerlink" href="#id23" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 7.4.7 </span><span class="caption-text">image-20230714214926137</span><a class="headerlink" href="#id33" title="Permalink to this image">¶</a></p>
 </div>
 <p>动态范围明显小于posit数，并且仅在左侧发生denormal才开始逐渐减小精度。</p>
 <p>这些图表全面地显示了整个数字系统在动态范围内的准确性，但精确点处的垂直尖峰使得很难比较两个系统。
 那让我们持悲观态度，看看数字集中每个点的最坏情况精度。
 下图仅显示了每个波谷的底部，使我们能够在同一图上显示posit和浮点的精度：</p>
-<div class="figure align-default" id="id24">
+<div class="figure align-default" id="id34">
 <img alt="_images/image-20230714215413547.png" src="_images/image-20230714215413547.png" />
-<p class="caption"><span class="caption-number">Fig. 7.4.8 </span><span class="caption-text">image-20230714215413547</span><a class="headerlink" href="#id24" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 7.4.8 </span><span class="caption-text">image-20230714215413547</span><a class="headerlink" href="#id34" title="Permalink to this image">¶</a></p>
 </div>
 <p>在更高的精度下，锯齿状不太明显，并且posit的decimal精度是一个对称的三角形轮廓，在中心达到峰值；
 浮点模式始终形成一个矩形，左侧有一个非规范化浮点的斜坡。
@@ -462,16 +467,394 @@ es
 作者指出，在该系统中可以有多种方式来表示特定值（冗余位模式），并且他提出了这样的约定：使用
 G 中存储最小的值的表示形式； 其他位模式在系统下变得毫无意义。</p>
 <p>Morris 浮点数如下所示，有五个子字段：</p>
-<div class="figure align-default" id="id25">
+<div class="figure align-default" id="id35">
 <img alt="_images/image-20230714221036607.png" src="_images/image-20230714221036607.png" />
-<p class="caption"><span class="caption-number">Fig. 7.5.1 </span><span class="caption-text">image-20230714221036607</span><a class="headerlink" href="#id25" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 7.5.1 </span><span class="caption-text">image-20230714221036607</span><a class="headerlink" href="#id35" title="Permalink to this image">¶</a></p>
 </div>
-<p>请注意，我们仅在 G
+<p>注意我们仅在 G
 位和指数符号位之间以及指数符号位和指数位之间显示黑色分隔线。
 这提醒我们，其他分区位置根据G的内容而变化。</p>
 <p>我们使用 <span class="math notranslate nohighlight">\(nfbit\)</span> 表示标准浮点数中的位数，因此让我们使用
 <span class="math notranslate nohighlight">\(nmbit\)</span> 表示 Morris 浮点数中的位数。 我们可以使用 gs 作为 G
 字段的大小，并使用 <strong>setmorrisenv</strong> 定义一个 Morris float 环境：</p>
+<div class="figure align-default" id="id36">
+<img alt="_images/image-20230714225348076.png" src="_images/image-20230714225348076.png" />
+<p class="caption"><span class="caption-number">Fig. 7.5.2 </span><span class="caption-text">image-20230714225348076</span><a class="headerlink" href="#id36" title="Permalink to this image">¶</a></p>
+</div>
+<p>比如设定一个8位的环境，1 gs 比特</p>
+<div class="figure align-default" id="id37">
+<img alt="_images/image-20230714225454830.png" src="_images/image-20230714225454830.png" />
+<p class="caption"><span class="caption-number">Fig. 7.5.3 </span><span class="caption-text">image-20230714225454830</span><a class="headerlink" href="#id37" title="Permalink to this image">¶</a></p>
+</div>
+<p>一个早期警告。 这个配置动态范围非常小。 事实上，如果我们使用 8
+位来表示从 -128 到 127 的无符号整数，动态范围会更大。</p>
+<p>现在我们需要 f2x 的等价物，我们可以将其称为
+m2x，它遵循莫里斯指定的规则。</p>
+<div class="figure align-default" id="id38">
+<img alt="_images/image-20230714225708841.png" src="_images/image-20230714225708841.png" />
+<p class="caption"><span class="caption-number">Fig. 7.5.4 </span><span class="caption-text">image-20230714225708841</span><a class="headerlink" href="#id38" title="Permalink to this image">¶</a></p>
+</div>
+<p>对于以下内容向读者致歉，但重要的是要看到简单地添加描述指数大小的字段所导致的混乱：</p>
+<div class="figure align-default" id="id39">
+<img alt="_images/image-20230715085837853.png" src="_images/image-20230715085837853.png" />
+<p class="caption"><span class="caption-number">Fig. 7.5.5 </span><span class="caption-text">image-20230715085837853</span><a class="headerlink" href="#id39" title="Permalink to this image">¶</a></p>
+</div>
+<p>由有序位串表示的值的离散图为我们提供了有关莫里斯提案缺点的第二条线索：</p>
+<div class="figure align-default" id="id40">
+<img alt="_images/image-20230715085920846.png" src="_images/image-20230715085920846.png" />
+<p class="caption"><span class="caption-number">Fig. 7.5.6 </span><span class="caption-text">image-20230715085920846</span><a class="headerlink" href="#id40" title="Permalink to this image">¶</a></p>
+</div>
+<p>这种格式的排序产生了多么疯狂的结果啊！
+这就是莫里斯锥度精度方法的关键失败。
+下面对值进行排序并去掉许多冗余表示：</p>
+<div class="figure align-default" id="id41">
+<img alt="_images/image-20230715090028916.png" src="_images/image-20230715090028916.png" />
+<p class="caption"><span class="caption-number">Fig. 7.5.7 </span><span class="caption-text">image-20230715090028916</span><a class="headerlink" href="#id41" title="Permalink to this image">¶</a></p>
+</div>
+<p>8 位可以产生 <span class="math notranslate nohighlight">\(2^8=256\)</span> 个不同的位模式。
+而上面的列表中有多少个数学值？</p>
+<div class="figure align-default" id="id42">
+<img alt="_images/image-20230715090115992.png" src="_images/image-20230715090115992.png" />
+<p class="caption"><span class="caption-number">Fig. 7.5.8 </span><span class="caption-text">image-20230715090115992</span><a class="headerlink" href="#id42" title="Permalink to this image">¶</a></p>
+</div>
+<p>应该有 256 个不同的值 …，但我们只有 161 个。Morris
+系统散布着表达相同值的冗余方式，浪费了超过<em>三分之一</em>的位模式。</p>
+<p>以此作为数字系统，我们可以将小数精度与位置和传统浮点数一起绘制：</p>
+<div class="figure align-default" id="id43">
+<img alt="_images/image-20230715090244755.png" src="_images/image-20230715090244755.png" />
+<p class="caption"><span class="caption-number">Fig. 7.5.9 </span><span class="caption-text">image-20230715090244755</span><a class="headerlink" href="#id43" title="Permalink to this image">¶</a></p>
+</div>
+<p>在最好情况下，莫里斯浮点可以匹配posit精度，但动态范围要小得多。
+让我们至少证明，通过在 G 中允许两位而不是一位，Morris
+浮点可以具有更大的动态范围（以各处精度非常低为代价）：</p>
+<div class="figure align-default" id="id44">
+<img alt="_images/image-20230716161358209.png" src="_images/image-20230716161358209.png" />
+<p class="caption"><span class="caption-number">Fig. 7.5.10 </span><span class="caption-text">image-20230716161358209</span><a class="headerlink" href="#id44" title="Permalink to this image">¶</a></p>
+</div>
+<p>这是删除所有冗余后得到的结果：</p>
+<div class="figure align-default" id="id45">
+<img alt="_images/image-20230716162254947.png" src="_images/image-20230716162254947.png" />
+<p class="caption"><span class="caption-number">Fig. 7.5.11 </span><span class="caption-text">image-20230716162254947</span><a class="headerlink" href="#id45" title="Permalink to this image">¶</a></p>
+</div>
+<p>现在，位模式的浪费更加严重，因为只有 145 个不同的值。</p>
+<div class="figure align-default" id="id46">
+<img alt="_images/image-20230716162356909.png" src="_images/image-20230716162356909.png" />
+<p class="caption"><span class="caption-number">Fig. 7.5.12 </span><span class="caption-text">image-20230716162356909</span><a class="headerlink" href="#id46" title="Permalink to this image">¶</a></p>
+</div>
+<p>至少动态范围现在从 <span class="math notranslate nohighlight">\(2^{-15}\)</span> 到 <span class="math notranslate nohighlight">\(2^{15}\)</span>。
+但是，在定义浮点数的整个范围内，除了 1/2 到 4
+之间的一小部分幅度之外，精度比浮点数还差，它设法维持相同的精度。</p>
+<p>嗯… 如果我们为posit提供另一比特用于动态范围，会发生什么？</p>
+<div class="figure align-default" id="id47">
+<img alt="_images/image-20230716162816163.png" src="_images/image-20230716162816163.png" />
+<p class="caption"><span class="caption-number">Fig. 7.5.13 </span><span class="caption-text">image-20230716162816163</span><a class="headerlink" href="#id47" title="Permalink to this image">¶</a></p>
+</div>
+<p>同样地来比较三个数字系统</p>
+<div class="figure align-default" id="id48">
+<img alt="_images/image-20230716185228311.png" src="_images/image-20230716185228311.png" />
+<p class="caption"><span class="caption-number">Fig. 7.5.14 </span><span class="caption-text">image-20230716185228311</span><a class="headerlink" href="#id48" title="Permalink to this image">¶</a></p>
+</div>
+<p>这是一个字节大小的数字能表示的巨大动态范围！
+posit数处处都与莫里斯浮点相匹配或更好。 跟IEEE
+浮点相比，除了靠近上溢或下溢位置的区域外位置，也都有相同的精度。</p>
+<p>这显示了设计好的数字系统以充分利用每个位模式具有的价值。
+以低精度尝试所提出的系统是一个快速评估的方法，而用 32 位或 64
+位表示评估时其缺点则很有可能被掩盖。</p>
+<p>这很有趣，但对于接下来的部分，我们需要返回到 {8,1} 位置环境来与 8
+位浮点数进行比较：</p>
+<div class="figure align-default" id="id49">
+<img alt="_images/image-20230716190712712.png" src="_images/image-20230716190712712.png" />
+<p class="caption"><span class="caption-number">Fig. 7.5.15 </span><span class="caption-text">image-20230716190712712</span><a class="headerlink" href="#id49" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="posit">
+<h2><span class="section-number">7.6. </span>浮点和posit比较一元运算<a class="headerlink" href="#posit" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="id3">
+<h3><span class="section-number">7.6.1. </span>倒数<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
+<p>我们可以比较倒数闭包，即 1/x 可以精确表示为集合成员的情况的百分比。
+比较浮点数或posit的倒数分别是：精确值、有限但不精确、和产生
+NaN、上溢或下溢的整组的百分比：</p>
+<div class="figure align-default" id="id50">
+<img alt="_images/image-20230716191118553.png" src="_images/image-20230716191118553.png" />
+<p class="caption"><span class="caption-number">Fig. 7.6.1 </span><span class="caption-text">image-20230716191118553</span><a class="headerlink" href="#id50" title="Permalink to this image">¶</a></p>
+</div>
+<p>只有 34 个浮点值具有精确的倒数。 相比之下，256 个 unum 值中的 48
+个具有精确的倒数，并且不会因溢出而导致灾难性的精度损失。 IEEE
+浮点定义是一个“拼凑”，因为它在低端是subnormal数（其倒数错误地溢出到无穷大），而在高端数字换成了
+NaN 值。</p>
+<p>下图可以更容易看出浮点和posit的相对性能。 整个集合计算 1/x
+时的误差按从最小到最大的顺序排序并绘制。</p>
+<div class="figure align-default" id="id51">
+<img alt="_images/image-20230716192046096.png" src="_images/image-20230716192046096.png" />
+<p class="caption"><span class="caption-number">Fig. 7.6.2 </span><span class="caption-text">image-20230716192046096</span><a class="headerlink" href="#id51" title="Permalink to this image">¶</a></p>
+</div>
+<p>posit数loss比浮点数增长得更慢，并且永远不会达到无穷大。</p>
+</div>
+<div class="section" id="id4">
+<h3><span class="section-number">7.6.2. </span>平方根<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
+<p>我们还可以比较平方根闭包，即 <span class="math notranslate nohighlight">\(\sqrt{x}\)</span>
+可以精确表示为集合成员的情况的百分比。 <strong>sqrtbarchart</strong>
+例程还找出平方根得出精确、有限但不精确或产生 NaN 的比例。
+平方根运算不能上溢或下溢。 负输入产生 NaN 结果，但由于posit
+的“<span class="math notranslate nohighlight">\(\pm\infty\)</span>”实际上意味着无符号无穷大，因此<span class="math notranslate nohighlight">\(\pm\infty\)</span>
+的平方根是<span class="math notranslate nohighlight">\(\pm\infty\)</span>，因此对于该输入也是封闭的 。</p>
+<div class="figure align-default" id="id52">
+<img alt="_images/image-20230716193018044.png" src="_images/image-20230716193018044.png" />
+<p class="caption"><span class="caption-number">Fig. 7.6.3 </span><span class="caption-text">image-20230716193018044</span><a class="headerlink" href="#id52" title="Permalink to this image">¶</a></p>
+</div>
+<p>posit表现较好，但乍一看优势不大。 条形图并未显示浮点数的不精确程度。
+排序的误差图可以看出比计算 1/x 时的差异更大。 以下是每个非 NaN 的
+<span class="math notranslate nohighlight">\(\sqrt{x}\)</span>值误差的排序图：</p>
+<div class="figure align-default" id="id53">
+<img alt="_images/image-20230716193644632.png" src="_images/image-20230716193644632.png" />
+<p class="caption"><span class="caption-number">Fig. 7.6.4 </span><span class="caption-text">image-20230716193644632</span><a class="headerlink" href="#id53" title="Permalink to this image">¶</a></p>
+</div>
+<p>posit的误差比浮点小一半（对于有结果的数）</p>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">7.6.3. </span>平方<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
+<p>另一个常见的一元运算是
+<span class="math notranslate nohighlight">\(x^2\)</span>。上溢和下溢是对浮点数求平方时常见的灾难。posit也会根据
+IEEE 舍入规则会发生上溢或下溢，但至少损失只是几个小数而不是无穷大。</p>
+<div class="figure align-default" id="id54">
+<img alt="_images/image-20230716194321916.png" src="_images/image-20230716194321916.png" />
+<p class="caption"><span class="caption-number">Fig. 7.6.5 </span><span class="caption-text">image-20230716194321916</span><a class="headerlink" href="#id54" title="Permalink to this image">¶</a></p>
+</div>
+<p>posit表现好很多，主要是没有那些异常情况</p>
+<div class="figure align-default" id="id55">
+<img alt="_images/image-20230716194455347.png" src="_images/image-20230716194455347.png" />
+<p class="caption"><span class="caption-number">Fig. 7.6.6 </span><span class="caption-text">image-20230716194455347</span><a class="headerlink" href="#id55" title="Permalink to this image">¶</a></p>
+</div>
+<p>每个posit数都可以平方。
+（无符号无穷大的平方还是无符号无穷大。）相比之下，几乎一半的浮点数平方会导致结果信息完全丢失。</p>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">7.6.4. </span>对数（以 2 为底）<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h3>
+<p>我们还可以比较以 2 为底的对数闭包，即 <span class="math notranslate nohighlight">\(log_2(x)\)</span>
+可以精确表示为集合成员的情况的百分比。 与平方根一样，大约一半的值会产生
+NaN，因为负值的对数是复数。 注意：我们允许 posits
+返回<span class="math notranslate nohighlight">\(\pm\infty\)</span>作为0的对数,
+返回0作为<span class="math notranslate nohighlight">\(\pm\infty\)</span>的对数。 记无穷大是无符号的，就像零一样。</p>
+<div class="figure align-default" id="id56">
+<img alt="_images/image-20230716195104752.png" src="_images/image-20230716195104752.png" />
+<p class="caption"><span class="caption-number">Fig. 7.6.7 </span><span class="caption-text">image-20230716195104752</span><a class="headerlink" href="#id56" title="Permalink to this image">¶</a></p>
+</div>
+<p>posit还是做得更好，乍一看，优势似乎很小。 但在 posit 环境中还有更多 2
+的整数次幂，以 2 为底的对数可以精确表达。 以下是每个非 NaN
+或无穷大值的误差排序：</p>
+<div class="figure align-default" id="id57">
+<img alt="_images/image-20230716195534400.png" src="_images/image-20230716195534400.png" />
+<p class="caption"><span class="caption-number">Fig. 7.6.8 </span><span class="caption-text">image-20230716195534400</span><a class="headerlink" href="#id57" title="Permalink to this image">¶</a></p>
+</div>
+<p>posit误差又只有浮点的一半</p>
+</div>
+<div class="section" id="id7">
+<h3><span class="section-number">7.6.5. </span>指数（以 2 为底）<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h3>
+<p>也许应该加一个<span class="math notranslate nohighlight">\(2^x\)</span>。如果你可以做<span class="math notranslate nohighlight">\(log_2(x)\)</span>,
+那么只需要一个缩放因子你就可以做<span class="math notranslate nohighlight">\(ln(x)\)</span>或是<span class="math notranslate nohighlight">\(log_{10}(x)\)</span>
+。类似地，当你可以做<span class="math notranslate nohighlight">\(2^x\)</span>，就可以容易地导出<span class="math notranslate nohighlight">\(e^x\)</span>或是<span class="math notranslate nohighlight">\(10^x\)</span>的缩放因子。</p>
+<div class="figure align-default" id="id58">
+<img alt="_images/image-20230716200506094.png" src="_images/image-20230716200506094.png" />
+<p class="caption"><span class="caption-number">Fig. 7.6.9 </span><span class="caption-text">image-20230716200506094</span><a class="headerlink" href="#id58" title="Permalink to this image">¶</a></p>
+</div>
+<p>posit有一种例外情况：当参数为 <span class="math notranslate nohighlight">\(\pm\infty\)</span> 时，结果为 NaN。
+如果结果完全由无限值组成，我们能使用<span class="math notranslate nohighlight">\(\pm\infty\)</span> 作为合法答案，但
+<span class="math notranslate nohighlight">\(2^{-\infty}\)</span> 为零，因此 <span class="math notranslate nohighlight">\(2^{\pm\infty}\)</span>是不确定的。</p>
+<p>posit 的最大误差非常大，因为 <span class="math notranslate nohighlight">\(2^{maxpos}\)</span> 将被舍入到 maxpos。
+对此只有少数错误误差到了<span class="math notranslate nohighlight">\(log_{10}(2^{4096})\approx 1233\)</span>
+个小数位。
+但是比较浮点哪个更糟糕：丢失超过一千位小数，还是丢失无限位小数？
+好吧，如果您可以远离那些（罕见的）非常大的值，它仍然是赢的，因为较小值的错误对于posit来说表现得更好。
+可以这样想：唯一一次在 posits
+中出现较大的小数损失是在处理远远超出浮点数甚至可以表示为输入参数的数字时。</p>
+<div class="figure align-default" id="id59">
+<img alt="_images/image-20230716202249940.png" src="_images/image-20230716202249940.png" />
+<p class="caption"><span class="caption-number">Fig. 7.6.10 </span><span class="caption-text">image-20230716202249940</span><a class="headerlink" href="#id59" title="Permalink to this image">¶</a></p>
+</div>
+<p>对于常见的一元运算
+1/x、<span class="math notranslate nohighlight">\(\sqrt(x)\)</span>、<span class="math notranslate nohighlight">\(x^2\)</span>、<span class="math notranslate nohighlight">\(log_2(x)\)</span> 和
+<span class="math notranslate nohighlight">\(2^x\)</span>，posit一致地比具有相同位数的浮点数更准确，
+并在更大的动态范围内产生有意义的结果。 精度越高posit的优势就越大。
+如果我们要显示比较 32 位浮点与 32
+位位置的一元运算的图表，它们将很难读，因为当需要当以足够大的比例绘制图表以显示浮点错误时，posit的误差将紧贴图的
+x 轴！</p>
+<p>现在，我们将注意力转向带有两个参数的四种基本算术运算：加法、减法、乘法和除法。</p>
+</div>
+</div>
+<div class="section" id="id8">
+<h2><span class="section-number">7.7. </span>两参数的操作<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h2>
+<p>现在我们开始研究需要两个操作数的四个常规算术运算 + - */。
+为了帮助可视化 65536 个结果，我们可以制作 256 x 256
+的“闭合图”，一目了然地显示结果中哪些部分是精确、不精确、上溢、下溢或
+NaN。</p>
+<div class="section" id="id9">
+<h3><span class="section-number">7.7.1. </span>加减法<a class="headerlink" href="#id9" title="Permalink to this heading">¶</a></h3>
+<p>因为 <span class="math notranslate nohighlight">\(x-y=x+(-y)\)</span>
+在浮点数和posit数中都可以完美工作，因此无需单独研究减法。
+对于加法运算，我们精确计算出 z=x+y
+结果，将其与每个数字系统规则返回的求和进行比较。
+结果可能是精确的，或必须舍入到附近的有限非零数，或上溢出或下溢，或是像<span class="math notranslate nohighlight">\(\infty-\infty\)</span>产生
+NaN 。 每一个都用颜色编码，因此我们可以一目了然地查看整个加法表。
+在舍有入情况下，颜色编码是从黑色（精确）到洋红色（posit或浮点的最大误差）的渐变。
+以下是 float 和 unum 的闭合图。 首先是浮点数：</p>
+<div class="figure align-default" id="id60">
+<img alt="_images/image-20230716203823561.png" src="_images/image-20230716203823561.png" />
+<p class="caption"><span class="caption-number">Fig. 7.7.1 </span><span class="caption-text">image-20230716203823561</span><a class="headerlink" href="#id60" title="Permalink to this image">¶</a></p>
+</div>
+<div class="figure align-default" id="id61">
+<img alt="_images/image-20230716203851517.png" src="_images/image-20230716203851517.png" />
+<p class="caption"><span class="caption-number">Fig. 7.7.2 </span><span class="caption-text">image-20230716203851517</span><a class="headerlink" href="#id61" title="Permalink to this image">¶</a></p>
+</div>
+<p>由于输入中的所有 NaN 将以 NaN 为结果，边框框架都以黄色显示。
+如果仔细观察左上角和右下角，您会看到将<span class="math notranslate nohighlight">\(\infty\)</span>加到<span class="math notranslate nohighlight">\(-\infty\)</span>以及将<span class="math notranslate nohighlight">\(-\infty\)</span>
+加到<span class="math notranslate nohighlight">\(\infty\)</span>的额外的 NaN 结果。</p>
+<p>大的正值或大的负值的结果会溢出到<span class="math notranslate nohighlight">\(\infty\)</span>或<span class="math notranslate nohighlight">\(-\infty\)</span>，但加法运算符不会发生下溢。当输入的量级差异很大时，误差会从洋红色渐变为黑色，因为在这种情况下，小数精度的损失非常小。</p>
+<p>这是posit的闭合图及其汇总表：</p>
+<div class="figure align-default" id="id62">
+<img alt="_images/image-20230716204800155.png" src="_images/image-20230716204800155.png" />
+<p class="caption"><span class="caption-number">Fig. 7.7.3 </span><span class="caption-text">image-20230716204800155</span><a class="headerlink" href="#id62" title="Permalink to this image">¶</a></p>
+</div>
+<div class="figure align-default" id="id63">
+<img alt="_images/image-20230716204841259.png" src="_images/image-20230716204841259.png" />
+<p class="caption"><span class="caption-number">Fig. 7.7.4 </span><span class="caption-text">image-20230716204841259</span><a class="headerlink" href="#id63" title="Permalink to this image">¶</a></p>
+</div>
+<p>注意到的第一件事是求和精确的黑色区域比浮点数大得多。
+那些区域中，是大小相似但符号相反的posit数，从而导致数字抵消。当幅度接近动态范围的中心时，抵消数字会产生较小的幅度数字，需要更少的小数位来准确表示。锥形精度正是在这些情况下想要的，并且这些情况在posit上比浮点数更常见，因为位置在动态范围中心附近有更多的小数数字。</p>
+<p>初看起来没有 NaN 情况，但在最左下角确实有一个琥珀色方块，代表将
+<span class="math notranslate nohighlight">\(\pm\infty\)</span> 加上 <span class="math notranslate nohighlight">\(\pm\infty\)</span>时发生的情况。
+上溢的可能已被消除。</p>
+<p>以下是浮点数与定点数的加法性能总结：</p>
+<div class="figure align-default" id="id64">
+<img alt="_images/image-20230716205631449.png" src="_images/image-20230716205631449.png" />
+<p class="caption"><span class="caption-number">Fig. 7.7.5 </span><span class="caption-text">image-20230716205631449</span><a class="headerlink" href="#id64" title="Permalink to this image">¶</a></p>
+</div>
+<p>精确求和运算的发生率更高是显而易见的。
+与单操作数函数一样，我们可以对小数误差进行排序，并绘制图表来比较浮点加法与正加法的精度损失：</p>
+<div class="figure align-default" id="id65">
+<img alt="_images/image-20230716205721200.png" src="_images/image-20230716205721200.png" />
+<p class="caption"><span class="caption-number">Fig. 7.7.6 </span><span class="caption-text">image-20230716205721200</span><a class="headerlink" href="#id65" title="Permalink to this image">¶</a></p>
+</div>
+<p>为了清楚起见，该图仅绘制了 65536 个误差中的前 64000 个误差。
+如果绘制整个集合，最后几个posit加法案例的小数误差高达
+0.3，但只有在表达远远超出浮点数动态范围的数字时才会发生这种情况。</p>
+<div class="figure align-default" id="id66">
+<img alt="_images/image-20230716210030086.png" src="_images/image-20230716210030086.png" />
+<p class="caption"><span class="caption-number">Fig. 7.7.7 </span><span class="caption-text">image-20230716210030086</span><a class="headerlink" href="#id66" title="Permalink to this image">¶</a></p>
+</div>
+<p>最坏的情况是如果 maxpos+maxpos 四舍五入到 maxpos，则小数误差为
+<span class="math notranslate nohighlight">\(log_{10}(2)=0.3\)</span>。 IEEE
+将结果“舍入”为无穷大，从而产生无限小数误差。</p>
+</div>
+<div class="section" id="id10">
+<h3><span class="section-number">7.7.2. </span>乘法<a class="headerlink" href="#id10" title="Permalink to this heading">¶</a></h3>
+<p>我们使用类似的方法来比较浮点和posit乘法的效果。
+与加法不同，乘法可能会导致浮点数下溢。 “gradual underflow
+逐渐下溢”区域提供了一些保护，正如您在闭包图的中心看到的那样。
+如果没有非标准化浮动，蓝色下溢区域将是完整的菱形。</p>
+<div class="figure align-default" id="id67">
+<img alt="_images/image-20230716210445694.png" src="_images/image-20230716210445694.png" />
+<p class="caption"><span class="caption-number">Fig. 7.7.8 </span><span class="caption-text">image-20230716210445694</span><a class="headerlink" href="#id67" title="Permalink to this image">¶</a></p>
+</div>
+<div class="figure align-default" id="id68">
+<img alt="_images/image-20230716210525630.png" src="_images/image-20230716210525630.png" />
+<p class="caption"><span class="caption-number">Fig. 7.7.9 </span><span class="caption-text">image-20230716210525630</span><a class="headerlink" href="#id68" title="Permalink to this image">¶</a></p>
+</div>
+<p>posit乘的颜色要少好多，这是一件好事。 只有两个像素亮起为
+NaN，紧邻轴具有“零”标签的位置。 这就是 <span class="math notranslate nohighlight">\(\pm\infty\)</span> 乘以 0 的地方。</p>
+<div class="figure align-default" id="id69">
+<img alt="_images/image-20230716210609747.png" src="_images/image-20230716210609747.png" />
+<p class="caption"><span class="caption-number">Fig. 7.7.10 </span><span class="caption-text">image-20230716210609747</span><a class="headerlink" href="#id69" title="Permalink to this image">¶</a></p>
+</div>
+<div class="figure align-default" id="id70">
+<img alt="_images/image-20230716210757326.png" src="_images/image-20230716210757326.png" />
+<p class="caption"><span class="caption-number">Fig. 7.7.11 </span><span class="caption-text">image-20230716210757326</span><a class="headerlink" href="#id70" title="Permalink to this image">¶</a></p>
+</div>
+<p>浮点比posit有更多的准确值，但成本却很高。
+如图所示，几乎四分之一的浮点乘积会上溢或下溢，并且对于更高精度的浮点，该比例并不会减少。</p>
+<div class="figure align-default" id="id71">
+<img alt="_images/image-20230716210929455.png" src="_images/image-20230716210929455.png" />
+<p class="caption"><span class="caption-number">Fig. 7.7.12 </span><span class="caption-text">image-20230716210929455</span><a class="headerlink" href="#id71" title="Permalink to this image">¶</a></p>
+</div>
+<p>最坏情况的 posits 舍入发生在 maxpos * maxpos 中，它会舍入到 maxpos。
+这个点意味着（非常罕见）损失约 3.6 个小数。
+如下图所示，与浮点数相比，posit在最小化乘法误差方面要好得多：</p>
+<div class="figure align-default" id="id72">
+<img alt="_images/image-20230716211056754.png" src="_images/image-20230716211056754.png" />
+<p class="caption"><span class="caption-number">Fig. 7.7.13 </span><span class="caption-text">image-20230716211056754</span><a class="headerlink" href="#id72" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="id11">
+<h3><span class="section-number">7.7.3. </span>除法<a class="headerlink" href="#id11" title="Permalink to this heading">¶</a></h3>
+<p>类似地，我们可以比较除法运算的闭包。
+它几乎是乘法图的另外一种象限的排列。</p>
+<div class="figure align-default" id="id73">
+<img alt="_images/image-20230716211218951.png" src="_images/image-20230716211218951.png" />
+<p class="caption"><span class="caption-number">Fig. 7.7.14 </span><span class="caption-text">image-20230716211218951</span><a class="headerlink" href="#id73" title="Permalink to this image">¶</a></p>
+</div>
+<div class="figure align-default" id="id74">
+<img alt="_images/image-20230716211240370.png" src="_images/image-20230716211240370.png" />
+<p class="caption"><span class="caption-number">Fig. 7.7.15 </span><span class="caption-text">image-20230716211240370</span><a class="headerlink" href="#id74" title="Permalink to this image">¶</a></p>
+</div>
+<p>情况与乘法类似；
+精确结果的情况比posit的情况要多一些，但几乎四分之一的情况会发生灾难性的上溢或下溢。
+请注意，posit闭包图看起来更接近于从左上角到右下角的对角线对称：</p>
+<div class="figure align-default" id="id75">
+<img alt="_images/image-20230716211437625.png" src="_images/image-20230716211437625.png" />
+<p class="caption"><span class="caption-number">Fig. 7.7.16 </span><span class="caption-text">image-20230716211437625</span><a class="headerlink" href="#id75" title="Permalink to this image">¶</a></p>
+</div>
+<div class="figure align-default" id="id76">
+<img alt="_images/image-20230716211456864.png" src="_images/image-20230716211456864.png" />
+<p class="caption"><span class="caption-number">Fig. 7.7.17 </span><span class="caption-text">image-20230716211456864</span><a class="headerlink" href="#id76" title="Permalink to this image">¶</a></p>
+</div>
+<p>两个 NaN 值在左下角<span class="math notranslate nohighlight">\(\pm\infty/\pm\infty\)</span> 和中心 <span class="math notranslate nohighlight">\((0/0)\)</span>
+可见。 以下是除法比较的总结：</p>
+<div class="figure align-default" id="id77">
+<img alt="_images/image-20230716211600351.png" src="_images/image-20230716211600351.png" />
+<p class="caption"><span class="caption-number">Fig. 7.7.18 </span><span class="caption-text">image-20230716211600351</span><a class="headerlink" href="#id77" title="Permalink to this image">¶</a></p>
+</div>
+<p>排序错误的图几乎与乘法的图相同，因此这里无需重复。</p>
+</div>
+<div class="section" id="id12">
+<h3><span class="section-number">7.7.4. </span>求幂<a class="headerlink" href="#id12" title="Permalink to this heading">¶</a></h3>
+<p>让我们尝试比较 <span class="math notranslate nohighlight">\(x^y\)</span> 操作的闭包。
+这比标准的双参数算术运算计算起来要困难得多，而且许多结果都是复数值，因此会变成
+NaN。 另外，<span class="math notranslate nohighlight">\(0^0\)</span> 和 <span class="math notranslate nohighlight">\(1^\infty\)</span> 都是 NaN。
+图案奇异而壮观：</p>
+<div class="figure align-default" id="id78">
+<img alt="_images/image-20230716211816304.png" src="_images/image-20230716211816304.png" />
+<p class="caption"><span class="caption-number">Fig. 7.7.19 </span><span class="caption-text">image-20230716211816304</span><a class="headerlink" href="#id78" title="Permalink to this image">¶</a></p>
+</div>
+<div class="figure align-default" id="id79">
+<img alt="_images/image-20230716211849327.png" src="_images/image-20230716211849327.png" />
+<p class="caption"><span class="caption-number">Fig. 7.7.20 </span><span class="caption-text">image-20230716211849327</span><a class="headerlink" href="#id79" title="Permalink to this image">¶</a></p>
+</div>
+<p>posit闭合图同样发人深省。
+一般来说，负实数的负实数次方具有虚数部分，因此会触发浮点值和正posit值的
+NaN，在左侧创建一个大的金带。 但也有例外，例如指数为负偶数时。
+在图最左下角和左上角，所有posit都是负偶数。</p>
+<div class="figure align-default" id="id80">
+<img alt="_images/image-20230716212251357.png" src="_images/image-20230716212251357.png" />
+<p class="caption"><span class="caption-number">Fig. 7.7.21 </span><span class="caption-text">image-20230716212251357</span><a class="headerlink" href="#id80" title="Permalink to this image">¶</a></p>
+</div>
+<div class="figure align-default" id="id81">
+<img alt="_images/image-20230716212306707.png" src="_images/image-20230716212306707.png" />
+<p class="caption"><span class="caption-number">Fig. 7.7.22 </span><span class="caption-text">image-20230716212306707</span><a class="headerlink" href="#id81" title="Permalink to this image">¶</a></p>
+</div>
+<p>请注意，<span class="math notranslate nohighlight">\(0^0\)</span> 是 NaN，每个图的中心都有琥珀色方块。
+浮点方块更大，因为它有两种零，因此有四种方法可以落在 <span class="math notranslate nohighlight">\(0^0\)</span> 上。
+以下是幂函数比较的总结：</p>
+<div class="figure align-default" id="id82">
+<img alt="_images/image-20230716212334728.png" src="_images/image-20230716212334728.png" />
+<p class="caption"><span class="caption-number">Fig. 7.7.23 </span><span class="caption-text">image-20230716212334728</span><a class="headerlink" href="#id82" title="Permalink to this image">¶</a></p>
+</div>
+<p>排序错误的图最终会变得非常高，但是对于非 NaN
+且不是很大或不是很小的值的区域， posits
+会有通常的精度改进，尽管左侧有一个小区域，其中浮点数稍微更精确些取得了“领先”。</p>
+<div class="figure align-default" id="id83">
+<img alt="_images/image-20230716212559127.png" src="_images/image-20230716212559127.png" />
+<p class="caption"><span class="caption-number">Fig. 7.7.24 </span><span class="caption-text">image-20230716212559127</span><a class="headerlink" href="#id83" title="Permalink to this image">¶</a></p>
+</div>
+</div>
 </div>
 </div>
 
@@ -490,6 +873,21 @@ G 中存储最小的值的表示形式； 其他位模式在系统下变得毫�
 <li><a class="reference internal" href="#id1">7.3. 构建低精度集进行比较</a></li>
 <li><a class="reference internal" href="#id2">7.4. “十进制精度”的仔细定义</a></li>
 <li><a class="reference internal" href="#morris">7.5. Morris浮点</a></li>
+<li><a class="reference internal" href="#posit">7.6. 浮点和posit比较一元运算</a><ul>
+<li><a class="reference internal" href="#id3">7.6.1. 倒数</a></li>
+<li><a class="reference internal" href="#id4">7.6.2. 平方根</a></li>
+<li><a class="reference internal" href="#id5">7.6.3. 平方</a></li>
+<li><a class="reference internal" href="#id6">7.6.4. 对数（以 2 为底）</a></li>
+<li><a class="reference internal" href="#id7">7.6.5. 指数（以 2 为底）</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id8">7.7. 两参数的操作</a><ul>
+<li><a class="reference internal" href="#id9">7.7.1. 加减法</a></li>
+<li><a class="reference internal" href="#id10">7.7.2. 乘法</a></li>
+<li><a class="reference internal" href="#id11">7.7.3. 除法</a></li>
+<li><a class="reference internal" href="#id12">7.7.4. 求幂</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -506,6 +904,13 @@ G 中存储最小的值的表示形式； 其他位模式在系统下变得毫�
             <span class="pagenation-direction">Previous</span>
             <div>6. 浮点数与Posit对比预览：32 比特下的准确性</div>
          </div>
+     </a>
+     <a id="button-next" href="08_QuadPrecision.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>8. 四精度测试示例</div>
+        </div>
      </a>
   </div>
         

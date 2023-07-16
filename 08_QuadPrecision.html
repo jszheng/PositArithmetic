@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>8. 四精度测试示例 &#8212; Posit 算术 0.1 documentation</title>
+
+    <link rel="stylesheet" href="_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="_static/fonts.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css" />
+    <link rel="stylesheet" type="text/css" href="_static/d2l.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/d2l.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="9. 二次公式" href="09_Quadratic.html" />
+    <link rel="prev" title="7. Posit与IEEE浮点数的对比：基于度量的研究" href="07_FPvsPositMetric.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link is-active"><span class="section-number">8. </span>四精度测试示例</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="_sources/08_QuadPrecision.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/jszheng/PositArithmetic">
+                  <i class="fab fa-github"></i>
+                  Github
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="index.html">
+              <span class="title-text">
+                  Posit 算术
+              </span>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Overview.html">1. 概论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Specifics.html">2. 细节：将 posit 位字符串转换为值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Visualize.html">3. 可视化射影实数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_Convert.html">4. 将数值转换为Posit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_IEEE754Env.html">5. 创建IEEE 754浮点环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_FPvsPosit.html">6. 浮点数与Posit对比预览：32 比特下的准确性</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_FPvsPositMetric.html">7. Posit与IEEE浮点数的对比：基于度量的研究</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">8. 四精度测试示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Quadratic.html">9. 二次公式</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="index.html">
+              <span class="title-text">
+                  Posit 算术
+              </span>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Overview.html">1. 概论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Specifics.html">2. 细节：将 posit 位字符串转换为值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Visualize.html">3. 可视化射影实数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_Convert.html">4. 将数值转换为Posit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_IEEE754Env.html">5. 创建IEEE 754浮点环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_FPvsPosit.html">6. 浮点数与Posit对比预览：32 比特下的准确性</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_FPvsPositMetric.html">7. Posit与IEEE浮点数的对比：基于度量的研究</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">8. 四精度测试示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Quadratic.html">9. 二次公式</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <div class="section" id="id1">
+<h1><span class="section-number">8. </span>四精度测试示例<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">8.1. </span>非常细瘦的三角形的面积<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
+<p>下面是一个经典的“瘦三角形”问题，取自 David Goldberg 所著的《What Every
+Computer Scientist Should Know About Floating-Point Arithmetic》，发表在
+1991 年 3 月的《Computing Surveys》上：</p>
+<table border="4"><tr><td bgcolor="lightblue"><p>当三角形两条边b和c加起来仅比最长边a略长时，求三角形的面积A。具体来说，其中两条边比最长边的一半大3个ULP。</p>
+</td></tr></table><div class="figure align-default" id="id3">
+<img alt="_images/image-20230716213427377.png" src="_images/image-20230716213427377.png" />
+<p class="caption"><span class="caption-number">Fig. 8.1.1 </span><span class="caption-text">image-20230716213427377</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<p>可以把它想象成炎热阳光下的路面弯曲。 面积 A 的经典公式使用临时值 s：</p>
+<div class="math notranslate nohighlight" id="equation-08-quadprecision-0">
+<span class="eqno">(8.1.1)<a class="headerlink" href="#equation-08-quadprecision-0" title="Permalink to this equation">¶</a></span>\[s=\frac{a+b+c}{2}; A=\sqrt{s(s-a)(s-b)(s-c)}\]</div>
+<p>细三角形公式的问题在于 s 非常接近 a 的值，并且 s 的计算会累积两个
+ULP的舍入误差 … ，因此相对误差被放大得尽可能严重想象。 我们想要测试
+posits 在高精度上超越浮点数的能力，所以我们将把边做成</p>
+<div class="math notranslate nohighlight" id="equation-08-quadprecision-1">
+<span class="eqno">(8.1.2)<a class="headerlink" href="#equation-08-quadprecision-1" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{array}{l}
+a=7 \\
+b=c=7+3 \times 2^{-111}
+\end{array}\end{split}\]</div>
+<p>这些是 IEEE 四精度（128 位）浮点数可以精确表达的值。
+假设所有值都以光年为单位。 b 边和 c 边比 a 的一半大了仅约质子直径的
+1/200，但这足以使三角形达到约 85 厘米的高度，即标准门洞的宽度！
+让我们使用面积公式和 Mathematica
+扩展精度有理值来看看面积的正确值是多少（以平方光年为单位），精确到 40
+位小数：</p>
+<div class="figure align-default" id="id4">
+<img alt="_images/image-20230716220602633.png" src="_images/image-20230716220602633.png" />
+<p class="caption"><span class="caption-number">Fig. 8.1.2 </span><span class="caption-text">image-20230716220602633</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+<p>这以平方光年为单位，是一个很难想象的数量。 面积约为地球表面积的55倍。</p>
+</div>
+<div class="section" id="ieee">
+<h2><span class="section-number">8.2. </span>用 IEEE 四精度浮点算瘦三角形面积<a class="headerlink" href="#ieee" title="Permalink to this heading">¶</a></h2>
+<p>IEEE四精度使用15位指数，因此我们可以设置浮点环境并检查动态范围，如下所示：</p>
+<div class="figure align-default" id="id5">
+<img alt="_images/image-20230716220731335.png" src="_images/image-20230716220731335.png" />
+<p class="caption"><span class="caption-number">Fig. 8.2.1 </span><span class="caption-text">image-20230716220731335</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+<p>这是使用浮点做计算，使用下划线表示其上方的浮点版本。
+也就是说，下划线将其下划线的任何内容四舍五入为最接近的浮点数。</p>
+<div class="figure align-default" id="id6">
+<img alt="_images/image-20230716220844891.png" src="_images/image-20230716220844891.png" />
+<p class="caption"><span class="caption-number">Fig. 8.2.2 </span><span class="caption-text">image-20230716220844891</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+<p>其错误率超过 15%，考虑到 IEEE 四精度的精度约为 33
+位小数，这是一个巨大的错误。 将不正确的数字涂成橙色，浮点数显示如下</p>
+<div class="math notranslate nohighlight" id="equation-08-quadprecision-2">
+<span class="eqno">(8.2.1)<a class="headerlink" href="#equation-08-quadprecision-2" title="Permalink to this equation">¶</a></span>\[3.\color{orange}63481490842332134725920516158057683\color{black} \times 10^{-16}\]</div>
+<p>换句话说，它只有一位小数正确了。
+由于测量单位是平方光年，误差大约与海王星的表面积一样大。</p>
+</div>
+<div class="section" id="posit">
+<h2><span class="section-number">8.3. </span>用posit算瘦三角形面积：不平等的比拼<a class="headerlink" href="#posit" title="Permalink to this heading">¶</a></h2>
+<p>现在尝试使用 posits，只需使用上划线而不是下划线即可。 选择 es=7 为 posit
+环境提供了与 IEEE 128 位浮点（四精度）非常相似的动态范围：</p>
+<div class="figure align-default" id="id7">
+<img alt="_images/image-20230716221221066-16895184590791.png" src="_images/image-20230716221221066-16895184590791.png" />
+<p class="caption"><span class="caption-number">Fig. 8.3.1 </span><span class="caption-text">image-20230716221221066</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</div>
+<p>如果用橙色涂写错误符号，结果是</p>
+<div class="math notranslate nohighlight" id="equation-08-quadprecision-3">
+<span class="eqno">(8.3.1)<a class="headerlink" href="#equation-08-quadprecision-3" title="Permalink to this equation">¶</a></span>\[3.147842048749004252358852654945507744\color{orange}39\color{black} \times 10^{-16}\]</div>
+<p>这个超精确的答案（精确到小数点后 37 位）可以转换为 16
+位posit数，且仍然比 128 位浮点结果具有更高的精度。</p>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">8. 四精度测试示例</a><ul>
+<li><a class="reference internal" href="#id2">8.1. 非常细瘦的三角形的面积</a></li>
+<li><a class="reference internal" href="#ieee">8.2. 用 IEEE 四精度浮点算瘦三角形面积</a></li>
+<li><a class="reference internal" href="#posit">8.3. 用posit算瘦三角形面积：不平等的比拼</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="07_FPvsPositMetric.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>7. Posit与IEEE浮点数的对比：基于度量的研究</div>
+         </div>
+     </a>
+     <a id="button-next" href="09_Quadratic.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>9. 二次公式</div>
+        </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>

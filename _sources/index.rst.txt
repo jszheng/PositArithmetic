@@ -53,3 +53,5 @@ http://www.johngustafson.net/unums.html
    05_IEEE754Env
    06_FPvsPosit
    07_FPvsPositMetric
+   08_QuadPrecision
+   09_Quadratic

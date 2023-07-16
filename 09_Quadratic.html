@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     
-    <title>Index &#8212; Posit 算术 0.1 documentation</title>
+    <title>9. 二次公式 &#8212; Posit 算术 0.1 documentation</title>
 
     <link rel="stylesheet" href="_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
     <link rel="stylesheet" href="_static/sphinx_materialdesign_theme.css" type="text/css" />
@@ -24,15 +24,17 @@
     <script src="_static/doctools.js"></script>
     <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/d2l.js"></script>
-    <link rel="index" title="Index" href="#" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="8. 四精度测试示例" href="08_QuadPrecision.html" /> 
   </head>
 <body>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
     <div class="mdl-layout__header-row">
         
         <nav class="mdl-navigation breadcrumb">
-            <a class="mdl-navigation__link is-active">Index</a>
+            <a class="mdl-navigation__link is-active"><span class="section-number">9. </span>二次公式</a>
         </nav>
         <div class="mdl-layout-spacer"></div>
         <nav class="mdl-navigation">
@@ -53,6 +55,14 @@
       </div>
 </form>
         
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="_sources/09_Quadratic.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
         </nav>
     </div>
     <div class="mdl-layout__header-row header-links">
@@ -83,7 +93,7 @@
         
             
             <nav class="mdl-navigation">
-                <ul>
+                <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="01_Overview.html">1. 概论</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_Specifics.html">2. 细节：将 posit 位字符串转换为值</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_Visualize.html">3. 可视化射影实数</a></li>
@@ -92,7 +102,7 @@
 <li class="toctree-l1"><a class="reference internal" href="06_FPvsPosit.html">6. 浮点数与Posit对比预览：32 比特下的准确性</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07_FPvsPositMetric.html">7. Posit与IEEE浮点数的对比：基于度量的研究</a></li>
 <li class="toctree-l1"><a class="reference internal" href="08_QuadPrecision.html">8. 四精度测试示例</a></li>
-<li class="toctree-l1"><a class="reference internal" href="09_Quadratic.html">9. 二次公式</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">9. 二次公式</a></li>
 </ul>
 
             </nav>
@@ -121,7 +131,7 @@
         
             
             <nav class="mdl-navigation">
-                <ul>
+                <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="01_Overview.html">1. 概论</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_Specifics.html">2. 细节：将 posit 位字符串转换为值</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_Visualize.html">3. 可视化射影实数</a></li>
@@ -130,7 +140,7 @@
 <li class="toctree-l1"><a class="reference internal" href="06_FPvsPosit.html">6. 浮点数与Posit对比预览：32 比特下的准确性</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07_FPvsPositMetric.html">7. Posit与IEEE浮点数的对比：基于度量的研究</a></li>
 <li class="toctree-l1"><a class="reference internal" href="08_QuadPrecision.html">8. 四精度测试示例</a></li>
-<li class="toctree-l1"><a class="reference internal" href="09_Quadratic.html">9. 二次公式</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">9. 二次公式</a></li>
 </ul>
 
             </nav>
@@ -142,11 +152,55 @@
     <div class="document">
         <div class="page-content" role="main">
         
-
-<h1 id="index">Index</h1>
-
-<div class="genindex-jumpbox">
- 
+  <div class="section" id="id1">
+<h1><span class="section-number">9. </span>二次公式<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
+<p>我们可以举出书《错误终结：Unum 计算》中使用的示例，当 b
+相当大时，使用二次公式 <span class="math notranslate nohighlight">\(\frac{-b\pm\sqrt{b^2-4a c}}{2a}\)</span> 其中 b 比
+a 和 c 大很多，导致两个根之一丢失有效数字。
+使用的系数为a=3，b=100，c=2。</p>
+<div class="figure align-default" id="id2">
+<img alt="_images/image-20230716222227138.png" src="_images/image-20230716222227138.png" />
+<p class="caption"><span class="caption-number">Fig. 9.1 </span><span class="caption-text">image-20230716222227138</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<p>精确到小数点后九位的根是</p>
+<div class="figure align-default" id="id3">
+<img alt="_images/image-20230716222304679.png" src="_images/image-20230716222304679.png" />
+<p class="caption"><span class="caption-number">Fig. 9.2 </span><span class="caption-text">image-20230716222304679</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<p>问题是当 <span class="math notranslate nohighlight">\(b^2\)</span> 远大于 <span class="math notranslate nohighlight">\(a c\)</span>
+并且平方根不精确时，一个根的相对误差会因相近数的相减而放大。
+传统的数值分析教科书教导程序员应该使用重新排列代数的技巧。</p>
+<table border="4"><tr><td bgcolor="lightblue"><p>理想情况下，数字系统应该足够强大，以至于粗心的人可以使用它，而无需记住每种情况的技巧。</p>
+</td></tr></table><p>首先，使用单精度浮点数求根：</p>
+<div class="figure align-default" id="id4">
+<img alt="_images/image-20230716222611934.png" src="_images/image-20230716222611934.png" />
+<p class="caption"><span class="caption-number">Fig. 9.3 </span><span class="caption-text">image-20230716222611934</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+<p>这是使用 posits 的相同计算： <img alt="image-20230716222648185" src="_images/image-20230716222648185.png" /></p>
+<p>使用橙色错误数字表示法可以更容易地看到精确度的比较：</p>
+<div class="figure align-default" id="id5">
+<img alt="_images/image-20230716222725483.png" src="_images/image-20230716222725483.png" />
+<p class="caption"><span class="caption-number">Fig. 9.4 </span><span class="caption-text">image-20230716222725483</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+<p>顺便说一句，如果我们确实使用代数重排技巧，posit仍然会击败浮点数。
+技巧是将 <span class="math notranslate nohighlight">\((-b+\sqrt{b^2-4a c})/(2a)\)</span> 写为
+<span class="math notranslate nohighlight">\((2c)/(-b-\sqrt{b^2-4ac})\)</span> 以避免通过减法刮掉有效数字相似的数字。
+与大多数数值技巧一样，它并非显而易见，必须通过繁琐的代数来计算，并且在编码时很容易出错。</p>
+<p>这是使用浮点技巧计算的较小量级根：</p>
+<div class="figure align-default" id="id6">
+<img alt="_images/image-20230716223008565.png" src="_images/image-20230716223008565.png" />
+<p class="caption"><span class="caption-number">Fig. 9.5 </span><span class="caption-text">image-20230716223008565</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+<p>当这个技巧与 posits 一起使用时，误差大约缩小了 8 倍：</p>
+<div class="figure align-default" id="id7">
+<img alt="_images/image-20230716223111485.png" src="_images/image-20230716223111485.png" />
+<p class="caption"><span class="caption-number">Fig. 9.6 </span><span class="caption-text">image-20230716223111485</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</div>
+<p>对比如下</p>
+<div class="figure align-default" id="id8">
+<img alt="_images/image-20230716223141127.png" src="_images/image-20230716223141127.png" />
+<p class="caption"><span class="caption-number">Fig. 9.7 </span><span class="caption-text">image-20230716223141127</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+</div>
 </div>
 
 
@@ -158,6 +212,13 @@
 
       <div class="clearer"></div>
     </div><div class="pagenation">
+     <a id="button-prev" href="08_QuadPrecision.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>8. 四精度测试示例</div>
+         </div>
+     </a>
   </div>
         
         </main>
