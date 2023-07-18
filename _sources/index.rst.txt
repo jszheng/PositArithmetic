@@ -55,3 +55,6 @@ http://www.johngustafson.net/unums.html
    07_FPvsPositMetric
    08_QuadPrecision
    09_Quadratic
+   10_FusedOps
+   11_FFT
+   12_LinearAlgebra

@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>12. 用Posits做线性代数：一种新范式 &#8212; Posit 算术 0.1 documentation</title>
+
+    <link rel="stylesheet" href="_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="_static/fonts.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css" />
+    <link rel="stylesheet" type="text/css" href="_static/d2l.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/d2l.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="11. 快速傅里叶变换(本节未完成)" href="11_FFT.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link is-active"><span class="section-number">12. </span>用Posits做线性代数：一种新范式</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="_sources/12_LinearAlgebra.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/jszheng/PositArithmetic">
+                  <i class="fab fa-github"></i>
+                  Github
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="index.html">
+              <span class="title-text">
+                  Posit 算术
+              </span>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Overview.html">1. 概论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Specifics.html">2. 细节：将 posit 位字符串转换为值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Visualize.html">3. 可视化射影实数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_Convert.html">4. 将数值转换为Posit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_IEEE754Env.html">5. 创建IEEE 754浮点环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_FPvsPosit.html">6. 浮点数与Posit对比预览：32 比特下的准确性</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_FPvsPositMetric.html">7. Posit与IEEE浮点数的对比：基于度量的研究</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_QuadPrecision.html">8. 四精度测试示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Quadratic.html">9. 二次公式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_FusedOps.html">10. 融合的操作与Quire数据类型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_FFT.html">11. 快速傅里叶变换(本节未完成)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">12. 用Posits做线性代数：一种新范式</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="index.html">
+              <span class="title-text">
+                  Posit 算术
+              </span>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Overview.html">1. 概论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Specifics.html">2. 细节：将 posit 位字符串转换为值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Visualize.html">3. 可视化射影实数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_Convert.html">4. 将数值转换为Posit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_IEEE754Env.html">5. 创建IEEE 754浮点环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_FPvsPosit.html">6. 浮点数与Posit对比预览：32 比特下的准确性</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_FPvsPositMetric.html">7. Posit与IEEE浮点数的对比：基于度量的研究</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_QuadPrecision.html">8. 四精度测试示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Quadratic.html">9. 二次公式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_FusedOps.html">10. 融合的操作与Quire数据类型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_FFT.html">11. 快速傅里叶变换(本节未完成)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">12. 用Posits做线性代数：一种新范式</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <div class="section" id="posits">
+<h1><span class="section-number">12. </span>用Posits做线性代数：一种新范式<a class="headerlink" href="#posits" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="id1">
+<h2><span class="section-number">12.1. </span>高斯消去法是一种迭代方法<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
+<p>浮点数擅长的一件事是猜测线性方程组<span class="math notranslate nohighlight">\(A x=b\)</span>的答案
+<span class="math notranslate nohighlight">\(x\)</span>，其中 <span class="math notranslate nohighlight">\(A\)</span> 是 n × n 矩阵，<span class="math notranslate nohighlight">\(b\)</span>
+是给定的n值向量。（至少，它们<em>在某些条件下表现良好</em>，并且人们已经学会忍受这些限制。）LINPACK
+基准测试用 -1 到 1 之间的随机数填充 A，并将每行的总和分配给 b 的值，因此
+答案应该是 <span class="math notranslate nohighlight">\(x=\{1,1,…,1\}\)</span>。 我们使用下划线和上划线运算符来确保
+A 中的每个数字都在两个数字系统的表达词汇表中。
+该基准测试以一种看起来像某种浮点的方式指定数字的 64 位表示，不一定是
+IEEE 754 标准； 因此，64 位posit肯定可以在 LINPACK 基准测试上使用！</p>
+<p>需要 64 位精度是有充分理由的，我们现在将对此进行探讨。
+比如说，如果我们尝试使用 16 位浮点数和位置，会发生什么？
+另外，如果我们认识到所谓的“直接求解器”只是通常在一次迭代后停止的迭代求解器，会发生什么？
+（除非以无限精度执行高斯消去法，否则它只能给出近似解，并且通常必须迭代应用以纠正残差。）</p>
+<p>我们还做了一些新的事情，就是在基准规则设计去修正误差。
+驱动程序假设答案是 x={1,1,…,1}，但这错误地假设计算 b 时没有舍入！ A
+中的值具有一定的大小范围，因此行的精确总和通常包含比精确到浮点或posit的小数部分更多的有效位。
+因此，我们调整 A 的每一行中的最小值，以确保右侧 b 没有舍入。 以下是使用
+16 位 IEEE 浮点数的示例。 如果数字 a 可以用 p 位精确表示，则 <strong>powQ</strong>
+辅助函数返回 True，否则返回 False。</p>
+<div class="figure align-default" id="id5">
+<img alt="_images/image-20230717134329501.png" src="_images/image-20230717134329501.png" />
+<p class="caption"><span class="caption-number">Fig. 12.1.1 </span><span class="caption-text">image-20230717134329501</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+<p>设置环境。 一次一行地创建 A
+矩阵，在最低有效位中对其进行调整，直到其总和达到可以精确表示的数字；
+如果调整失败（在某些不常见的情况下会发生这种情况），它只会生成一个新行并重试。
+这似乎让人想起<em>逆向误差分析</em>，其中四舍五入的算术产生的答案被认为是接近指定问题的精确解决方案；
+但这里要做的不是。 这只是完成了 LINPACK
+的设计目标，即创建一个理想化的问题，其中输入值和正确答案都可以用计算环境的数字词汇来表达。</p>
+<div class="figure align-default" id="id6">
+<img alt="_images/image-20230717134716522.png" src="_images/image-20230717134716522.png" />
+<p class="caption"><span class="caption-number">Fig. 12.1.2 </span><span class="caption-text">image-20230717134716522</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+<p>使用精确算术检查行总和是否等于右侧（使用 quire 可以轻松完成）：</p>
+<div class="figure align-default" id="id7">
+<img alt="_images/image-20230717134843821.png" src="_images/image-20230717134843821.png" />
+<p class="caption"><span class="caption-number">Fig. 12.1.3 </span><span class="caption-text">image-20230717134843821</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</div>
+<p>我们用LINPACK风格解该系统。
+高斯消去法的部分主元消去法*，每次操作后舍入。 下面是算法，在不调用类似
+BLAS 的例程的情况下尽可能简洁。</p>
+<div class="figure align-default" id="id8">
+<img alt="_images/image-20230717151442121.png" src="_images/image-20230717151442121.png" />
+<p class="caption"><span class="caption-number">Fig. 12.1.4 </span><span class="caption-text">image-20230717151442121</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+</div>
+<p>该求解器将在 Mathematica
+中使用精确的有理数算术，因此在我们的样本矩阵上测试它：</p>
+<div class="figure align-default" id="id9">
+<img alt="_images/image-20230717151537055.png" src="_images/image-20230717151537055.png" />
+<p class="caption"><span class="caption-number">Fig. 12.1.5 </span><span class="caption-text">image-20230717151537055</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+</div>
+<p>如果我们没有“纯化”输入矩阵，我们就不会得到这个答案，而是会看到一堆接近 1
+的有理数，其分子和分母都是巨大的整数。</p>
+<p>对于求解器的 IEEE 浮点版本，我们通过使用现已成为 IEEE 754 标准 (2008)
+一部分的乘加融合来尽可能提高其准确性。
+下面的代码中只有四个地方需要四舍五入到最接近的浮点数，如下划线所示。</p>
+<div class="figure align-default" id="id10">
+<img alt="_images/image-20230717151925930.png" src="_images/image-20230717151925930.png" />
+<p class="caption"><span class="caption-number">Fig. 12.1.6 </span><span class="caption-text">image-20230717151925930</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
+</div>
+<p>我们应该得到一个非常接近 1 的有理数（浮点数）列表。我们还计算答案与所有
+1 的平均偏差：</p>
+<div class="figure align-default" id="id11">
+<img alt="_images/image-20230717153906423.png" src="_images/image-20230717153906423.png" />
+<p class="caption"><span class="caption-number">Fig. 12.1.7 </span><span class="caption-text">image-20230717153906423</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
+</div>
+<p>半精度 IEEE 浮点数的小数精度在大约 3 到 3.3
+位小数之间波动，但我们最终的精度只有大约 1 位小数（最坏情况）。
+出于比较目的，posit版本与浮点版本相同，并且还包括融合乘加。
+（可以重新排列循环，使最里面的循环是点积，从而使每个结果值所经历的舍入次数再次减少
+n 阶。）</p>
+<div class="figure align-default" id="id12">
+<img alt="_images/image-20230717163147435.png" src="_images/image-20230717163147435.png" />
+<p class="caption"><span class="caption-number">Fig. 12.1.8 </span><span class="caption-text">image-20230717163147435</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
+</div>
+<p>同样地我们可以生成 100 个输出值（接近 1 的有理数）的列表，并找到它们与 1
+的平均偏差。平均浮点误差比平均posit数误差大约 50%。</p>
+<div class="figure align-default" id="id13">
+<img alt="_images/image-20230717163402560.png" src="_images/image-20230717163402560.png" />
+<p class="caption"><span class="caption-number">Fig. 12.1.9 </span><span class="caption-text">image-20230717163402560</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
+</div>
+<p>对于 100×100 这样大的矩阵使用 16
+位数字显然是有风险的，因为我们只有大约三位小数数字的精度，但需要累加最多
+100 个数字的总和。 我们可以计算<em>残差</em>，即差异向量
+<span class="math notranslate nohighlight">\(b-Ax\)</span>。在posits的情况下，可以使用 quire
+计算残差，仅四舍五入一次。
+对于浮点数，需要使用融合乘加法通过矩阵向量乘法循环来拼写出来。</p>
+<div class="figure align-default" id="id14">
+<img alt="_images/image-20230717163921066.png" src="_images/image-20230717163921066.png" />
+<p class="caption"><span class="caption-number">Fig. 12.1.10 </span><span class="caption-text">image-20230717163921066</span><a class="headerlink" href="#id14" title="Permalink to this image">¶</a></p>
+</div>
+<p>如果我们现在求解右侧的残差，我们可以使用这些解来校正结果。
+这实际上是牛顿-拉夫森迭代的一种形式。
+顺便说一句，我们在这里再次调用求解器是偷懒的，因为求解器将矩阵分解为下上形式，我们所要做的就是使用它来反求解，工作量为
+<span class="math notranslate nohighlight">\(n^2\)</span>，而不是 <span class="math notranslate nohighlight">\(n^3\)</span> 从头开始进行线性求解。</p>
+<div class="figure align-default" id="id15">
+<img alt="_images/image-20230717164147609.png" src="_images/image-20230717164147609.png" />
+<p class="caption"><span class="caption-number">Fig. 12.1.11 </span><span class="caption-text">image-20230717164147609</span><a class="headerlink" href="#id15" title="Permalink to this image">¶</a></p>
+</div>
+<p>更正后的posit形式现在非常接近，有几种情况在答案向量中恰好达到 1。</p>
+<div class="figure align-default" id="id16">
+<img alt="_images/image-20230717164353337.png" src="_images/image-20230717164353337.png" />
+<p class="caption"><span class="caption-number">Fig. 12.1.12 </span><span class="caption-text">image-20230717164353337</span><a class="headerlink" href="#id16" title="Permalink to this image">¶</a></p>
+</div>
+<p>浮点残差校正仅将结果提高了大约 2 倍，并且仍然永远不会精确地达到正确答案
+1：</p>
+<div class="figure align-default" id="id17">
+<img alt="_images/image-20230717164426931.png" src="_images/image-20230717164426931.png" />
+<p class="caption"><span class="caption-number">Fig. 12.1.13 </span><span class="caption-text">image-20230717164426931</span><a class="headerlink" href="#id17" title="Permalink to this image">¶</a></p>
+</div>
+<p>以下是与全 1 正确答案的平均偏差以及错误图（已排序）：</p>
+<div class="figure align-default" id="id18">
+<img alt="_images/image-20230717164648572.png" src="_images/image-20230717164648572.png" />
+<p class="caption"><span class="caption-number">Fig. 12.1.14 </span><span class="caption-text">image-20230717164648572</span><a class="headerlink" href="#id18" title="Permalink to this image">¶</a></p>
+</div>
+<p>另一次迭代不会改善浮点结果。 但看看它对 posit 结果有何影响； 它搞定了！</p>
+<div class="figure align-default" id="id19">
+<img alt="_images/image-20230717164853872.png" src="_images/image-20230717164853872.png" />
+<p class="caption"><span class="caption-number">Fig. 12.1.15 </span><span class="caption-text">image-20230717164853872</span><a class="headerlink" href="#id19" title="Permalink to this image">¶</a></p>
+</div>
+<p>posit的答案是<em>无限准确的</em>。
+校正技术对于浮点数来说价值有限，因为您确实需要一个quire才能正确进行残差校正。
+由于它仅稍微改善了答案，因此大多数人从不费心进行多次高斯消去法迭代，并将其称为“直接方法”。
+但事实并非如此。 这是一种猜测方法，通常会朝着解决方案的方向发展。</p>
+<p>当我们这样做时，我们可以使用 64 位 IEEE 浮点和相同的 100×100
+矩阵来重现原始的 LINPACK 基准测试。 让我们看看效果如何，我们选用 6
+点小字以获得紧凑的显示</p>
+<div class="figure align-default" id="id20">
+<img alt="_images/image-20230717170154613.png" src="_images/image-20230717170154613.png" />
+<p class="caption"><span class="caption-number">Fig. 12.1.16 </span><span class="caption-text">image-20230717170154613</span><a class="headerlink" href="#id20" title="Permalink to this image">¶</a></p>
+</div>
+<p>答案很接近，但缺少正确值 1，每个项都不是。
+为了更容易阅读，下面是将答案向量的前几个项表示为小数，最多 54 位：</p>
+<div class="figure align-default" id="id21">
+<img alt="_images/image-20230717170249400.png" src="_images/image-20230717170249400.png" />
+<p class="caption"><span class="caption-number">Fig. 12.1.17 </span><span class="caption-text">image-20230717170249400</span><a class="headerlink" href="#id21" title="Permalink to this image">¶</a></p>
+</div>
+<p>选择似乎很明确； 使用 64
+位浮点数并为答案向量中的每个项拿到错误答案，或者使用 16
+位posit并为每个项拿到正确答案。
+尽管使用了残差校正，但几乎肯定会<em>更快地</em>解决问题，并且达到目的只使用
+1/4 的存储空间。</p>
+<p>使用 16
+位posit的限制是，当矩阵是像这样的随机元素时，较大n导致它们会超出动态范围。如果矩阵正定（对于实际物理模拟所需的线性系统来说通常如此），那么
+16
+位posit应该能够产生可靠到小数点后三位左右精度的答案，这通常足以满足科学问题和工程目的需要。</p>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">12.2. </span>贝利的数字噩梦，重新呈现<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
+<p>回想一下《错误的终结》一书中的这个例子：大卫·贝利 (David Bailey)
+提出了一个 2×2 线性系统，其条件数几乎是最糟糕的。
+该矩阵距离奇异矩阵仅差一个 ULP！ 他将问题提出为</p>
+<div class="math notranslate nohighlight" id="equation-12-linearalgebra-0">
+<span class="eqno">(12.2.1)<a class="headerlink" href="#equation-12-linearalgebra-0" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{pmatrix}
+0.25510582  &amp; 0.52746197 \\
+0.80143857  &amp; 1.65707065
+\end{pmatrix}
+\begin{pmatrix}
+x \\
+y
+\end{pmatrix} =
+\begin{pmatrix}
+0.79981812 \\
+2.51270273
+\end{pmatrix}\end{split}\]</div>
+<p>答案是<span class="math notranslate nohighlight">\(x=-1,y=2\)</span>。 即使这些值只有 8 位和 9
+位小数，使用精度约为 16 位小数的双精度浮点数也会遇到麻烦。
+贝利的部分观点是，将小数转换为二进制表示形式时存在舍入误差，该误差会因矩阵的病态而放大。
+但这里有一种表达问题的方法，消除了将十进制小数转换为二进制时的舍入误差，其中我们使用变量<span class="math notranslate nohighlight">\(\begin{pmatrix} a &amp; b \\ c &amp; d \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} u \\ v \end{pmatrix}\)</span>代表系统：</p>
+<div class="figure align-default" id="id22">
+<img alt="_images/image-20230717211056523.png" src="_images/image-20230717211056523.png" />
+<p class="caption"><span class="caption-number">Fig. 12.2.1 </span><span class="caption-text">image-20230717211056523</span><a class="headerlink" href="#id22" title="Permalink to this image">¶</a></p>
+</div>
+<p>所有这些输入值现在都可以用双精度 IEEE 浮点数精确表达。 Mathematica
+可以确认确切的答案：</p>
+<div class="figure align-default" id="id23">
+<img alt="_images/image-20230717211209179.png" src="_images/image-20230717211209179.png" />
+<p class="caption"><span class="caption-number">Fig. 12.2.2 </span><span class="caption-text">image-20230717211209179</span><a class="headerlink" href="#id23" title="Permalink to this image">¶</a></p>
+</div>
+<p>然而，这仍然不足以使浮点数免受可怕的舍入错误的影响。 由于系统只有
+2×2，我们可以使用 Cramer 规则以紧凑的形式写出解：</p>
+<p><img alt="image-20230717211421760" src="_images/image-20230717211421760.png" /> 虽然在该精度下可以正确计算行列式，但
+<span class="math notranslate nohighlight">\(u d-b v\)</span> 却不能，从而导致 x 值出现无限小数误差下溢。 如果我们使用
+64 位posit (es=3)，我们会得到正确的值 (-1,2)。
+但posit还有多余的准确性来解决这个问题； 我们可以将 nbits 值一直调低到 59
+位，仍然得到正确的结果：</p>
+<div class="figure align-default" id="id24">
+<img alt="_images/image-20230717211844314.png" src="_images/image-20230717211844314.png" />
+<p class="caption"><span class="caption-number">Fig. 12.2.3 </span><span class="caption-text">image-20230717211844314</span><a class="headerlink" href="#id24" title="Permalink to this image">¶</a></p>
+</div>
+<p>检查此矩阵的条件数，了解为什么“贝利的数字噩梦”是测试用例的一个很好的昵称：</p>
+<div class="figure align-default" id="id25">
+<img alt="_images/image-20230717212011907.png" src="_images/image-20230717212011907.png" />
+<p class="caption"><span class="caption-number">Fig. 12.2.4 </span><span class="caption-text">image-20230717212011907</span><a class="headerlink" href="#id25" title="Permalink to this image">¶</a></p>
+</div>
+<p>适定系统的条件数的大小接近 1。即使输入值（和正确答案）的大小都接近
+1，您仍然可能会得到一个可怕的条件数，从而产生非常错误的结果。 对于
+posits 来说，这种情况仍然可能发生，但是 posits 确实比 float
+提供了更多的保护！ 如果我们要求 Mathematica 按照 Bailey
+的意图求解使用十进制输入表示的系统，会发生以下情况：</p>
+<div class="figure align-default" id="id26">
+<img alt="_images/image-20230717212225490.png" src="_images/image-20230717212225490.png" />
+<p class="caption"><span class="caption-number">Fig. 12.2.5 </span><span class="caption-text">image-20230717212225490</span><a class="headerlink" href="#id26" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="xsc">
+<h2><span class="section-number">12.3. </span>XSC 方法<a class="headerlink" href="#xsc" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="valid">
+<h3><span class="section-number">12.3.1. </span>valid 环境的区间算术替代品<a class="headerlink" href="#valid" title="Permalink to this heading">¶</a></h3>
+<p>20 世纪 80 年代，卡尔斯鲁厄大学的一群数学家（包括 Kulisch 和 S. Rump
+等人）开发了使用线性求解器的 quire
+类型细化来改进各种运算的方法，而不仅仅是 <span class="math notranslate nohighlight">\(Ax=b\)</span> 的解。
+例如，他们演示了多项式、有理函数和数值导数的计算精度在 0.5 ULP 以内。
+关键思想是将此类计算编写为一系列运算，具体取决于 <span class="math notranslate nohighlight">\(+ - \times \div\)</span>
+对先前计算的值的运算，然后可以将其重写为下三角的稀疏方程组。
+反过来，可以使用精确的点积以非常高的精度解决这个问题。 虽然 PASCAL-XSC
+和 ACRITH
+等语言使用该方法，但缺乏quire标准（以及支持该标准的快速硬件的可用性）阻碍了它们的广泛采用。
+posit 环境可以利用 Karlsruhe 小组开发的技术。</p>
+<p>他们的方法大部分依赖于区间界限，这让我们希望有一个完整的valid环境。
+现在我们可以依靠 Mathematica 中的内置区间算术,
+尽管它不像一个完整的valids环境。 稍后我们将需要它来使用 quire
+进行迭代细化。 目前，这应该被视为原型环境中<em>未完成</em>的部分。
+<strong>x2pint</strong> 函数采用实值或具有实端点的区间，并返回具有 posit
+端点并包含原输入参数的区间。 （代码不全，太长了，见原文）</p>
+<div class="figure align-default" id="id27">
+<img alt="_images/image-20230717213306502.png" src="_images/image-20230717213306502.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.1 </span><span class="caption-text">image-20230717213306502</span><a class="headerlink" href="#id27" title="Permalink to this image">¶</a></p>
+</div>
+<p>下面是一个示例，说明如何使用一对posit作为闭区间的端点（valids
+可以表示的子集）来找到<span class="math notranslate nohighlight">\(\pi\)</span>值的界限：</p>
+</div>
+<div class="section" id="id3">
+<h3><span class="section-number">12.3.2. </span>用于基本块的 XSC 式求解器<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
+<p>Kulisch 和 Miranker
+表明，仅具有加减乘除运算的基本块可以转换为下三角方程组，然后使用精确的点积求解到
+0.5 ULP 以内。 他们的例子之一：</p>
+<div class="math notranslate nohighlight" id="equation-12-linearalgebra-1">
+<span class="eqno">(12.3.1)<a class="headerlink" href="#equation-12-linearalgebra-1" title="Permalink to this equation">¶</a></span>\[\text{Find } X= (a+b) \times c - \frac{d}{e}\]</div>
+<p>作为线性代数问题，此表达式相当于求解六个未知数的六个线性方程：</p>
+<div class="math notranslate nohighlight" id="equation-12-linearalgebra-2">
+<span class="eqno">(12.3.2)<a class="headerlink" href="#equation-12-linearalgebra-2" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{matrix}
+x_1 = a \\
+x_2 = x_1+ b \\
+x_3 = cx_2 \\
+x_4 = d \\
+e x_5 = x_4 \\
+x_6 = x_3-x_5
+\end{matrix}
+\text{ 变换成系统 }
+\begin{pmatrix}
+1 &amp; &amp; &amp; &amp; &amp;  \\
+-1 &amp; 1 &amp; &amp; &amp; &amp; \\
+&amp; c &amp; -1 &amp; &amp; &amp; \\
+&amp; &amp; &amp; 1 &amp; &amp; \\
+&amp; &amp; &amp; -1 &amp; e &amp; \\
+&amp; &amp; -1 &amp; 0 &amp; 1 &amp; 1
+\end{pmatrix}
+\begin{pmatrix}
+x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5 \\ x_6
+\end{pmatrix} =
+\begin{pmatrix}
+a \\ b \\ 0 \\ d \\ 0 \\ 0
+\end{pmatrix}\end{split}\]</div>
+<p>我们寻找的 X 是<span class="math notranslate nohighlight">\(x_6\)</span>。 该矩阵是下三角且稀疏的。
+现在让我们看看是否可以在 {16,1} posit环境中选取导致舍入误差的值，并使用
+Mathematica 精确求解系统作为比较的基础：</p>
+<div class="figure align-default" id="id28">
+<img alt="_images/image-20230717215038879.png" src="_images/image-20230717215038879.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.2 </span><span class="caption-text">image-20230717215038879</span><a class="headerlink" href="#id28" title="Permalink to this image">¶</a></p>
+</div>
+<p>以下是与每个值最接近的posit数：</p>
+<div class="figure align-default" id="id29">
+<img alt="_images/image-20230717215221733.png" src="_images/image-20230717215221733.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.3 </span><span class="caption-text">image-20230717215221733</span><a class="headerlink" href="#id29" title="Permalink to this image">¶</a></p>
+</div>
+<p>选择的输入值会引起麻烦，从 <span class="math notranslate nohighlight">\(32+\frac{3}{64}\)</span>
+开始，在这种低精度环境中四舍五入到 <span class="math notranslate nohighlight">\(32\frac{1}{16}\)</span>。 选择 c
+值以使乘积大约为 1，然后加上接近 -1 比值（也四舍五入）就会放大相对误差。
+现在将精确值与每次操作后舍入得到的计算值进行对比：</p>
+<div class="figure align-default" id="id30">
+<img alt="_images/image-20230717215656063.png" src="_images/image-20230717215656063.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.4 </span><span class="caption-text">image-20230717215656063</span><a class="headerlink" href="#id30" title="Permalink to this image">¶</a></p>
+</div>
+<p>对于如此少的操作来说，这是一个很大的舍入误差。让我们看看是否可以修复它。
+使用posit线性求解器，然后以 quire
+级精度计算残差（最终舍入到最近的posit值）：</p>
+<div class="figure align-default" id="id31">
+<img alt="_images/image-20230717215854539.png" src="_images/image-20230717215854539.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.5 </span><span class="caption-text">image-20230717215854539</span><a class="headerlink" href="#id31" title="Permalink to this image">¶</a></p>
+</div>
+<p>现在使用残差作为右侧进行求解，将其添加为第一个解的修正，并将该解表示为posit：</p>
+<div class="figure align-default" id="id32">
+<img alt="_images/image-20230717220004717.png" src="_images/image-20230717220004717.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.6 </span><span class="caption-text">image-20230717220004717</span><a class="headerlink" href="#id32" title="Permalink to this image">¶</a></p>
+</div>
+<p>注意到所有的6个数都和goal完全相同了</p>
+<div class="figure align-default" id="id33">
+<img alt="_images/image-20230717220050147.png" src="_images/image-20230717220050147.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.7 </span><span class="caption-text">image-20230717220050147</span><a class="headerlink" href="#id33" title="Permalink to this image">¶</a></p>
+</div>
+<p>这就是为什么quire和线性求解器不仅仅是解 A x=b 问题； 它们是评估 + - * /
+操作的基本块序列到半个 ULP 以内的关键，就好像只有一次舍入一样。
+稀疏下三角矩阵的设置和迭代求解可以自动完成，正如自 20 世纪 80 年代以来
+XSC 语言所证明的那样； S. Rump
+估计，它会使总工作量最多增加六倍，通常还要少得多。
+即使操作数量增加了六倍，它们使用的是寄存器和最近一级缓存中的变量，而不是主内存。
+如果该技术让低精度算术得到满意的结果，那么内存带宽和存储的节省（以及相应的功耗和能源成本的节省）应该是值得额外工作的，特别是如果程序员可以指定在哪里应用该技术
+以及哪些地方不可以。</p>
+</div>
+<div class="section" id="id4">
+<h3><span class="section-number">12.3.3. </span>乘法结合律？<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
+<p>实验：看看该题能否得到乘法的结合律。 使用非常低精度的 posit
+环境，一个简单情况舍入后
+<span class="math notranslate nohighlight">\((u \times v)\times w \ne u\times (v \times w)\)</span> 。</p>
+<div class="figure align-default" id="id34">
+<img alt="_images/image-20230717221409838.png" src="_images/image-20230717221409838.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.8 </span><span class="caption-text">image-20230717221409838</span><a class="headerlink" href="#id34" title="Permalink to this image">¶</a></p>
+</div>
+<p>这是正确的乘积，以分数和精确的小数表示：</p>
+<div class="figure align-default" id="id35">
+<img alt="_images/image-20230718081704244.png" src="_images/image-20230718081704244.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.9 </span><span class="caption-text">image-20230718081704244</span><a class="headerlink" href="#id35" title="Permalink to this image">¶</a></p>
+</div>
+<p>请注意，这甚至在有 quire 下也无法表达，为 {8,0} posit 环境存储的是
+<span class="math notranslate nohighlight">\(\frac{1}{4096}\)</span> 的整数倍的值。 这是最接近正确乘积的posit数了：</p>
+<div class="figure align-default" id="id36">
+<img alt="_images/image-20230718082345063.png" src="_images/image-20230718082345063.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.10 </span><span class="caption-text">image-20230718082345063</span><a class="headerlink" href="#id36" title="Permalink to this image">¶</a></p>
+</div>
+<p>如果我们在每次乘法后进行四舍五入，这三个数字就会违反结合律。
+如果我们将最后两项先分组，我们会得到以下结果：</p>
+<div class="figure align-default" id="id37">
+<img alt="_images/image-20230718082601857.png" src="_images/image-20230718082601857.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.11 </span><span class="caption-text">image-20230718082601857</span><a class="headerlink" href="#id37" title="Permalink to this image">¶</a></p>
+</div>
+<p>如果我们碰巧将前两项分组，我们会得到最佳答案（精确乘积 pex 的 0.5 ULP
+范围内的答案）：</p>
+<div class="figure align-default" id="id38">
+<img alt="_images/image-20230718082755452.png" src="_images/image-20230718082755452.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.12 </span><span class="caption-text">image-20230718082755452</span><a class="headerlink" href="#id38" title="Permalink to this image">¶</a></p>
+</div>
+<p>61/64 的错误舍入仅与真实解稍远，因此这是一个敏感的测试用例。
+对于这些值，ULP 的一半是 0.0078125。 这是一个“险胜的比赛”； 到精确答案
+pex 的距离之间的差异仅为 3/4096：</p>
+<div class="figure align-default" id="id39">
+<img alt="_images/image-20230718083018929.png" src="_images/image-20230718083018929.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.13 </span><span class="caption-text">image-20230718083018929</span><a class="headerlink" href="#id39" title="Permalink to this image">¶</a></p>
+</div>
+<p>这表明，当我们在每次乘法后舍入时，浮点乘法通常不具有结合性。
+无论我们使用浮点还是posit，都是如此。
+（如果我们使用valids，计算乘积的两种方法将始终产生重叠的valids，并且重叠区域可以被视为对正确值的更严格限制。）</p>
+<p><em>基于 quire 的线性求解器</em>可以恢复乘法结合性吗？ 将积
+<span class="math notranslate nohighlight">\(u \cdot v \cdot w\)</span> 设置为下三角系统。
+当表达式中只有乘法、加法和减法时，始终可以在对角线上使用 1 或 -1
+来执行此操作。</p>
+<div class="math notranslate nohighlight" id="equation-12-linearalgebra-3">
+<span class="eqno">(12.3.3)<a class="headerlink" href="#equation-12-linearalgebra-3" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{align}
+x_1&amp;=u \\
+x_2&amp;=x_1 \times v \\
+x_3&amp;=x_2 \times w \\
+\begin{pmatrix}
+1 &amp;  0 &amp;  0 \\
+v &amp; -1 &amp;  0 \\
+0 &amp;  w &amp; -1
+\end{pmatrix}
+\begin{pmatrix}
+x_1 \\ x_2 \\ x_3
+\end{pmatrix}
+&amp;=
+\begin{pmatrix}
+u \\ 0 \\ 0
+\end{pmatrix}
+\end{align}\end{split}\]</div>
+<p>精确求解系统产生的乘积放在变量<span class="math notranslate nohighlight">\(x_3\)</span>中 。</p>
+<p>下面是精确的解，对所有变量使用 Kulisch 符号：</p>
+<div class="figure align-default" id="id40">
+<img alt="_images/image-20230718084426886.png" src="_images/image-20230718084426886.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.14 </span><span class="caption-text">image-20230718084426886</span><a class="headerlink" href="#id40" title="Permalink to this image">¶</a></p>
+</div>
+<p>以posit精度构造近似逆矩阵 R：</p>
+<div class="figure align-default" id="id41">
+<img alt="_images/image-20230718084533528.png" src="_images/image-20230718084533528.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.15 </span><span class="caption-text">image-20230718084533528</span><a class="headerlink" href="#id41" title="Permalink to this image">¶</a></p>
+</div>
+<p>细化矩阵是
+<span class="math notranslate nohighlight">\(I-R A\)</span>。以quire精度计算它并用valid模式界定边界（现在使用
+Mathematica 间隔，作为实际valid算术库的替代品）：</p>
+<div class="figure align-default" id="id42">
+<img alt="_images/image-20230718084735196.png" src="_images/image-20230718084735196.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.16 </span><span class="caption-text">image-20230718084735196</span><a class="headerlink" href="#id42" title="Permalink to this image">¶</a></p>
+</div>
+<p>我们以quire精度计算<span class="math notranslate nohighlight">\(R\cdot b\)</span>
+，然后舍入为近似解<span class="math notranslate nohighlight">\(\tilde{x}\)</span>。</p>
+<div class="figure align-default" id="id43">
+<img alt="_images/image-20230718085007675.png" src="_images/image-20230718085007675.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.17 </span><span class="caption-text">image-20230718085007675</span><a class="headerlink" href="#id43" title="Permalink to this image">¶</a></p>
+</div>
+<p>我们使用 quire
+精度计算残差（德国人喜欢称之为“缺陷”），并再次找到最接近的posit形式。</p>
+<div class="figure align-default" id="id44">
+<img alt="_images/image-20230718085254314.png" src="_images/image-20230718085254314.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.18 </span><span class="caption-text">image-20230718085254314</span><a class="headerlink" href="#id44" title="Permalink to this image">¶</a></p>
+</div>
+<p>现在我们需要一个包围<span class="math notranslate nohighlight">\(\tilde{x}-\hat{x}\)</span>的区间。让我们保守一点，给它可表示的实数的整个范围。</p>
+<div class="figure align-default" id="id45">
+<img alt="_images/image-20230718100347588.png" src="_images/image-20230718100347588.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.19 </span><span class="caption-text">image-20230718100347588</span><a class="headerlink" href="#id45" title="Permalink to this image">¶</a></p>
+</div>
+<p>这最终建立了 Kulisch 在《数字计算机的算术》第 31 页上指定的迭代方案。
+可证明的界限随着每次迭代而缩小，收紧套索，直到不确定性只有一个 ULP 宽。
+需要做更多的工作来证明valids可以比闭区间做得更好。
+这是一个区间型算法与传统迭代方法不同的例子；
+它们需要精心制作，才能生成<em>压缩映射</em>contractive map。
+一些传统的迭代方法不这样做，并且使用区间算术，每次迭代的界限变得更宽松而不是更紧！</p>
+<p>注意这里我们不需要用户有专业知识。
+编译器可以<strong>自动</strong>生成细化过程并生成 ULP
+宽度的界限，然后将其四舍五入到最接近的位置。
+编译器指令应该说明哪些代码块应该以这种方式确保高精度，以便程序不会因为对不需要高精度的答案的细化而运行速度变慢。
+XSC 环境没有这种程度的程序员控制，这是它们没有流行起来的另一个原因。</p>
+<div class="figure align-default" id="id46">
+<img alt="_images/image-20230718101725633.png" src="_images/image-20230718101725633.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.20 </span><span class="caption-text">image-20230718101725633</span><a class="headerlink" href="#id46" title="Permalink to this image">¶</a></p>
+</div>
+<p>最后一个元素是一个 ULP 宽，所以我们已经完成了。
+我们可以再迭代一次，以表明包围区间现在是稳定的：</p>
+<div class="figure align-default" id="id47">
+<img alt="_images/image-20230718102006930.png" src="_images/image-20230718102006930.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.21 </span><span class="caption-text">image-20230718102006930</span><a class="headerlink" href="#id47" title="Permalink to this image">¶</a></p>
+</div>
+<p>稳定后的正确答案是</p>
+<div class="figure align-default" id="id48">
+<img alt="_images/image-20230718102045710.png" src="_images/image-20230718102045710.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.22 </span><span class="caption-text">image-20230718102045710</span><a class="headerlink" href="#id48" title="Permalink to this image">¶</a></p>
+</div>
+<p>嗯，它成功了。 它找到了真实乘积的最佳包围区间，只有一个 ULP 宽。 在用
+posit 替换边界时，我们将舍入到“偶数”端点 31/32。
+这表明，如果需要，quire可以将代数的结合性恢复到posit的计算环境中。
+如果我们使用区间算术（valids）进行乘法，则两次乘法后的界限将是两个 ULP
+宽。 XSC 方法将其缩小到一个 ULP 宽度，然后进行唯一且一致的舍入。</p>
+</div>
+<div class="section" id="quire">
+<h3><span class="section-number">12.3.4. </span>当即便是quire也无法拯救不适定系统时<a class="headerlink" href="#quire" title="Permalink to this heading">¶</a></h3>
+<p>下面是来自 Kulisch 和 Miranker
+的示例，其中残差较低并不意味着您接近答案。 请注意，这不是下三角矩阵；
+下三角矩阵的表现要好得多。 这很像贝利的数值梦魇，一个看似简单的 2×2
+系统，但实际上却非常不适定。</p>
+<div class="figure align-default" id="id49">
+<img alt="_images/image-20230718104322128.png" src="_images/image-20230718104322128.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.23 </span><span class="caption-text">image-20230718104322128</span><a class="headerlink" href="#id49" title="Permalink to this image">¶</a></p>
+</div>
+<p>准确的答案应该是
+{1,-1}，使用有理数的精确算术能够得到真正的<em>直接解</em>，因为没有舍入：</p>
+<div class="figure align-default" id="id50">
+<img alt="_images/image-20230718104526649.png" src="_images/image-20230718104526649.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.24 </span><span class="caption-text">image-20230718104526649</span><a class="headerlink" href="#id50" title="Permalink to this image">¶</a></p>
+</div>
+<p>为了设置 XSC 紧包迭代，我们首先找到逆矩阵的posit近似。</p>
+<div class="figure align-default" id="id51">
+<img alt="_images/image-20230718104632101.png" src="_images/image-20230718104632101.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.25 </span><span class="caption-text">image-20230718104632101</span><a class="headerlink" href="#id51" title="Permalink to this image">¶</a></p>
+</div>
+<p>将近似逆应用于右侧向量 b 以获得起始猜测（quire精度）：</p>
+<div class="figure align-default" id="id52">
+<img alt="_images/image-20230718104722111.png" src="_images/image-20230718104722111.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.26 </span><span class="caption-text">image-20230718104722111</span><a class="headerlink" href="#id52" title="Permalink to this image">¶</a></p>
+</div>
+<p>这些值不需要四舍五入到最接近的posit，碰巧已经是可以表达为posit数。
+使用所需精度计算“缺陷”，并四舍五入到最接近的位置：</p>
+<div class="figure align-default" id="id53">
+<img alt="_images/image-20230718104855522.png" src="_images/image-20230718104855522.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.27 </span><span class="caption-text">image-20230718104855522</span><a class="headerlink" href="#id53" title="Permalink to this image">¶</a></p>
+</div>
+<p>注意到这是一个相当大的“缺陷”！
+问题出在细化矩阵算子<span class="math notranslate nohighlight">\(ref=I-A\cdot R\)</span>上</p>
+<div class="figure align-default" id="id54">
+<img alt="_images/image-20230718105040141.png" src="_images/image-20230718105040141.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.28 </span><span class="caption-text">image-20230718105040141</span><a class="headerlink" href="#id54" title="Permalink to this image">¶</a></p>
+</div>
+<p>除非谱半径（最大特征值与最小特征值之比）小于 1，否则我们无法保证收敛。</p>
+<div class="figure align-default" id="id55">
+<img alt="_images/image-20230718105127445.png" src="_images/image-20230718105127445.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.29 </span><span class="caption-text">image-20230718105127445</span><a class="headerlink" href="#id55" title="Permalink to this image">¶</a></p>
+</div>
+<p>这里谱半径不小于1，所以我们不应该对残差细化抱有太大希望。
+应用“细化”运算符会使事情变得更糟，也就是说，间隔界限将变得更松，而不是更紧。
+即使使用quire，残差校正也不起作用。
+问题是如此不适定，以至于无法通过这种方式解决。 XSC
+的解决方法是检测这些罕见的情况并将其报告给用户。</p>
+<p>此外尝试两个候选解。</p>
+<p>第一个尝试非常接近正确解，X=0.999，Y=-1.001（使用最接近的posit表示）</p>
+<div class="figure align-default" id="id56">
+<img alt="_images/image-20230718105441204.png" src="_images/image-20230718105441204.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.30 </span><span class="caption-text">image-20230718105441204</span><a class="headerlink" href="#id56" title="Permalink to this image">¶</a></p>
+</div>
+<p>我们人类的直觉告诉我们，对于如此接近的猜测，缺陷应该非常小：</p>
+<div class="figure align-default" id="id57">
+<img alt="_images/image-20230718105522341.png" src="_images/image-20230718105522341.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.31 </span><span class="caption-text">image-20230718105522341</span><a class="headerlink" href="#id57" title="Permalink to this image">¶</a></p>
+</div>
+<p>对于第二个候选解，尝试更差的猜测，X=0.341，Y=-0.087，并检查残差：</p>
+<div class="figure align-default" id="id58">
+<img alt="_images/image-20230718111705775.png" src="_images/image-20230718111705775.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.32 </span><span class="caption-text">image-20230718111705775</span><a class="headerlink" href="#id58" title="Permalink to this image">¶</a></p>
+</div>
+<p>第二个解向量选择显然离正确解更远，但残差更小！
+至少我们还可以检测到细化方法何时会失败。
+但这里幸运的猜测可能对你没有啥帮助。</p>
+</div>
+<div class="section" id="kulish">
+<h3><span class="section-number">12.3.5. </span>Kulish 多项式挑战示例<a class="headerlink" href="#kulish" title="Permalink to this heading">¶</a></h3>
+<p>Kulisch 给出了多项式的示例，该多项式很难针对某些输入值进行准确评估。
+它的精确根为 <span class="math notranslate nohighlight">\(1/\sqrt{2}\)</span>。
+如果我们使用接近该根的值，任何错误都会被放大。</p>
+<div class="figure align-default" id="id59">
+<img alt="_images/image-20230718114046531.png" src="_images/image-20230718114046531.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.33 </span><span class="caption-text">image-20230718114046531</span><a class="headerlink" href="#id59" title="Permalink to this image">¶</a></p>
+</div>
+<p>我们可能应该使用霍纳规则写出多项式的定义，与程序实际对多项式求值的方式一样。</p>
+<div class="figure align-default" id="id60">
+<img alt="_images/image-20230718114218532.png" src="_images/image-20230718114218532.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.34 </span><span class="caption-text">image-20230718114218532</span><a class="headerlink" href="#id60" title="Permalink to this image">¶</a></p>
+</div>
+<p>Kulisch 的示例使用
+<span class="math notranslate nohighlight">\(t=0.707107\)</span>，并表明多项式计算仅正确到小数点后两位。
+公平比较，我们需要使用最接近的二进制表示形式
+<span class="math notranslate nohighlight">\(\frac{707107}{1000000}\)</span> 作为输入量来找到准确的答案。 将环境设置为
+32 位posit：</p>
+<div class="figure align-default" id="id61">
+<img alt="_images/image-20230718114522640.png" src="_images/image-20230718114522640.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.35 </span><span class="caption-text">image-20230718114522640</span><a class="headerlink" href="#id61" title="Permalink to this image">¶</a></p>
+</div>
+<p>我们可以使用精确有理算术和 97
+位小数来表达该分数的精确多项式的结果，当然只有前几位小数是有效数字：</p>
+<div class="figure align-default" id="id62">
+<img alt="_images/image-20230718115039455.png" src="_images/image-20230718115039455.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.36 </span><span class="caption-text">image-20230718115039455</span><a class="headerlink" href="#id62" title="Permalink to this image">¶</a></p>
+</div>
+<p>现在看看当我们依赖“机器精度”（即内部 64 位 IEEE 浮点数）时会发生什么：</p>
+<div class="figure align-default" id="id63">
+<img alt="_images/image-20230718115204562.png" src="_images/image-20230718115204562.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.37 </span><span class="caption-text">image-20230718115204562</span><a class="headerlink" href="#id63" title="Permalink to this image">¶</a></p>
+</div>
+<p>尽管使用了超过 15
+位有效小数，但只有前两位小数是正确的：<span class="math notranslate nohighlight">\(-1.9\color{orange}326\color{black}\cdots\times10^{-11}\)</span>。
+我们能否使用 XSC 风格的细化技术，通过 32 位posit获得更好的答案？</p>
+<p>使用霍纳规则和五个临时量 <span class="math notranslate nohighlight">\(x_1\)</span>到 <span class="math notranslate nohighlight">\(x_5\)</span> 编写 P(t) 的方程：</p>
+<div class="figure align-default" id="id64">
+<img alt="_images/image-20230718121936391.png" src="_images/image-20230718121936391.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.38 </span><span class="caption-text">image-20230718121936391</span><a class="headerlink" href="#id64" title="Permalink to this image">¶</a></p>
+</div>
+<p>精确值的最佳 32 位posit表示如下，显示为小数点后 10 位：</p>
+<div class="figure align-default" id="id65">
+<img alt="_images/image-20230718122101348.png" src="_images/image-20230718122101348.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.39 </span><span class="caption-text">image-20230718122101348</span><a class="headerlink" href="#id65" title="Permalink to this image">¶</a></p>
+</div>
+<p>颜色编码显示，对于如此小的数值，该小数只有 20 比特位，而 ULP 约为
+<span class="math notranslate nohighlight">\(10^6\)</span> 的一部分。 这是合适的，因为输入值只有六位有效数字。</p>
+<p>下面是 <span class="math notranslate nohighlight">\(Ax=b\)</span> 问题设置和近似解
+<span class="math notranslate nohighlight">\(\hat{x}\)</span>，表示为精确有理数和近似小数：</p>
+<div class="figure align-default" id="id66">
+<img alt="_images/image-20230718122619859.png" src="_images/image-20230718122619859.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.40 </span><span class="caption-text">image-20230718122619859</span><a class="headerlink" href="#id66" title="Permalink to this image">¶</a></p>
+</div>
+<p>以下是在posit精度下的近似逆矩阵：</p>
+<div class="figure align-default" id="id67">
+<img alt="_images/image-20230718122822934.png" src="_images/image-20230718122822934.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.41 </span><span class="caption-text">image-20230718122822934</span><a class="headerlink" href="#id67" title="Permalink to this image">¶</a></p>
+</div>
+<p>细化矩阵是 <span class="math notranslate nohighlight">\(I-R A\)</span>，以quire精度计算，然后四舍五入：</p>
+<div class="figure align-default" id="id68">
+<img alt="_images/image-20230718122929285.png" src="_images/image-20230718122929285.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.42 </span><span class="caption-text">image-20230718122929285</span><a class="headerlink" href="#id68" title="Permalink to this image">¶</a></p>
+</div>
+<p>我们以quire精度计算
+<span class="math notranslate nohighlight">\(R \cdot b\)</span>，然后舍入以作为近似解，<span class="math notranslate nohighlight">\(\tilde{x}\)</span>。</p>
+<div class="figure align-default" id="id69">
+<img alt="_images/image-20230718123359394.png" src="_images/image-20230718123359394.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.43 </span><span class="caption-text">image-20230718123359394</span><a class="headerlink" href="#id69" title="Permalink to this image">¶</a></p>
+</div>
+<p>我们总是以quire精度精确地计算“缺陷”，并四舍五入到posit精度：</p>
+<div class="figure align-default" id="id70">
+<img alt="_images/image-20230718123048634.png" src="_images/image-20230718123048634.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.44 </span><span class="caption-text">image-20230718123048634</span><a class="headerlink" href="#id70" title="Permalink to this image">¶</a></p>
+</div>
+<p>现在我们需要围绕 <span class="math notranslate nohighlight">\(\tilde{x}-\hat{x}\)</span> 的区间包围作为起始猜测。
+像往常一样，要极端保守并使用尽可能大的起始间隔。</p>
+<div class="figure align-default" id="id71">
+<img alt="_images/image-20230718123537074.png" src="_images/image-20230718123537074.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.45 </span><span class="caption-text">image-20230718123537074</span><a class="headerlink" href="#id71" title="Permalink to this image">¶</a></p>
+</div>
+<p>这最终建立了 Kulisch 在《数字计算机的算术》第 31 页上指定的迭代方案。
+我们可以观察 e 的最后一个元素发生了什么，因为这就是我们寻求的答案。</p>
+<div class="figure align-default" id="id72">
+<img alt="_images/image-20230718123725708.png" src="_images/image-20230718123725708.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.46 </span><span class="caption-text">image-20230718123725708</span><a class="headerlink" href="#id72" title="Permalink to this image">¶</a></p>
+</div>
+<p>它还有很长的路要走，但正在快速缩小。</p>
+<div class="figure align-default" id="id73">
+<img alt="_images/image-20230718123800825.png" src="_images/image-20230718123800825.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.47 </span><span class="caption-text">image-20230718123800825</span><a class="headerlink" href="#id73" title="Permalink to this image">¶</a></p>
+</div>
+<p>看上去不错</p>
+<div class="figure align-default" id="id74">
+<img alt="_images/image-20230718123840030.png" src="_images/image-20230718123840030.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.48 </span><span class="caption-text">image-20230718123840030</span><a class="headerlink" href="#id74" title="Permalink to this image">¶</a></p>
+</div>
+<p>这看上去已经收敛了，但是再来一次迭代确保</p>
+<div class="figure align-default" id="id75">
+<img alt="_images/image-20230718123929461.png" src="_images/image-20230718123929461.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.49 </span><span class="caption-text">image-20230718123929461</span><a class="headerlink" href="#id75" title="Permalink to this image">¶</a></p>
+</div>
+<p>已经不变了。现在开始应用这个校正值</p>
+<div class="figure align-default" id="id76">
+<img alt="_images/image-20230718124025529.png" src="_images/image-20230718124025529.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.50 </span><span class="caption-text">image-20230718124025529</span><a class="headerlink" href="#id76" title="Permalink to this image">¶</a></p>
+</div>
+<p>最后一个间隔是结果界限，到目前为止，它比使用 32
+位浮点所能做到的要好，我们稍后会看到的。
+但在我们停止之前，让我们尝试使用每个区间中的一个点作为新的起点，因为在纠正最后一项时我们失去了很多精度。
+它离正确答案太远了，没有多少有效数字可以真正放大答案。
+该方法的优点在于，即使起始点较差且矩阵 A
+的逆矩阵非常近似，它也会产生严格的界限。只要 <span class="math notranslate nohighlight">\(A R-I\)</span> 的谱半径小于
+1，包围区间就会收敛到 ULP-宽的界限。 这一定是区间算术界的最高成就之一。</p>
+<div class="figure align-default" id="id77">
+<img alt="_images/image-20230718124345454.png" src="_images/image-20230718124345454.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.51 </span><span class="caption-text">image-20230718124345454</span><a class="headerlink" href="#id77" title="Permalink to this image">¶</a></p>
+</div>
+<p>使用这个更好的起始猜测来计算精确的残差：</p>
+<div class="figure align-default" id="id78">
+<img alt="_images/image-20230718124435365.png" src="_images/image-20230718124435365.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.52 </span><span class="caption-text">image-20230718124435365</span><a class="headerlink" href="#id78" title="Permalink to this image">¶</a></p>
+</div>
+<p>这个非常小的修正表明这<em>非常</em>接近真实答案。
+但我们并不是简单地使用典型的迭代方法；我们正在证明答案位于一个区间内。
+使用通常的全区域的包围区间来开始，并将 d
+舍入到最近的posit。（如果我们不将 d 舍入到最接近的位置
+<span class="math notranslate nohighlight">\(\tilde{d}\)</span>，我们就无法使用 quire 来精确计算
+<span class="math notranslate nohighlight">\(R\cdot d\)</span>。</p>
+<div class="figure align-default" id="id79">
+<img alt="_images/image-20230718124853259.png" src="_images/image-20230718124853259.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.53 </span><span class="caption-text">image-20230718124853259</span><a class="headerlink" href="#id79" title="Permalink to this image">¶</a></p>
+</div>
+<p>使用与以前相同的细化运算符，但这个更好的起点会迭代，直到事情停止变化。
+仅将最后一个值显示为小数，当它看起来稳定时，通过将其显示为有理数来进行检查。</p>
+<div class="figure align-default" id="id80">
+<img alt="_images/image-20230718125016327.png" src="_images/image-20230718125016327.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.54 </span><span class="caption-text">image-20230718125016327</span><a class="headerlink" href="#id80" title="Permalink to this image">¶</a></p>
+</div>
+<p>已经稳定了。 加上这个校正值，然后仅查看最后一个值就是答案的界限：</p>
+<div class="figure align-default" id="id81">
+<img alt="_images/image-20230718125204456.png" src="_images/image-20230718125204456.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.55 </span><span class="caption-text">image-20230718125204456</span><a class="headerlink" href="#id81" title="Permalink to this image">¶</a></p>
+</div>
+<p>我们可以使用颜色编码输出来显示这些位置边界相距 1 个
+ULP，因此这是一个最大精度结果，具有六位小数的精度。</p>
+<div class="figure align-default" id="id82">
+<img alt="_images/image-20230718125255416.png" src="_images/image-20230718125255416.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.56 </span><span class="caption-text">image-20230718125255416</span><a class="headerlink" href="#id82" title="Permalink to this image">¶</a></p>
+</div>
+<p>这是相当惊人的，因为 32
+位posit产生的答案精确到小数点后六位，并且具有可证明的包围，而 64
+位浮点数产生的答案精确到小数点后两位，而不保证任何正确性。 Kulisch
+博士得 1 分。</p>
+<p>只是为了好玩，让我们看看如果我们使用 32 位浮点数，结果会有多糟糕。
+我们将 t 的值转换为最接近的浮点数。</p>
+<div class="figure align-default" id="id83">
+<img alt="_images/image-20230718125432038.png" src="_images/image-20230718125432038.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.57 </span><span class="caption-text">image-20230718125432038</span><a class="headerlink" href="#id83" title="Permalink to this image">¶</a></p>
+</div>
+<p>使用该 t 值的多项式的精确值应如下：</p>
+<div class="figure align-default" id="id84">
+<img alt="_images/image-20230718125534349.png" src="_images/image-20230718125534349.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.58 </span><span class="caption-text">image-20230718125534349</span><a class="headerlink" href="#id84" title="Permalink to this image">¶</a></p>
+</div>
+<p>以下是每次运算后使用 Horner 规则和 IEEE 标准舍入计算的多项式。
+看到一堆下划线很有趣，它们准确地告诉您舍入发生的位置。</p>
+<div class="figure align-default" id="id85">
+<img alt="_images/image-20230718125619883.png" src="_images/image-20230718125619883.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.59 </span><span class="caption-text">image-20230718125619883</span><a class="headerlink" href="#id85" title="Permalink to this image">¶</a></p>
+</div>
+<p>啊呀，无限误差。浮点算术认为该值是多项式的根！
+但是等等，我们至少可以使用融合乘加，这将舍入次数从 8 减少到 4：</p>
+<div class="figure align-default" id="id86">
+<img alt="_images/image-20230718125741388.png" src="_images/image-20230718125741388.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.60 </span><span class="caption-text">image-20230718125741388</span><a class="headerlink" href="#id86" title="Permalink to this image">¶</a></p>
+</div>
+<p>这看起来比我们计算的正确值 fex 大很多。 让我们看看误差有多大：</p>
+<div class="figure align-default" id="id87">
+<img alt="_images/image-20230718125828111.png" src="_images/image-20230718125828111.png" />
+<p class="caption"><span class="caption-number">Fig. 12.3.61 </span><span class="caption-text">image-20230718125828111</span><a class="headerlink" href="#id87" title="Permalink to this image">¶</a></p>
+</div>
+<p>现在答案相差了 260 万倍。 好吧，至少它的符号位还是对的！</p>
+<p>posit算术、quire累加和收缩包围区间技术的结合使 32 位posit的性能显着优于
+64 位浮点数。 32
+位posit产生了一个严格的、可证明的界限，具有六位小数的精度，而 64
+位浮点数产生了一个猜测，但不能指示猜测中有多少个小数是正确的。实际上只有前两位小数是正确的。</p>
+</div>
+</div>
+<div class="section" id="sandia">
+<h2><span class="section-number">12.4. </span>解决真正的偏微分方程问题（用Sandia的数据集）<a class="headerlink" href="#sandia" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="ax-b-quire">
+<h3><span class="section-number">12.4.1. </span>关于 Ax=b 和 quire 数据类型的见解<a class="headerlink" href="#ax-b-quire" title="Permalink to this heading">¶</a></h3>
+<p>如果 A 和 b 用posit（或浮点数）表示，并且 A 是非奇异的，则 x
+仅有<strong>一个</strong>答案：有理数向量。</p>
+<p>恰好有一个 <span class="math notranslate nohighlight">\(\tilde{x}\)</span> 可以posit数来表达且比任何其他数更接近 x
+的。（舍入是唯一的）。</p>
+<p>矩阵 A 乘以 x 是一个 quire 向量，没有舍入误差！ （如果我们使用 32
+位posit，则每个quire是 512 位。）</p>
+<p>使用精确点积作为最内层循环的高斯消除意味着每个元素进行 <span class="math notranslate nohighlight">\(O(n^2)\)</span>
+舍入，而不是 <span class="math notranslate nohighlight">\(O(n^3)\)</span>。 对于 <span class="math notranslate nohighlight">\(n \approx 10^6\)</span> 的 petascale
+问题，这意味着答案中的精确度大约为三位小数。</p>
+<p>让我们看看是否可以从Sandia导入一个基于真实偏微分方程的小测试文件。
+从他们的 81 个变量系统开始，显然是使用 5 点模板通过 9×9 泊松问题生成的。
+前两个数字是矩阵内的行列坐标，长小数是双精度分量值。
+对于本文档中间的长数字表表示歉意…！</p>
+<p>这里只截取部分图</p>
+<div class="figure align-default" id="id88">
+<img alt="_images/image-20230718135741955.png" src="_images/image-20230718135741955.png" />
+<p class="caption"><span class="caption-number">Fig. 12.4.1 </span><span class="caption-text">image-20230718135741955</span><a class="headerlink" href="#id88" title="Permalink to this image">¶</a></p>
+</div>
+<p>虽然这显然应该作为稀疏矩阵存储和求解，但为了快速原型设计，我们只需填充一个稠密矩阵，以便我们可以使用上一节中开发的稠密矩阵求解器。
+与使用最近邻模板（有限差分）近似求解的偏微分方程一样，系统具有主对角线、相邻对角线和相距
+9 个元素（即方形域的宽度或高度）的对角线。 该图显示了具有 z
+维度系数值的矩阵。</p>
+<div class="figure align-default" id="id89">
+<img alt="_images/image-20230718135952691.png" src="_images/image-20230718135952691.png" />
+<p class="caption"><span class="caption-number">Fig. 12.4.2 </span><span class="caption-text">image-20230718135952691</span><a class="headerlink" href="#id89" title="Permalink to this image">¶</a></p>
+</div>
+<p>Sandia还提供了其右侧向量
+b，该向量与矩阵输入值的小数近似质量没有明显差别。</p>
+<div class="figure align-default" id="id90">
+<img alt="_images/image-20230718140544777.png" src="_images/image-20230718140544777.png" />
+<p class="caption"><span class="caption-number">Fig. 12.4.3 </span><span class="caption-text">image-20230718140544777</span><a class="headerlink" href="#id90" title="Permalink to this image">¶</a></p>
+</div>
+<p>显然，该矩阵是由精确有理数构造的。
+Sandia同意重建这些原始有理数，这将使我们能够缩放 A 和 b 以改进 A
+的表述。如果我们将 A 乘以 120，所有值都会变得非常接近整数。 再使用微小的
+3点字符，整个矩阵就适合页面宽度。</p>
+<div class="figure align-default" id="id91">
+<img alt="_images/image-20230718140947491.png" src="_images/image-20230718140947491.png" />
+<p class="caption"><span class="caption-number">Fig. 12.4.4 </span><span class="caption-text">image-20230718140947491</span><a class="headerlink" href="#id91" title="Permalink to this image">¶</a></p>
+</div>
+<p>这是Sandia使用传统双精度浮点提供的“正确答案”。 我们预计其精度接近 15
+位小数，因为该矩阵似乎对角占优且是良态。</p>
+<p>conditioned matrix
+在一般线代教材里不讲的，它主要涉及矩阵计算的数据敏感性分析，比如对于一个Ax=b，它要衡量的是：若有一个Δb，则Δx会有多大？如果Δx不很大，则这是一个well
+conditioned matrix，如果Δx很大，则它就不是一个well
+conditioned的矩阵了，甚至是一个ill conditioned matrix了。</p>
+<p>对于一个矩阵，在矩阵的大特征值方向上(λ＞＞1)，有Δx=1/λ
+Δb，Δx比Δb还小，就很well；若在矩阵小特征值方向上，也有λ＞1，这个矩阵肯定是well
+conditioned 的了。但如果有特征值很小(极端是0)，则按Δx=1/λ
+Δb公式，一个Δb就会对应一个很大的Δx，这就不是well conditioned 的矩阵了。</p>
+<p>从图形上看，在x按圆周分布时(x长度不变，方向变)，由y=Ax得到的y一般会按椭圆分布。一个well
+conditioned的矩阵会产生一个长短轴方向上的y模长都不比对应的x模长小太多的y椭圆分布，或者说是最小的特征值λ也距离零足够远。最严重病态的矩阵ill
+conditioned mayrix就是有特征值为零的矩阵了吧。</p>
+<div class="figure align-default" id="id92">
+<img alt="_images/image-20230718141554898.png" src="_images/image-20230718141554898.png" />
+<p class="caption"><span class="caption-number">Fig. 12.4.5 </span><span class="caption-text">image-20230718141554898</span><a class="headerlink" href="#id92" title="Permalink to this image">¶</a></p>
+</div>
+<p>用mathematica的内置求解器开始</p>
+<div class="figure align-default" id="id93">
+<img alt="_images/image-20230718141804248.png" src="_images/image-20230718141804248.png" />
+<p class="caption"><span class="caption-number">Fig. 12.4.6 </span><span class="caption-text">image-20230718141804248</span><a class="headerlink" href="#id93" title="Permalink to this image">¶</a></p>
+</div>
+<p>计算残差以检查这是否是准确的答案：</p>
+<div class="figure align-default" id="id94">
+<img alt="_images/image-20230718142825566.png" src="_images/image-20230718142825566.png" />
+<p class="caption"><span class="caption-number">Fig. 12.4.7 </span><span class="caption-text">image-20230718142825566</span><a class="headerlink" href="#id94" title="Permalink to this image">¶</a></p>
+</div>
+<p>这看起来是一个准确的答案！ 也许我们可以制作它的 3D 图。</p>
+<div class="figure align-default" id="id95">
+<img alt="_images/image-20230718142859082.png" src="_images/image-20230718142859082.png" />
+<p class="caption"><span class="caption-number">Fig. 12.4.8 </span><span class="caption-text">image-20230718142859082</span><a class="headerlink" href="#id95" title="Permalink to this image">¶</a></p>
+</div>
+<p>让我们尝试仅使用 16 位posit数来解决这个问题，看看会发生什么。</p>
+<div class="figure align-default" id="id96">
+<img alt="_images/image-20230718142946057.png" src="_images/image-20230718142946057.png" />
+<p class="caption"><span class="caption-number">Fig. 12.4.9 </span><span class="caption-text">image-20230718142946057</span><a class="headerlink" href="#id96" title="Permalink to this image">¶</a></p>
+</div>
+<p>下面是残差：</p>
+<div class="figure align-default" id="id97">
+<img alt="_images/image-20230718142442927.png" src="_images/image-20230718142442927.png" />
+<p class="caption"><span class="caption-number">Fig. 12.4.10 </span><span class="caption-text">image-20230718142442927</span><a class="headerlink" href="#id97" title="Permalink to this image">¶</a></p>
+</div>
+<p>如果我们用它来修正答案，我们会得到一个与Sandia提供的结果相匹配的结果，达到
+16 位posit的精度：</p>
+<div class="figure align-default" id="id98">
+<img alt="_images/image-20230718142618705.png" src="_images/image-20230718142618705.png" />
+<p class="caption"><span class="caption-number">Fig. 12.4.11 </span><span class="caption-text">image-20230718142618705</span><a class="headerlink" href="#id98" title="Permalink to this image">¶</a></p>
+</div>
+<div class="figure align-default" id="id99">
+<img alt="_images/image-20230718142639983.png" src="_images/image-20230718142639983.png" />
+<p class="caption"><span class="caption-number">Fig. 12.4.12 </span><span class="caption-text">image-20230718142639983</span><a class="headerlink" href="#id99" title="Permalink to this image">¶</a></p>
+</div>
+<div class="figure align-default" id="id100">
+<img alt="_images/image-20230718142705171.png" src="_images/image-20230718142705171.png" />
+<p class="caption"><span class="caption-number">Fig. 12.4.13 </span><span class="caption-text">image-20230718142705171</span><a class="headerlink" href="#id100" title="Permalink to this image">¶</a></p>
+</div>
+<p>答案中的任何差异都太小而无法看到。
+使用残差校正方法，似乎没有理由使用高于 16
+位的posit精度，而如果任何数据都用 64
+位表示，则显然有能力解决更大的问题。 quire允许 16 位posit数完成 64
+位浮点数的工作。</p>
+</div>
+</div>
+<div class="section" id="unum">
+<h2><span class="section-number">12.5. </span>Unum 线性求解器的时间复杂度<a class="headerlink" href="#unum" title="Permalink to this heading">¶</a></h2>
+<p><span class="math notranslate nohighlight">\(A x=b\)</span> 问题的 A 和 b 输入在实际应用中可以是近似的。
+区间算术有一个定理，该定理指出，找到整组 x
+值的精确数学描述来满足具有输入区间界限的线性方程是 NP 困难的。
+有一个简单的方法可以理解为什么会这样：精确矩阵的每一行都指定 n
+空间中的一个超平面，而解就是 n 个超平面的交集。 例如，2×2
+线性方程组仅表示两条直线的交点。</p>
+<div class="figure align-default" id="id101">
+<img alt="_images/image-20230718143946083.png" src="_images/image-20230718143946083.png" />
+<p class="caption"><span class="caption-number">Fig. 12.5.1 </span><span class="caption-text">image-20230718143946083</span><a class="headerlink" href="#id101" title="Permalink to this image">¶</a></p>
+</div>
+<p>当在数字系统中指定方程时，无论是浮点还是posit数，确切的交点的坐标通常不是浮点或posit，尽管它们是有理数。
+如果分母正好是 2 的幂，因此它们出现在数字词汇中，那只是巧合。
+有一个唯一的最接近答案的点，只需通过对答案向量的每个元素进行四舍五入即可找到。</p>
+<p>如果矩阵系数是间隔而不是精确点，则单行表示 n 个“超板”的交集，即 n
+空间中由“板”界定的区域。
+找到交集的唯一方法是检查边界的最小值和最大值的每种可能组合, 或
+<span class="math notranslate nohighlight">\(2^n\)</span> 超平面。
+严格界限意味着找到<span class="math notranslate nohighlight">\(n^2\)</span>个矩阵元素和<span class="math notranslate nohighlight">\(n\)</span>个右侧元素中每个元素的最小值和最大值的超平面，总共<span class="math notranslate nohighlight">\(2(n^2+n)\)</span>种情况。
+即使 n 小到 2，表示结果的精确几何交集也很难计算，如下图所示。</p>
+<div class="figure align-default" id="id102">
+<img alt="_images/image-20230718144843051.png" src="_images/image-20230718144843051.png" />
+<p class="caption"><span class="caption-number">Fig. 12.5.2 </span><span class="caption-text">image-20230718144843051</span><a class="headerlink" href="#id102" title="Permalink to this image">¶</a></p>
+</div>
+<p>假如我们先简单地找到一个似乎可以解决 A x=b 的特定解 x，然后扰动 x
+以找到其他可行的解，迭代直到我们找到所有解决方案，怎么样？ 这就是基于
+ubox 的方法之一，使用多维向量进行计算，这些向量每个分量(或
+ubox)要么是精确的值，要么是一个 ULP
+宽的开区间。在下图中，黑点是您喜欢的任何求解器产生的第一个猜测（并检查它是否确实在四舍五入后求解了方程）。
+那是一个在所有维度上都精确的 ubox，也是探索的种子。
+通过测试相邻点，看看它们是否也满足 A
+x=b（其中“=”表示与右侧向量的区间有交集），我们可以“绘制”复杂形状的内部，以找到所有的ubox组成的解集，如下图浅绿色所示。
+红色边框代表一个可证明不满足 A x=b 的 ubox。 也就是说，精确的矩阵 A 乘以
+ubox x 会得到不与 b 的所有分量相交的区间。</p>
+<div class="figure align-default" id="id103">
+<img alt="_images/image-20230718145721723.png" src="_images/image-20230718145721723.png" />
+<p class="caption"><span class="caption-number">Fig. 12.5.3 </span><span class="caption-text">image-20230718145721723</span><a class="headerlink" href="#id103" title="Permalink to this image">¶</a></p>
+</div>
+<p>虽然这种方法的优点是可以在大规模并行计算机上轻松完成，并且编程比将超平面与计算几何相交要简单得多，要注意的是通过每个分量中的
+ULP 扰动 x 值意味着 <span class="math notranslate nohighlight">\(3^n\)</span> 扰动 在每个维度中，因为每个分量都可以按
+ULP 下降、保持不变或按 ULP 上升。 它适用于 n 的一些值，但不是非常大的
+n。 例如，对于 n=100 的 LINPACK，必须测试 3^100
+个输入向量（ubox）显然很棘手。 矩阵是稠密还是稀疏并不重要。
+乍一看，这似乎是 ubox 类型求解器获得合理时间复杂度的一个僵局。</p>
+<p>然而，LINPACK 示例带来了一个见解：在第 12.1 节中，我们扰动了 A
+矩阵，使得精确答案与<span class="math notranslate nohighlight">\(x_i\)</span>的所有 1 值的预先设想的解相匹配。
+这是<em>逆向误差分析</em>的一种形式：一个问题的近似解可以被视为另一个问题的精确答案，如果不同的问题只是略有不同，那么我们可能会接受这个答案。
+这一论点可以追溯到 20 世纪 50
+年代威尔金森关于数值分析的经典论文，当其他问题与最初提出的问题相邻时，他创建了存在性证明。
+但逆向误差分析实际上并没有构造出改变后的问题；
+它只是表明它在某些条件下存在。</p>
+<hr class="docutils" />
+<p>通过 unum
+算术，我们可以<strong>显式地构造改变后的问题以进行逆向误差分析</strong>。
+此外，这使我们能够使完美、有界解的时间复杂度变得像所有当前求解 A x=b
+的数值方法一样简单。</p>
+<hr class="docutils" />
+<p>LINPACK 基准测试的原始随机矩阵 A 已更改，以便使用 posit
+词汇表将解向量表示为 n 维空间中的精确点。
+该解向量的每次扰动都无法求解线性系统！ 这样我们就完成了。
+只有一个“ubox”来解决这个系统，并且它在所有维度上都是精确的，并且在每个分量都是精确的1。
+没有 ULP 范围。 顺便说一句，传统的区间算术无法实现这一点；
+传统的区间算术使用 [a,b] 形式的闭区间，其中
+<span class="math notranslate nohighlight">\(a\le b\)</span>，并且该精确点的所有 <span class="math notranslate nohighlight">\(3^n-1\)</span>
+个邻居也会产生一个在每个分量中接触 b
+的向量，因此它们仍然会产生难以处理的时间复杂性。 对于 unum
+算术，valids是开区间，并且不包括满足 <span class="math notranslate nohighlight">\(A x=b\)</span> 的端点。
+这意味着精确解的任何开区间邻居都是上图中红色边界的一部分。 迭代方法为
+<span class="math notranslate nohighlight">\(O(n^3)\)</span>因为原始高斯消除（LU 分解）为 <span class="math notranslate nohighlight">\(O(n^3)\)</span>，而迭代为
+<span class="math notranslate nohighlight">\(O(n^2)\)</span>因为它们仅依赖于使用 quire 求矩阵向量乘积 以及用
+<span class="math notranslate nohighlight">\(U^{-1}\)</span> 和
+<span class="math notranslate nohighlight">\(L^{-1}\)</span>（高斯消元法形成的三角矩阵）进行反解，所有这些都只需要
+<span class="math notranslate nohighlight">\(O(n^2)\)</span> 的工作。 因此，对于 <span class="math notranslate nohighlight">\(n×n\)</span> 系统，求解 LINPACK
+的时间复杂度为 O(n^3)，即使使用迭代方法来获得完美的单一精确解。
+这个结果似乎是新的。</p>
+<p>然而，对于实际问题，我们通常无法选择调整矩阵条目。
+桑迪亚的测试数据就是一个很好的例子。 请记住，缩放 120
+后，矩阵全部为整数：这是因为它是由表达模板运算符产生的，例如</p>
+<div class="math notranslate nohighlight" id="equation-12-linearalgebra-4">
+<span class="eqno">(12.5.1)<a class="headerlink" href="#equation-12-linearalgebra-4" title="Permalink to this equation">¶</a></span>\[x_{i,j}=(x_{i-1,j}+x_{i+1, j}+x_{i, j-1}+x_{i, j})/4\]</div>
+<p>除了 LINPACK 的情况外，我们应该将矩阵 A 视为精确的“不可调整”。
+这似乎推翻了构建反向误差分析问题的论点。</p>
+<p>或者确实如此？</p>
+<p>请记住，类型 III unum 具有 quire 数据类型。 当您尝试求解 A x=b
+时，您会找到一个近似的
+x，无论您使用的是高斯消除法、共轭梯度法还是连续过度松弛法，或者任何您最喜欢的方法。
+称之为 <span class="math notranslate nohighlight">\(\tilde{x}\)</span>，一个 posit 元素的向量，我们希望它导致
+<span class="math notranslate nohighlight">\(A \tilde{x}\)</span> 接近 b。</p>
+<p>然后使用精确的点积，我们可以计算 <span class="math notranslate nohighlight">\(\tilde{b} =A \tilde{x}\)</span>.
+确切地。
+答案不仅是<span class="math notranslate nohighlight">\(\tilde{x}\)</span>，也是逆向错误分析所需的显式构造问题：</p>
+<hr class="docutils" />
+<p><span class="math notranslate nohighlight">\(A x= \tilde{b}\)</span>是一个接近原问题<span class="math notranslate nohighlight">\(A x=b\)</span>的问题，
+解就是<span class="math notranslate nohighlight">\(x=\tilde{x}\)</span>。</p>
+<hr class="docutils" />
+<p>限制解区域不存在指数复杂性。复杂度是传统矩阵求解器方法的复杂度，然后原始问题的扰动版本成为解一部分。
+也就是说，<span class="math notranslate nohighlight">\(\tilde{x}\)</span>和更改后的 <span class="math notranslate nohighlight">\(\tilde{b}\)</span>
+都被计算并视为问题的输出。 然后用户可以决定 <span class="math notranslate nohighlight">\(\tilde{b}\)</span>
+是否足够接近所请求的 b. 这是解决 A x=b 问题的新范式，而这是由于有 quire
+数据类型而成为可能</p>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">12. 用Posits做线性代数：一种新范式</a><ul>
+<li><a class="reference internal" href="#id1">12.1. 高斯消去法是一种迭代方法</a></li>
+<li><a class="reference internal" href="#id2">12.2. 贝利的数字噩梦，重新呈现</a></li>
+<li><a class="reference internal" href="#xsc">12.3. XSC 方法</a><ul>
+<li><a class="reference internal" href="#valid">12.3.1. valid 环境的区间算术替代品</a></li>
+<li><a class="reference internal" href="#id3">12.3.2. 用于基本块的 XSC 式求解器</a></li>
+<li><a class="reference internal" href="#id4">12.3.3. 乘法结合律？</a></li>
+<li><a class="reference internal" href="#quire">12.3.4. 当即便是quire也无法拯救不适定系统时</a></li>
+<li><a class="reference internal" href="#kulish">12.3.5. Kulish 多项式挑战示例</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sandia">12.4. 解决真正的偏微分方程问题（用Sandia的数据集）</a><ul>
+<li><a class="reference internal" href="#ax-b-quire">12.4.1. 关于 Ax=b 和 quire 数据类型的见解</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#unum">12.5. Unum 线性求解器的时间复杂度</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="11_FFT.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>11. 快速傅里叶变换(本节未完成)</div>
+         </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>
